@@ -88,7 +88,8 @@ These are deliberate. Nothing unverified was published as fact.
 - `[ADD VERIFIED DATA]` — results panels on all five case studies. Fill only from
   GA4 / Search Console, and state the date range the number covers.
 - `[ CLIENT QUOTE — to collect ]` — testimonial blocks on each case study.
-- `[YOUR EMAIL]` and `[COMPANY / NIP DETAILS]` — footer, every page.
+- `[YOUR EMAIL]` and `[COMPANY / NIP DETAILS]` — footer, every page, plus `/privacy/`.
+- `WEB3FORMS_KEY` in `assets/estimator.js` — the estimator cannot email until this is set.
 - Layer checklists (`layers-list`) on each case study mark which of the 8 growth-system
   layers are live vs. in progress. Verify these match reality before launch.
 
@@ -99,3 +100,80 @@ The nav and footer link to pages that do not exist yet:
 and the `/pl/` and `/uk/` language versions. These links were in the original
 homepage design. Build them or trim the nav before launch — live 404s in the
 main navigation hurt both trust and crawling.
+
+## Project estimator (`/estimate/`)
+
+A six-step questionnaire that prices a project in the browser and can email the
+result. No backend — the maths runs client-side, so it works on GitHub Pages.
+
+### Changing prices
+
+Every price lives in **one object** at the top of `assets/estimator.js`: `RATES`.
+Nothing else in the file needs editing. The figures there come from the real rate
+card:
+
+| Item | Price |
+|---|---|
+| Website, up to 4 pages (+ design system, logo, form, Sheets) | €500 |
+| Website, up to 10 pages (+ GBP, design system, logo, form, Sheets) | €800 |
+| Larger site, 10+ pages | from €800 |
+| SEO strategy + keywords + GBP + content + 2 posts + GSC + GA4 | €300 |
+| Google Business Profile setup/optimisation | €150 |
+| Blog + 5 articles | €150 |
+| GA4 + Search Console + conversions | €250 |
+| n8n automation | from €300 |
+| Social optimisation + 16-post calendar + reels | €200 |
+
+**Two values are assumptions, not from the rate card** — change them to whatever
+you actually charge:
+
+- `extraLanguagePct: 0.35` — each additional language adds 35% of the website base
+- `rushPct: 0.25` — fast-track surcharge
+
+`rangeUpliftPct: 0.30` sets how far above the floor the quoted range goes.
+
+The 10-page package declares `bundles: ['gbp']`, so if someone picks that package
+*and* the GBP add-on, the add-on shows as "included" instead of being charged
+twice. Add the same key to any other package that already contains an add-on.
+
+### Turning on email delivery
+
+1. Get a free access key at <https://web3forms.com> (they email it to you; no account).
+2. Put it in `WEB3FORMS_KEY` in `assets/estimator.js`. That single constant is
+   pushed into the form's hidden field at runtime, so it is never set twice.
+3. In the Web3Forms dashboard, **turn on Auto Reply** — otherwise only you receive
+   the estimate and the client gets nothing.
+
+Until a key is set, the form shows a plain "not configured yet" message rather
+than failing silently.
+
+### Design decisions worth keeping
+
+- **The estimate is not gated.** People see the number before being asked for an
+  email. Higher completion, and it avoids collecting personal data as the price of
+  information — which matters under GDPR.
+- **A honeypot field** (`botcheck`) catches bots without a CAPTCHA.
+- **The range is presented as a ballpark, not a quote**, in the UI and in the
+  emailed text.
+
+## Scroll-scrub (homepage)
+
+The hero-to-section-02 transition uses **CSS scroll-driven animations**
+(`animation-timeline: view()`), not a JavaScript scroll handler. It runs off the
+main thread, so it cannot drop frames while the page is still loading, and it
+tracks scroll position rather than playing a fixed timeline — so it is naturally
+interruptible and reversible.
+
+Guarded twice: `@supports (animation-timeline: view())` and
+`@media (prefers-reduced-motion: no-preference)`. Browsers without support get the
+static page, which is already correct — nothing is hidden behind the animation.
+
+Easing is `linear` on purpose. A scrub has to follow the finger 1:1; any curve
+makes it feel laggy and disconnected from the gesture.
+
+## Privacy page
+
+`/privacy/` exists because the estimator's consent checkbox links to it. It
+describes what the site actually does, but **the bracketed fields must be filled
+in before launch** — company name, address, tax number, email, retention period.
+It is not legal advice.
