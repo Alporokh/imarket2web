@@ -1076,3 +1076,76 @@ h1, h2, h3, p { margin: 0; }
   border-color: var(--dark-border);
   box-shadow: 0 18px 50px rgba(0,0,0,.42);
 }
+
+/* =======================================================================
+   CASE BAND - dark, with the lilies
+   -----------------------------------------------------------------------
+   Replaces the peach block. The photograph already carries a wide stretch
+   of flat dark space on its left, so the section's base colour is sampled
+   straight from it (#021B26) and a gradient carries that colour across the
+   copy. The join is invisible and the text never sits on petals.
+
+   Everything inside the band flips to a dark treatment: white cards would
+   read as holes punched in the photograph.
+   ======================================================================= */
+
+.case {
+  position: relative;
+  overflow: hidden;
+  background-color: #021B26;
+  color: var(--on-dark);
+}
+.case > .wrap { position: relative; z-index: 2; }
+.case::before,
+.case::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.case::before {
+  z-index: 0;
+  background: url(../images/case-lilies.webp) right center / cover no-repeat;
+}
+.case::after {
+  z-index: 1;
+  background: linear-gradient(100deg,
+    #021B26 0%, #021B26 32%,
+    rgba(2,27,38,.86) 46%,
+    rgba(2,27,38,.42) 62%,
+    rgba(2,27,38,.06) 78%,
+    transparent 90%);
+}
+
+.case .tag { background: rgba(255,255,255,.12); color: #CFE3EC; }
+.case h2 { color: #fff; }
+.case p { color: #BCCBD3; }
+
+/* Screenshot frame, matched to the band rather than to the old peach */
+.case .shot { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); }
+.case .shot .mono { color: #8FA8B4; }
+
+/* Cards become glass, so the photograph still reads behind them */
+.case .stat,
+.case .quote {
+  background: rgba(8,38,50,.62);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.case .stat .d,
+.case .quote figcaption { color: #fff; }
+.case .stat ul,
+.case .stat .note { color: #BCCBD3; }
+.case .stat .big { color: #7CBAF8; }
+.case .stat .big small { color: #7E97A3; }
+.case .placeholder { color: #9FD0F5; }
+.case .quote blockquote { color: #93A8B2; }
+
+@supports not (backdrop-filter: blur(10px)) {
+  .case .stat, .case .quote { background: rgba(8,38,50,.9); }
+}
+
+/* Narrow screens see a slice of the photo rather than the composition, so
+   it drops back to a texture and the copy keeps a flat ground. */
+@media (max-width: 900px) {
+  .case::before { opacity: .42; background-position: 72% center; }
+  .case::after {
+    background: linear-gradient(to bottom, rgba(2,27,38,.84), rgba(2,27,38,.94));
+  }
+}

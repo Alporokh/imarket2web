@@ -450,3 +450,25 @@ If a screenshot ever needs cropping instead - a very tall capture, say - set
 `aspect-ratio` on that `.shot` and give the image
 `object-fit: cover; object-position: top`, which shows the hero rather than
 the middle.
+
+### Case band background
+
+The "Inside a project" band on the homepage uses `images/case-lilies.webp`
+(2400x1029, 56 KB) instead of the old flat peach.
+
+The base colour `#021B26` in the `.case` rule is **sampled from the photograph's
+own left-hand area**, and a gradient carries that colour across the copy. That
+is why the join is invisible: the CSS colour and the image agree exactly. If you
+swap the image, resample it or the seam will show.
+
+Everything inside the band is restyled for dark - white cards would read as
+holes punched in the photograph. The stat cards and the quote become glass with
+a `backdrop-filter`, with an opaque fallback for browsers without it.
+
+Below 900px the photo becomes a texture at 42% with a flat scrim over it: at
+phone width you only see a slice of the composition, and the copy needs solid
+ground more than it needs flowers.
+
+The image was generated rather than licensed, so there is no attribution to
+carry. Swap it for a photograph whenever you have one - the only things tied to
+the file are the sampled colour and the `.case::before` URL.
