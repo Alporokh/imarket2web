@@ -351,3 +351,29 @@ scroll past would turn a nice moment into a tic. Reduced motion gets a plain
 staggered fade instead, which still shows the order.
 
 To use it elsewhere, add `class="shuffle" data-shuffle` to any grid container.
+
+## Section 02 — infinite gallery
+
+The six service cards scroll as two rows moving in opposite directions,
+looping forever. Pure CSS, no JS.
+
+**How the seam is hidden:** each row holds its 3 cards **three times**, and the
+track translates by exactly `-33.3333%`. At the moment the animation restarts,
+the frame is pixel-identical to the frame before it, so there is no jump. If
+you add or remove cards, keep three copies and that percentage stays right.
+
+Only the first copy is real. The other two carry `aria-hidden="true"` and
+`tabindex="-1"`, so screen readers and the keyboard meet each service **once**,
+not three times.
+
+Speed is per row: `galScroll 64s` and `galScrollRev 74s`. Deliberately
+mismatched — equal speeds make the two rows look mechanically linked.
+
+**It pauses on hover and on keyboard focus.** That is not decoration: WCAG
+2.2.2 requires moving content to be pausable, and these cards are text people
+need to read. Reduced motion stops the animation entirely and hands the row
+back to normal horizontal scrolling with snap points, so every card stays
+reachable.
+
+The row is full-bleed out of `.wrap` via negative margins, with a mask that
+fades cards at both edges rather than cutting them off.

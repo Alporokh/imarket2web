@@ -896,3 +896,76 @@ h1, h2, h3, p { margin: 0; }
 .shuffle { perspective: 1200px; overflow: clip; }
 @supports not (overflow: clip) { .shuffle { overflow: hidden; } }
 .shuffle > * { transform-origin: 50% 55%; backface-visibility: hidden; }
+
+/* =======================================================================
+   SECTION 02 — INFINITE GALLERY
+   -----------------------------------------------------------------------
+   Two rows of service cards scrolling in opposite directions, looping
+   seamlessly. Pure CSS: the track holds three copies of its cards and
+   translates by exactly one third, so the moment it snaps back the frame
+   is identical and the seam is invisible.
+
+   Only the first copy is real. The other two carry aria-hidden and
+   tabindex="-1", so assistive tech and the keyboard meet each service
+   once, not three times.
+
+   WCAG 2.2.2 — moving content must be pausable. It pauses on hover and on
+   keyboard focus, and reduced motion stops it entirely and hands the row
+   back to normal horizontal scrolling.
+   ======================================================================= */
+
+.gal {
+  position: relative;
+  /* Full-bleed out of .wrap so cards run to both edges */
+  margin-left: calc(var(--pad-x) * -1);
+  margin-right: calc(var(--pad-x) * -1);
+  padding-block: 4px;
+  /* Fade the cards out at the edges instead of cutting them off */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+.gal-row { overflow: hidden; }
+.gal-row + .gal-row { margin-top: 16px; }
+
+.gal-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+  animation: galScroll 64s linear infinite;
+}
+.gal-row--rev .gal-track { animation-name: galScrollRev; animation-duration: 74s; }
+
+/* One third, because the track holds exactly three copies of its cards. */
+@keyframes galScroll    { to { transform: translate3d(-33.3333%, 0, 0); } }
+@keyframes galScrollRev { from { transform: translate3d(-33.3333%, 0, 0); } to { transform: none; } }
+
+.gal-track > .svc {
+  flex: 0 0 clamp(266px, 25vw, 348px);
+  min-height: 0;
+  margin: 0;
+}
+
+/* Pausable, as moving content must be */
+.gal-row:hover .gal-track,
+.gal-row:focus-within .gal-track { animation-play-state: paused; }
+
+.gal-hint {
+  text-align: center;
+  margin: 18px 0 0;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .gal-track { gap: 12px; }
+  .gal-row + .gal-row { margin-top: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Stop the movement, but keep every card reachable by scrolling the row. */
+  .gal-track { animation: none; }
+  .gal-row { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .gal-track > .svc { scroll-snap-align: start; }
+  .gal-hint { visibility: hidden; }
+}
