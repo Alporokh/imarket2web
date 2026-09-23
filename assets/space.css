@@ -24,3 +24,13 @@
 .space-scroll{position:absolute;z-index:4;left:var(--pad-x);bottom:30px;color:var(--on-dark-3);opacity:.8}
 @media(max-width:640px){.space-journey{height:300vh}.space-copy{justify-content:flex-start;padding-top:14vh}.space-copy .lead{max-width:92%}.space-earth{object-fit:contain}.space-scroll{bottom:20px}}
 @media(prefers-reduced-motion:reduce){.space-journey{height:auto}.space-stage{position:relative;height:auto;min-height:760px}.space-canvas{opacity:.65}.space-earth{opacity:.42;transform:translate3d(28%,24%,0) scale(.62)}.space-copy{min-height:760px}.space-message,.space-scroll{display:none}}
+
+/* ---- Shorter variant -------------------------------------------------------
+   The full 360vh journey suits a homepage, where the scene IS the arrival.
+   On a page whose job is to get you to content — the blog index — three and a
+   half screens before the first article is too much, so this variant runs the
+   same five beats over ~200vh. The JS derives progress from the section's own
+   height, so the beats simply compress; nothing else needs changing.
+   -------------------------------------------------------------------------- */
+.space-journey--short { height: 200vh; }
+@media (max-width: 640px) { .space-journey--short { height: 170vh; } }

@@ -256,6 +256,18 @@ and the mail goes out from your own Gmail.
 If you later edit `Code.gs`, you must **Deploy → Manage deployments → edit →
 New version**, or the site keeps calling the old copy. This catches everyone once.
 
+### If the form says it cannot reach the script
+
+Open the /exec URL in a private browsing window. You should see
+`{"ok":true,"service":"imarket2web estimator"}`. If you get a **Google sign-in
+page** instead, the deployment is asking visitors to log in, so the website
+cannot reach it:
+
+**Deploy → Manage deployments → pencil icon → Who has access → Anyone → Deploy.**
+
+"Anyone" and "Anyone with a Google account" are different settings, and only
+the first one works for a public form.
+
 ### What lands in the Sheet
 
 One row per submission: timestamp, name, email, estimate low/high, currency,
