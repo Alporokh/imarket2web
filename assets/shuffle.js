@@ -55,6 +55,16 @@
 
       var played = false;
 
+      // Per-element overrides, so a list of short lines can move more gently
+      // than a grid of large cards. data-shuffle-spread / -tilt / -stagger.
+      function opt(name, fallback) {
+        var v = parseFloat(grid.getAttribute("data-shuffle-" + name));
+        return isNaN(v) ? fallback : v;
+      }
+      var spread = opt("spread", SPREAD);
+      var tilt = opt("tilt", TILT);
+      var stagger = opt("stagger", STAGGER);
+
       function deal() {
         if (played) return;
         played = true;
@@ -75,11 +85,11 @@
 
         var starts = cards.map(function (c, i) {
           var b = c.getBoundingClientRect();
-          var dx = (cx - (b.left + b.width / 2)) * SPREAD;
-          var dy = (cy - (b.top + b.height / 2)) * SPREAD;
+          var dx = (cx - (b.left + b.width / 2)) * spread;
+          var dy = (cy - (b.top + b.height / 2)) * spread;
           // Deterministic tilt, so it looks shuffled but never lands oddly
-          var tilt = (i % 2 ? 1 : -1) * (TILT - (i % 3) * 3.5);
-          return { dx: dx, dy: dy, tilt: tilt };
+          var tiltDeg = (i % 2 ? 1 : -1) * (tilt - (i % 3) * (tilt / 3.7));
+          return { dx: dx, dy: dy, tilt: tiltDeg };
         });
 
         // 2. Stack them, with no transition so the jump is not seen
@@ -100,7 +110,7 @@
 
         // 3. Deal
         cards.forEach(function (c, i) {
-          var delay = i * STAGGER;
+          var delay = i * stagger;
           c.style.transition =
             'transform ' + DURATION + 'ms ' + EASE + ' ' + delay + 'ms, ' +
             'opacity ' + Math.round(DURATION * 0.55) + 'ms ease ' + delay + 'ms';
@@ -109,7 +119,7 @@
         });
 
         // Clean up, so nothing is left with stale inline styles or will-change
-        var total = (cards.length - 1) * STAGGER + DURATION + 60;
+        var total = (cards.length - 1) * stagger + DURATION + 60;
         setTimeout(function () {
           cards.forEach(function (c) {
             c.style.transition = '';

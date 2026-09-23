@@ -1149,3 +1149,36 @@ h1, h2, h3, p { margin: 0; }
     background: linear-gradient(to bottom, rgba(2,27,38,.84), rgba(2,27,38,.94));
   }
 }
+
+/* =======================================================================
+   A REAL TESTIMONIAL
+   -----------------------------------------------------------------------
+   The placeholder was one short line, so .quote centres it at 26px in a
+   muted grey. A genuine quote is a paragraph and deserves to read as
+   confident rather than provisional: smaller, darker, left-aligned with a
+   controlled measure. Centring three sentences leaves both edges ragged
+   and is noticeably harder to read.
+
+   Placeholders on the other four case studies keep the old treatment, so
+   the difference between real and pending stays visible at a glance.
+   ======================================================================= */
+
+.quote.is-real { text-align: left; }
+.quote.is-real blockquote {
+  font-size: clamp(18px, 1.5vw, 21px);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+  max-width: 60ch;
+  margin: 0 auto;
+}
+.quote.is-real figcaption {
+  max-width: 60ch;
+  margin: 16px auto 0;
+  color: var(--muted);
+}
+
+/* On the dark lily band the same quote needs the opposite end of the scale */
+.case .quote.is-real blockquote { color: #E4EEF3; }
+.case .quote.is-real figcaption { color: #93A8B2; }

@@ -93,7 +93,9 @@ These are deliberate. Nothing unverified was published as fact.
 
 - `[ADD VERIFIED DATA]` - results panels on all five case studies. Fill only from
   GA4 / Search Console, and state the date range the number covers.
-- `[ CLIENT QUOTE - to collect ]` - testimonial blocks on each case study.
+- `[ CLIENT QUOTE - to collect ]` - testimonial blocks on four case studies.
+  Permanent Guru has a real one from Iryna Malaniak; the homepage band carries
+  the same quote.
 - `[YOUR EMAIL]` and `[COMPANY / NIP DETAILS]` - footer, every page, plus `/privacy/`.
 - `WEB3FORMS_KEY` in `assets/estimator.js` - the estimator cannot email until this is set.
 - Layer checklists (`layers-list`) on each case study mark which of the 8 growth-system
@@ -342,7 +344,12 @@ Because the end state is *no transform*, the layout stays correct at every
 width and nothing is left pinned to a hardcoded position. If the script never
 runs, the cards are simply already where they belong.
 
-Tuning is at the top of the file: `STAGGER` (70ms between cards),
+Per-element overrides: `data-shuffle-spread`, `data-shuffle-tilt` and
+`data-shuffle-stagger` on the container. The two lists in section 04 use gentler
+values than the process grid - short lines in a narrow card need less travel
+than large cards do.
+
+Defaults at the top of the file: `STAGGER` (70ms between cards),
 `DURATION` (620ms each), `SPREAD` (how tightly they pile) and `TILT`
 (max rotation). Total run is about 1.1s.
 
@@ -472,3 +479,23 @@ ground more than it needs flowers.
 The image was generated rather than licensed, so there is no attribution to
 carry. Swap it for a photograph whenever you have one - the only things tied to
 the file are the sampled colour and the `.case::before` URL.
+
+### About the testimonial
+
+The Permanent Guru quote appears in two places: the homepage "Inside a project"
+band and the Permanent Guru case study. It is reproduced word for word.
+
+**No `Review` schema is attached, deliberately.** Google does not show rich
+results for reviews a business publishes about itself, so marking it up gains
+nothing and risks a manual action for self-serving review markup. It is plain
+content, which is the correct treatment.
+
+`.quote.is-real` styles it as testimony rather than a placeholder - smaller,
+darker, left-aligned with a 60ch measure. Centring three sentences leaves both
+edges ragged and is measurably harder to read. The four case studies still
+waiting on quotes keep the old muted centred treatment, so real and pending
+stay distinguishable at a glance.
+
+One thing to confirm: the quote says "Alena", the site says "Olena Porokh".
+Left exactly as written, since altering a client's words is not ours to do -
+but if that is a typo on their side, ask them to reissue it.
