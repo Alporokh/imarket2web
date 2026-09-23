@@ -1184,11 +1184,14 @@ h1, h2, h3, p { margin: 0; }
 /* =======================================================================
    ORBIT - the work page hero
    -----------------------------------------------------------------------
-   A tall track with a sticky stage. The stage carries the scene as an
-   ordinary background image, so the hero is correct with no JS, with
-   reduced motion, or before the script has run. orbit.js adds .is-live
-   once the particles are drawing, which fades that background out and
-   leaves only the canvas.
+   The scene sits on ::before as an image layer, the particles on the canvas
+   above it, the legibility scrim on ::after, and the copy above all of it.
+
+   Before the script runs the image is at full strength, so the hero is
+   correct with no JS, with reduced motion, or on a slow connection.
+   orbit.js adds .is-live once particles are drawing, which drops the image
+   to a faint underlay - the particles are the subject, but the sun and
+   Earth stay readable while everything is in motion.
    ======================================================================= */
 
 .orbit-track { position: relative; height: 320vh; background: #04070E; }
@@ -1196,41 +1199,44 @@ h1, h2, h3, p { margin: 0; }
   position: sticky; top: 0;
   height: 100vh;
   overflow: hidden;
-  background: #04070E url(../images/orbit-scene.webp) center / cover no-repeat;
-  transition: background-color .4s ease;
+  background: #04070E;
 }
-.orbit-track.is-live .orbit-stage { background-image: none; }
+.orbit-stage::before,
+.orbit-stage::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+
+.orbit-stage::before {
+  z-index: 0;
+  background: url(../images/orbit-scene.webp) center / cover no-repeat;
+  transition: opacity .8s ease;
+}
+.orbit-track.is-live .orbit-stage::before { opacity: .2; }
 
 .orbit-canvas {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 1;
   width: 100%; height: 100%;
   display: block;
   opacity: 0;
-  transition: opacity .6s ease;
+  transition: opacity .8s ease;
 }
 .orbit-track.is-live .orbit-canvas { opacity: 1; }
 
 /* Keeps the copy legible over the sun, which is the brightest thing here */
 .orbit-stage::after {
-  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  z-index: 2;
   background:
     linear-gradient(to right, rgba(4,7,14,.86) 0%, rgba(4,7,14,.66) 38%, rgba(4,7,14,.18) 66%, transparent 86%),
     linear-gradient(to bottom, rgba(4,7,14,.55), transparent 26%, transparent 72%, #04070E 100%);
 }
 
 .orbit-copy {
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
   height: 100%;
   display: flex; flex-direction: column; justify-content: center;
   padding-top: 40px; padding-bottom: 40px;
 }
 .orbit-copy .work-intro { margin-top: 22px; }
 
-.orbit-hint {
-  position: absolute; z-index: 2;
-  left: var(--pad-x); bottom: 30px;
-  color: var(--on-dark-3);
-}
+.orbit-hint { position: absolute; z-index: 3; left: var(--pad-x); bottom: 30px; color: var(--on-dark-3); }
 
 @media (max-width: 900px) {
   .orbit-track { height: 240vh; }
@@ -1240,8 +1246,8 @@ h1, h2, h3, p { margin: 0; }
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  /* No travel: one screen, the scene held still behind the copy. */
   .orbit-track { height: auto; }
   .orbit-stage { position: relative; height: auto; min-height: 640px; }
   .orbit-canvas { display: none; }
+  .orbit-track.is-live .orbit-stage::before { opacity: 1; }
 }

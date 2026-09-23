@@ -504,33 +504,55 @@ but if that is a typo on their side, ask them to reissue it.
 
 `assets/orbit.js` plus `images/orbit-scene.webp` (2000x857, 195 KB).
 
-A wide space scene - sun on the left, Earth and Moon on the right - rebuilt out
-of particles, with the scroll driving a camera that travels from the sun across
-to the Earth.
+A wide space scene - sun left, Earth and Moon right - rebuilt out of particles
+that swirl apart and reassemble, with the scroll driving a camera that travels
+from the sun to the Earth.
 
-**Where the colours come from.** The scene is decoded once into an offscreen
-canvas and sampled on a 4px grid. Every sample brighter than luminance 26
-becomes a particle carrying that pixel's own colour, which is why the sun comes
-out orange (avg rgb 226,131,33), the Earth blue (84,104,125) and the stars
-white without any of it being hardcoded. Dark space yields nothing, so about
-**10,000 particles** describe the whole scene.
+### The particle model
 
-**Why it is not slow.** Ten thousand `fillRect` calls a frame would be. Nothing
-here uses the 2D path API: particles are written straight into an `ImageData`
-buffer as pixels and blitted once per frame with `putImageData`, turning
-per-particle cost into a couple of array writes. Measured: ~2ms to clear the
-buffer at 1440x900, ~40,000 pixel writes per frame. Device pixel ratio is capped
-at 1.5.
+It follows the ReactBits ParticleImage component, which is what was asked for,
+and keeps its vocabulary so the two are comparable:
 
-Scroll phases: `assemble` (0-0.16) particles converge, `travel` (0.10-0.94) the
-camera pans, `disperse` (0.93-1) they drift apart as the section hands over.
+- colours are **sampled from the image**, never hardcoded
+- particles accelerate along a **Perlin noise flow field** that evolves over time
+- velocity is retained frame to frame and scaled by `DAMPING`
+- each particle has a `LIFESPAN`, then respawns at home with no velocity. That
+  constant dying and returning is what reads as "swirl apart and reassemble"
+- the pointer transfers momentum within `CURSOR_RADIUS`
 
-Tuning at the top of the file: `STEP` (particle density - lower is denser and
-slower), `LUM_MIN` (what counts as empty space), `ZOOM` (how far the camera can
-travel), `MAX_DPR`.
+Two things are ours rather than theirs: the scroll drives a camera pan, and the
+source image stays faintly visible underneath so the sun and Earth remain
+readable while everything is moving.
 
-**It degrades to the photograph.** The stage carries the scene as an ordinary
-CSS background; the canvas only fades in, and the background only fades out,
-once particles are actually drawing. With no JS, with reduced motion, before the
-script loads, or if the canvas is ever tainted, the hero is simply the image.
-Reduced motion also drops the track to a single screen.
+### Measured
+
+| | |
+|---|---|
+| particles | 5,242 |
+| frame cost | 2.88ms (budget 16.6ms) |
+| respawns | ~27 per frame |
+| drift | avg 77px, max 98px before returning home |
+
+`NOISE_STRENGTH` is **0.14, tuned rather than guessed**. At 0.34 the average
+drift was 143px, and since the Earth is only about 400px across in the scene it
+smeared into illegibility. If you want a wilder field, raise it and watch that
+drift number - past roughly 100px average the scene stops reading.
+
+### Two implementation notes
+
+**Offsets, not absolute positions.** Each particle stores an offset from its
+home rather than a screen coordinate, so the camera can pan without dragging
+particles out of formation, and the noise is sampled in scene space so the
+currents belong to the scene rather than the viewport.
+
+**No `fillRect`.** Several thousand path calls a frame would be slow. Particles
+are written into an `ImageData` buffer as pixels and blitted once with
+`putImageData`. Device pixel ratio capped at 1.5.
+
+### Degrades to the photograph
+
+The scene sits on `::before` as an image layer at full strength. `orbit.js`
+adds `.is-live` once particles are drawing, which drops it to 20% and fades the
+canvas in. No JS, reduced motion, a slow load or a tainted canvas all leave the
+hero as the image. The loop stops when the section is off screen or the tab is
+hidden.
