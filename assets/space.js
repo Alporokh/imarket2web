@@ -1,24 +1,20 @@
-// imarket2web — shared behaviour (mobile menu + footer year)
-(function () {
-  var header = document.querySelector('.site-header');
-  var btn = document.getElementById('menu-toggle');
-  if (header && btn) {
-    btn.addEventListener('click', function () {
-      var open = header.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open);
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    });
-    document.querySelectorAll('#mobile-menu a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        header.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', false);
-      });
-    });
-  }
-  var year = document.getElementById('year');
-  if (year) year.textContent = new Date().getFullYear();
-})();
+/* =========================================================================
+   Cinematic space hero — per-frame work
+   =========================================================================
+   Original effect by Olena Porokh. Reviewed and adjusted:
+     - Earth image self-hosted and resized (was a 1.24 MB hotlink to NASA at
+       3718x3718; now 382 KB at 1600x1600, which is still more than the 1.6x
+       zoom ever shows).
+     - Guarded so it costs nothing on pages without the hero.
 
+   Kept as-is because it was already right:
+     - smoothstep easing per sub-range, so each beat eases independently
+     - rAF-throttled scroll with passive listeners
+     - devicePixelRatio capped at 2, and fewer stars under 700px
+     - transform/opacity only
+     - bails out entirely on prefers-reduced-motion (CSS has a static
+       fallback layout for that case)
+   ========================================================================= */
 
 // Cinematic scroll-scrub: deep space -> light trails -> Earth approach.
 (function(){

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Space hero preview — imarket2web</title>
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="stylesheet" href="../../assets/space.css">
+<style>
+  /* Preview chrome only — not part of the effect. */
+  .lab { position: fixed; top: 12px; right: 12px; z-index: 300; width: 268px;
+    background: rgba(18,18,20,.94); border: 1px solid var(--dark-border);
+    border-radius: 16px; padding: 17px 19px; color: var(--on-dark);
+    backdrop-filter: blur(8px); font-size: 13px; }
+  .lab h2 { font-size: 15px; color: #fff; margin: 0 0 4px; letter-spacing: -.02em; }
+  .lab p { color: var(--on-dark-3); font-size: 12px; line-height: 1.45; margin: 0 0 13px; }
+  .lab .row { display: flex; justify-content: space-between; font-size: 12px;
+    padding: 6px 0; border-top: 1px solid var(--dark-line-2); }
+  .lab .row span:last-child { font-family: var(--mono); color: var(--blue-light); }
+  .lab .prog { height: 3px; background: var(--dark-line-2); border-radius: 9px; overflow: hidden; margin: 10px 0 4px; }
+  .lab .prog i { display: block; height: 100%; width: 0; background: var(--blue); }
+  .lab .beat { font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--blue-light); }
+  @media (max-width: 900px) { .lab { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="lab">
+  <h2>Space hero preview</h2>
+  <p>Scroll slowly. The scene is sticky for 360vh, then hands over to section 02.</p>
+  <div class="prog"><i id="p-bar"></i></div>
+  <div class="row"><span>Journey progress</span><span id="p-out">0%</span></div>
+  <div class="row"><span>Current beat</span><span class="beat" id="beat">stars</span></div>
+  <div class="row"><span>Earth image</span><span id="img">…</span></div>
+  <div class="row"><span>FPS</span><span id="fps">—</span></div>
+</div>
+
+<main>
+  <!-- ================= CINEMATIC SPACE HERO ================= -->
+  <section class="space-journey dark" id="space-journey" aria-label="imarket2web introduction">
+    <div class="space-stage">
+      <canvas class="space-canvas" id="space-canvas" aria-hidden="true"></canvas>
+      <img class="space-earth" id="space-earth"
+           src="../../images/earth-blue-marble.jpg"
+           alt="" aria-hidden="true" width="1600" height="1600" fetchpriority="high">
+      <div class="space-vignette" aria-hidden="true"></div>
+      <div class="space-copy wrap">
+        <span class="tag tag--dark">Digital growth systems · Poznań</span>
+        <h1 class="d h1">Websites are only the <span class="accent">beginning</span>.</h1>
+        <p class="lead">I build websites, search visibility and AI-powered marketing systems that help service businesses get discovered, earn trust and turn attention into enquiries.</p>
+        <div class="hero-ctas">
+          <a href="../../work/" class="btn">View projects <span aria-hidden="true">→</span></a>
+          <a href="../../estimate/" class="btn-ghost">Get an estimate</a>
+        </div>
+        <div class="langs"><span class="mono">Working in</span><span class="chip">English</span><span class="chip">Polski</span><span class="chip">Українська</span></div>
+      </div>
+      <div class="space-message d" aria-hidden="true">Build visibility.<br><span>Create momentum.</span></div>
+      <div class="space-scroll mono" aria-hidden="true">Scroll to explore ↓</div>
+    </div>
+  </section>
+
+  <!-- ================= 01 SERVICES (the handover) ================= -->
+  <section class="wrap section" id="services">
+    <div class="sec-head">
+      <div>
+        <div class="mono eyebrow">01 — What I do</div>
+        <h2 class="d h2" style="max-width:720px;">Six disciplines, built to work as <span class="accent">one system</span>.</h2>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card svc"><span class="mono">01</span><h3 class="d">Website design &amp; development</h3><p>Placeholder card, here so you can judge how the dark scene hands over to the cream section.</p></div>
+      <div class="card svc svc--blue"><span class="mono">02</span><h3 class="d">SEO &amp; local SEO</h3><p>Placeholder card.</p></div>
+      <div class="card svc svc--green"><span class="mono">03</span><h3 class="d">Content strategy</h3><p>Placeholder card.</p></div>
+    </div>
+  </section>
+</main>
+
+<script src="../../assets/space.js" defer></script>
+<script>
+(function () {
+  var j = document.getElementById('space-journey');
+  var bar = document.getElementById('p-bar'), out = document.getElementById('p-out');
+  var beat = document.getElementById('beat');
+
+  function tick() {
+    var r = j.getBoundingClientRect();
+    var range = j.offsetHeight - innerHeight;
+    var p = Math.max(0, Math.min(1, -r.top / Math.max(1, range)));
+    out.textContent = Math.round(p * 100) + '%';
+    bar.style.width = (p * 100) + '%';
+    beat.textContent =
+      p < 0.18 ? 'stars' :
+      p < 0.52 ? 'light speed' :
+      p < 0.66 ? 'earth rising' :
+      p < 0.82 ? 'message' :
+      p < 0.98 ? 'message out' : 'handover';
+  }
+  addEventListener('scroll', tick, { passive: true });
+  tick();
+
+  // Confirm the Earth image is local and report its real weight
+  var img = document.getElementById('space-earth');
+  var el = document.getElementById('img');
+  img.addEventListener('load', function () {
+    var p = performance.getEntriesByType('resource').filter(function (e) {
+      return e.name.indexOf('earth-blue-marble') > -1;
+    })[0];
+    el.textContent = p && p.transferSize
+      ? Math.round(p.transferSize / 1024) + ' KB local'
+      : 'local';
+  });
+  if (img.complete) img.dispatchEvent(new Event('load'));
+
+  // Rough FPS while scrolling, so jank is visible rather than guessed at
+  var frames = 0, last = performance.now();
+  (function loop(t) {
+    frames++;
+    if (t - last >= 1000) {
+      document.getElementById('fps').textContent = frames + ' fps';
+      frames = 0; last = t;
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+})();
+</script>
+</body>
+</html>

@@ -141,3 +141,7 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Working copy of the space-hero experiment — kept locally, not published.
+# The effect itself now lives in assets/space.* and lab/space/.
+space-effect/

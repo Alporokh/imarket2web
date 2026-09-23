@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://imarket2web.com/sitemap.xml
