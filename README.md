@@ -430,3 +430,23 @@ npx sharp-cli -i images/<file>.png -o images/work/<slug>.webp resize 1400 --with
 
 Still placeholders: the three screenshot-strip images per case study
 (`<slug>-01/02/03.jpg`), which want interior shots rather than the homepage.
+
+### How screenshots are presented
+
+A `.shot` that still holds a placeholder keeps its fixed height - an empty box
+needs one. A `.shot` holding a real screenshot does not: it takes the image's
+own proportions via `height: auto`, so the whole page top shows instead of a
+slice cropped from the middle.
+
+That distinction is what `.shot:has(img)` does, at the end of `site.css`. The
+`!important` on the height is deliberate and commented: six context rules set a
+fixed height on `.shot`, all more specific than `:has(img)`, and one override
+beats adding `:not(:has(img))` to every one of them.
+
+Because every `<img>` carries its real `width` and `height`, the browser
+reserves the correct space before the file loads, so nothing jumps.
+
+If a screenshot ever needs cropping instead - a very tall capture, say - set
+`aspect-ratio` on that `.shot` and give the image
+`object-fit: cover; object-position: top`, which shows the hero rather than
+the middle.

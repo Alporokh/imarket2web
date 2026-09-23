@@ -1039,3 +1039,40 @@ h1, h2, h3, p { margin: 0; }
   .lw-l { animation: none !important; }
   .lw { display: none; }
 }
+
+/* =======================================================================
+   SCREENSHOTS
+   -----------------------------------------------------------------------
+   A .shot that still holds a placeholder keeps its fixed height, because
+   an empty box needs one. A .shot holding a real screenshot does not: it
+   takes the image's own proportions, so the whole page top is visible
+   instead of a slice cropped out of the middle.
+
+   The !important is deliberate. Six context rules above set a fixed height
+   on .shot (.project, .project--wide, .case, .case-hero, .strip, plus the
+   responsive overrides), all of them more specific than :has(img). One
+   override beats adding :not(:has(img)) to every one of them.
+   ======================================================================= */
+
+.shot:has(img) {
+  height: auto !important;
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 40px rgba(23,23,26,.13);
+}
+.shot:has(img) img {
+  width: 100%;
+  height: auto;          /* the image sets the height, nothing is cropped */
+  object-fit: initial;   /* overrides the cover used for placeholder boxes */
+  display: block;
+  border-radius: 13px;   /* sits just inside the 14px frame */
+}
+
+/* On dark sections the frame should read as light, not as a hole */
+.dark .shot:has(img),
+.case-hero .shot:has(img) {
+  background: var(--dark-2);
+  border-color: var(--dark-border);
+  box-shadow: 0 18px 50px rgba(0,0,0,.42);
+}
