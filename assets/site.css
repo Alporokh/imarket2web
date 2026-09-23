@@ -588,3 +588,22 @@ h1, h2, h3, p { margin: 0; }
     }
   }
 }
+
+
+/* ============ Cinematic space journey ============ */
+.space-journey{height:360vh;position:relative;background:#020306;color:#fff}
+.space-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#020306}
+.space-canvas,.space-earth,.space-vignette{position:absolute;inset:0;width:100%;height:100%}
+.space-canvas{z-index:1}
+.space-earth{z-index:2;object-fit:contain;opacity:0;transform:translate3d(0,18%,0) scale(.055);transform-origin:50% 54%;will-change:transform,opacity;mix-blend-mode:screen}
+.space-vignette{z-index:3;pointer-events:none;background:radial-gradient(circle at 50% 48%,transparent 32%,rgba(0,0,0,.18) 66%,rgba(0,0,0,.72) 100%)}
+.space-copy{position:relative;z-index:4;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;pointer-events:none;will-change:transform,opacity}
+.space-copy .h1{max-width:920px;margin-top:24px}
+.space-copy .lead{max-width:610px;margin-top:26px}
+.space-copy .hero-ctas,.space-copy .langs{pointer-events:auto}
+.space-message{position:absolute;z-index:4;left:50%;top:50%;width:min(900px,86vw);transform:translate(-50%,-42%);text-align:center;font-size:clamp(38px,6vw,88px);line-height:.94;letter-spacing:-.05em;opacity:0;will-change:transform,opacity}
+.space-message span{color:var(--blue-light)}
+.space-scroll{position:absolute;z-index:4;left:var(--pad-x);bottom:30px;color:var(--on-dark-3);opacity:.8}
+.legacy-hero{display:none}
+@media(max-width:640px){.space-journey{height:300vh}.space-copy{justify-content:flex-start;padding-top:14vh}.space-copy .lead{max-width:92%}.space-earth{object-fit:contain}.space-scroll{bottom:20px}}
+@media(prefers-reduced-motion:reduce){.space-journey{height:auto}.space-stage{position:relative;height:auto;min-height:760px}.space-canvas{opacity:.65}.space-earth{opacity:.42;transform:translate3d(28%,24%,0) scale(.62)}.space-copy{min-height:760px}.space-message,.space-scroll{display:none}}
