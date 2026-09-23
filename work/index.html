@@ -79,32 +79,36 @@
 
 <main id="main">
 
-  <!-- ================= PAGE HERO ================= -->
-  <section class="dark">
-    <div class="wrap page-hero">
-      <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="../">Home</a><span>/</span><span aria-current="page">Work</span>
-      </nav>
-      <div class="work-intro" style="margin-top:22px;">
-        <div>
-          <h1 class="d h2-xl" style="color:#fff;">Five businesses. Five growth systems, <span class="accent">not five websites</span>.</h1>
-          <p class="lead">Every project here started the same way - a service business that was good at the work and invisible in search. What changed was never just the design. It was the order the layers were built in.</p>
-        </div>
-        <div class="work-count">
+  <!-- ================= PAGE HERO - orbit ================= -->
+  <section class="orbit-track" data-orbit aria-label="Work">
+    <div class="orbit-stage">
+      <canvas class="orbit-canvas" data-src="../images/orbit-scene.webp" aria-hidden="true"></canvas>
+      <div class="wrap orbit-copy">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="../">Home</a><span>/</span><span aria-current="page">Work</span>
+        </nav>
+        <div class="work-intro">
           <div>
-            <span class="d">3</span>
-            <span class="mono">Countries</span>
+            <h1 class="d h2-xl" style="color:#fff;">Five businesses. Five growth systems, <span class="accent">not five websites</span>.</h1>
+            <p class="lead">Every project here started the same way - a service business that was good at the work and invisible in search. What changed was never just the design. It was the order the layers were built in.</p>
           </div>
-          <div>
-            <span class="d">5</span>
-            <span class="mono">Languages shipped</span>
-          </div>
-          <div>
-            <span class="d">5</span>
-            <span class="mono">Live projects</span>
+          <div class="work-count">
+            <div>
+              <span class="d">3</span>
+              <span class="mono">Countries</span>
+            </div>
+            <div>
+              <span class="d">5</span>
+              <span class="mono">Languages shipped</span>
+            </div>
+            <div>
+              <span class="d">5</span>
+              <span class="mono">Live projects</span>
+            </div>
           </div>
         </div>
       </div>
+      <span class="orbit-hint mono" aria-hidden="true">Scroll from the sun to the earth &darr;</span>
     </div>
   </section>
 
@@ -289,5 +293,6 @@
 
 <script src="../assets/site.js" defer></script>
 <script src="../assets/consent.js" defer></script>
+<script src="../assets/orbit.js" defer></script>
 </body>
 </html>

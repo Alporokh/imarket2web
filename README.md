@@ -499,3 +499,38 @@ stay distinguishable at a glance.
 One thing to confirm: the quote says "Alena", the site says "Olena Porokh".
 Left exactly as written, since altering a client's words is not ours to do -
 but if that is a typo on their side, ask them to reissue it.
+
+## Work page hero - the particle orbit
+
+`assets/orbit.js` plus `images/orbit-scene.webp` (2000x857, 195 KB).
+
+A wide space scene - sun on the left, Earth and Moon on the right - rebuilt out
+of particles, with the scroll driving a camera that travels from the sun across
+to the Earth.
+
+**Where the colours come from.** The scene is decoded once into an offscreen
+canvas and sampled on a 4px grid. Every sample brighter than luminance 26
+becomes a particle carrying that pixel's own colour, which is why the sun comes
+out orange (avg rgb 226,131,33), the Earth blue (84,104,125) and the stars
+white without any of it being hardcoded. Dark space yields nothing, so about
+**10,000 particles** describe the whole scene.
+
+**Why it is not slow.** Ten thousand `fillRect` calls a frame would be. Nothing
+here uses the 2D path API: particles are written straight into an `ImageData`
+buffer as pixels and blitted once per frame with `putImageData`, turning
+per-particle cost into a couple of array writes. Measured: ~2ms to clear the
+buffer at 1440x900, ~40,000 pixel writes per frame. Device pixel ratio is capped
+at 1.5.
+
+Scroll phases: `assemble` (0-0.16) particles converge, `travel` (0.10-0.94) the
+camera pans, `disperse` (0.93-1) they drift apart as the section hands over.
+
+Tuning at the top of the file: `STEP` (particle density - lower is denser and
+slower), `LUM_MIN` (what counts as empty space), `ZOOM` (how far the camera can
+travel), `MAX_DPR`.
+
+**It degrades to the photograph.** The stage carries the scene as an ordinary
+CSS background; the canvas only fades in, and the background only fades out,
+once particles are actually drawing. With no JS, with reduced motion, before the
+script loads, or if the canvas is ever tainted, the hero is simply the image.
+Reduced motion also drops the track to a single screen.
