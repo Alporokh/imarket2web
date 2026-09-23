@@ -228,3 +228,56 @@ elsewhere.
 
 Do not re-add the Google Fonts `<link>` tags. That would reintroduce the only
 third-party request on the site and make the privacy page inaccurate.
+
+## Estimator backend — Google Sheet + automated reply
+
+The estimator posts to a **Google Apps Script** you own. That one script does
+three things: writes the lead into a Google Sheet, emails the estimate to the
+person who asked for it, and emails you a copy. No third-party form service,
+and the mail goes out from your own Gmail.
+
+**Sheet:** [imarket2web — Estimator leads](https://docs.google.com/spreadsheets/d/1hbBzRPIziBbClbMiWWLShFCCvewQb6drl6oHIAwo4XM/edit)
+
+### Setup (once, ~5 minutes)
+
+1. Open the Sheet → **Extensions → Apps Script**.
+2. Delete the placeholder code, paste in all of `tools/apps-script/Code.gs`, save.
+3. Run the `setup` function once. Authorise it when asked — that is it asking
+   permission to write to your own Sheet and send mail as you. The
+   "Google hasn't verified this app" warning is normal for your own scripts:
+   **Advanced → Go to (project name)**.
+4. **Deploy → New deployment → Web app.**
+   - Execute as: **Me**
+   - Who has access: **Anyone** — not "Anyone with a Google account", or the
+     website cannot reach it.
+5. Copy the `/exec` URL and paste it into `ENDPOINT` in `assets/estimator.js`.
+6. Submit a test from the live site. One row in the Sheet, two emails.
+
+If you later edit `Code.gs`, you must **Deploy → Manage deployments → edit →
+New version**, or the site keeps calling the old copy. This catches everyone once.
+
+### What lands in the Sheet
+
+One row per submission: timestamp, name, email, estimate low/high, currency,
+timeline, goal, website package, languages, fast-track, add-ons, message,
+consent, the full text breakdown, and source.
+
+### Switching back to Web3Forms
+
+Set `PROVIDER = 'web3forms'` and put the access key in `ENDPOINT`. Note that on
+their free tier the auto-reply is a paid feature, so only you would get the mail.
+
+### Why the request has no Content-Type header
+
+Apps Script cannot answer a CORS preflight. Sending the body as a plain string
+makes it a "simple" request, which skips the preflight entirely. Do not add a
+`Content-Type: application/json` header to that fetch — it will start failing.
+
+## Insights (`/insights/`)
+
+The blog section, using the space hero. Currently an honest empty state with the
+planned article queue rather than filler posts.
+
+**To publish the first article:** delete the `.empty-state` block in
+`insights/index.html` and uncomment the article grid below it. Each article is
+its own folder, e.g. `insights/why-one-page-per-treatment/index.html`.

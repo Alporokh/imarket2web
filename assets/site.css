@@ -825,3 +825,20 @@ h1, h2, h3, p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .consent { transform: none; transition: opacity .2s ease; }
 }
+
+/* ---- Insights empty state ---- */
+.empty-state { padding: clamp(30px, 3.4vw, 48px); max-width: 780px; }
+.empty-state .mono { color: var(--blue); display: block; margin-bottom: 12px; }
+.empty-state h3 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.08; letter-spacing: -.03em; margin: 0 0 14px; }
+.empty-state p { font-size: 16px; line-height: 1.6; color: var(--text); }
+.queue { margin: 20px 0 22px; padding: 0; list-style: none; counter-reset: q; display: flex; flex-direction: column; gap: 14px; }
+.queue li { counter-increment: q; position: relative; padding-left: 40px; font-size: 15px; line-height: 1.55; color: var(--text); }
+.queue li::before { content: counter(q, decimal-leading-zero); position: absolute; left: 0; top: 1px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--blue); }
+.queue strong { color: var(--ink-2); font-weight: 600; }
+.empty-note { font-size: 15px; color: var(--muted); padding-top: 18px; border-top: 1px solid var(--line); }
+.empty-note a { color: var(--blue); text-decoration: underline; }
+
+/* The space hero puts the crumbs on a dark backdrop */
+.space-copy .crumbs a { color: var(--on-dark-3); }
+.space-copy .crumbs a:hover { color: var(--blue-light); }

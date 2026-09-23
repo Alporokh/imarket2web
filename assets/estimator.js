@@ -104,15 +104,26 @@ const RATES = {
   rangeUpliftPct: 0.30    // top of the quoted range above the floor price
 };
 
-/* ---- Web3Forms -----------------------------------------------------------
-   Get a free access key at https://web3forms.com (no account needed — they
-   email you the key). Paste it below. Until then the form shows a clear
-   "not configured" message instead of failing silently.
+/* ---- Where submissions go -------------------------------------------------
 
-   Turn on "Auto Reply" in the Web3Forms dashboard so the client receives the
-   estimate; you get a copy either way.
+   PROVIDER = 'apps-script'  (recommended)
+     Posts to your own Google Apps Script, which writes the lead into the
+     Google Sheet, emails the estimate to the person who asked for it, and
+     emails you a copy. No third party, no limits worth worrying about, and
+     the mail comes from your own Gmail.
+     Setup: tools/apps-script/Code.gs — the instructions are at the top.
+     Then paste the /exec URL into ENDPOINT below.
+
+   PROVIDER = 'web3forms'
+     Simpler, but a third party handles the data and the auto-reply is a
+     dashboard setting rather than something you control.
+     Put the access key in ENDPOINT.
+
+   Until one is configured, the form says so plainly instead of failing
+   silently, and the estimate stays visible on the page.
    ------------------------------------------------------------------------ */
-const WEB3FORMS_KEY = 'YOUR-WEB3FORMS-ACCESS-KEY';
+const PROVIDER = 'apps-script';
+const ENDPOINT = 'PASTE-YOUR-APPS-SCRIPT-EXEC-URL-HERE';
 
 /* ========================================================================= */
 
@@ -245,6 +256,31 @@ function renderResult() {
   setTier('complete', t.complete, 'Every layer of the growth system');
 
   document.getElementById('estimate-payload').value = plainText(r, t);
+  lastResult = r;
+}
+
+/** The most recent calculation, so the form can send structured fields
+    to the Sheet rather than only a block of text. */
+let lastResult = null;
+
+function payloadFields() {
+  const r = lastResult;
+  const site = RATES.site[state.site] || {};
+  const addonNames = [...state.addons]
+    .map(k => (RATES.addons[k] || {}).short || k)
+    .join(', ');
+  return {
+    estimate_low: r ? Math.round(r.floor) : '',
+    estimate_high: r ? Math.round(r.ceiling) : '',
+    currency: RATES.currency,
+    timeline: r ? r.weeksMin + '–' + r.weeksMax + ' weeks' : '',
+    goal: state.goal || '',
+    website: site.label || '',
+    languages: state.languages,
+    rush: state.rush,
+    addons: addonNames,
+    source: 'estimator'
+  };
 }
 
 function setTier(id, data, note) {
@@ -391,49 +427,66 @@ document.addEventListener('DOMContentLoaded', () => {
   showStep(0);
 });
 
-/* ---- Email submission (Web3Forms) --------------------------------------- */
+/* ---- Submission ---------------------------------------------------------- */
 
 function wireForm() {
-  const form = document.getElementById('estimate-form');
+  const form = document.getElementById("estimate-form");
   if (!form) return;
 
-  // Single source of truth: push the key from this file into the hidden field,
-  // so it never has to be kept in sync in two places.
-  const keyField = form.querySelector('input[name="access_key"]');
-  if (keyField) keyField.value = WEB3FORMS_KEY;
+  const keyField = form.querySelector("input[name=access_key]");
+  if (keyField) keyField.value = PROVIDER === "web3forms" ? ENDPOINT : "";
 
-  form.addEventListener('submit', async e => {
+  form.addEventListener("submit", async e => {
     e.preventDefault();
-    const status = document.getElementById('form-status');
-    const btn = form.querySelector('button[type="submit"]');
+    const status = document.getElementById("form-status");
+    const btn = form.querySelector("button[type=submit]");
 
-    if (WEB3FORMS_KEY === 'YOUR-WEB3FORMS-ACCESS-KEY') {
-      status.className = 'form-status is-err';
-      status.textContent = 'Email delivery is not configured yet — add a Web3Forms access key in assets/estimator.js. Your estimate is shown above and can still be printed.';
+    if (!ENDPOINT || ENDPOINT.indexOf("PASTE-") === 0 || ENDPOINT.indexOf("YOUR-") === 0) {
+      status.className = "form-status is-err";
+      status.textContent = "Email delivery is not set up yet — see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.";
+      return;
+    }
+    if (!form.querySelector("[name=consent]").checked) {
+      status.className = "form-status is-err";
+      status.textContent = "Please tick the consent box so I am allowed to email you.";
       return;
     }
 
+    const data = Object.assign(
+      Object.fromEntries(new FormData(form)),
+      payloadFields()
+    );
+    data.consent = !!form.querySelector("[name=consent]").checked;
+
     btn.disabled = true;
-    status.className = 'form-status';
-    status.textContent = 'Sending…';
+    status.className = "form-status";
+    status.textContent = "Sending…";
 
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form)))
-      });
-      const data = await res.json();
-      if (data.success) {
-        status.className = 'form-status is-ok';
-        status.textContent = 'Sent. Check your inbox — the estimate is on its way.';
-        form.reset();
+      let ok;
+      if (PROVIDER === "apps-script") {
+        // A plain-string body is sent as text/plain, which is a "simple"
+        // request — no CORS preflight, which Apps Script cannot answer.
+        const res = await fetch(ENDPOINT, { method: "POST", body: JSON.stringify(data) });
+        const out = await res.json();
+        ok = out.success;
+        if (!ok) throw new Error(out.message || "Submission failed");
       } else {
-        throw new Error(data.message || 'Submission failed');
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(data)
+        });
+        const out = await res.json();
+        ok = out.success;
+        if (!ok) throw new Error(out.message || "Submission failed");
       }
+      status.className = "form-status is-ok";
+      status.textContent = "Sent. Check your inbox — the estimate is on its way.";
+      form.reset();
     } catch (err) {
-      status.className = 'form-status is-err';
-      status.textContent = 'Could not send: ' + err.message + '. Email hello@imarket2web.com instead.';
+      status.className = "form-status is-err";
+      status.textContent = "Could not send: " + err.message + ". Email imarket2web@gmail.com instead.";
     } finally {
       btn.disabled = false;
     }
