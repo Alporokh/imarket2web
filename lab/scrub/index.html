@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Scroll-scrub preview — imarket2web</title>
+<link rel="stylesheet" href="../../assets/site.css">
+<style>
+  /* Preview-only chrome. Nothing here ships to the real site. */
+  .lab {
+    position: fixed; top: 12px; right: 12px; z-index: 300; width: 290px;
+    background: rgba(18,18,20,.94); border: 1px solid var(--dark-border);
+    border-radius: 16px; padding: 18px 20px; color: var(--on-dark);
+    backdrop-filter: blur(8px); font-size: 13px;
+  }
+  .lab h2 { font-size: 15px; color: #fff; margin: 0 0 3px; letter-spacing: -.02em; }
+  .lab .sub { color: var(--on-dark-3); font-size: 12px; line-height: 1.45; margin: 0 0 16px; }
+  .lab label { display: block; margin-bottom: 14px; }
+  .lab .row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
+  .lab .row span:last-child { font-family: var(--mono); color: var(--blue-light); }
+  .lab input[type=range] { width: 100%; accent-color: var(--blue); }
+  .lab .support { font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    text-transform: uppercase; padding: 8px 10px; border-radius: 8px; margin-bottom: 14px; }
+  .lab .support.yes { background: #16294A; color: #7CBAF8; }
+  .lab .support.no  { background: #3A2417; color: #F0A882; }
+  .lab .prog { height: 3px; background: var(--dark-line-2); border-radius: 9px; overflow: hidden; margin: 4px 0 14px; }
+  .lab .prog i { display: block; height: 100%; width: 0; background: var(--blue); }
+  .lab pre { background: #0C0C0E; border: 1px solid var(--dark-line-2); border-radius: 10px;
+    padding: 11px 12px; font-family: var(--mono); font-size: 11px; color: var(--on-dark-2);
+    margin: 0 0 10px; white-space: pre-wrap; line-height: 1.6; }
+  .lab button { width: 100%; font-family: inherit; font-size: 13px; font-weight: 600;
+    padding: 11px; border-radius: 999px; border: 0; background: var(--blue); color: #fff; cursor: pointer; }
+  .lab button:hover { background: var(--blue-hover); }
+  .lab .reset { background: transparent; border: 1px solid var(--dark-border); color: var(--on-dark-2); margin-top: 7px; }
+  .spacer { height: 120vh; display: grid; place-items: center; }
+  .spacer p { font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 900px) { .lab { position: static; width: auto; margin: 12px; } }
+</style>
+</head>
+<body>
+
+<div class="lab">
+  <h2>Scroll-scrub preview</h2>
+  <p class="sub">Scroll down. Drag the sliders to tune, then paste the values into <code>assets/site.css</code>.</p>
+  <div id="support" class="support">checking…</div>
+  <div class="row"><span>Scrub progress</span><span id="p-out">0%</span></div>
+  <div class="prog"><i id="p-bar"></i></div>
+
+  <label>
+    <span class="row"><span>Hero copy</span><span id="o-copy">-64px</span></span>
+    <input type="range" id="s-copy" min="0" max="220" value="64">
+  </label>
+  <label>
+    <span class="row"><span>Screenshots</span><span id="o-shots">-132px</span></span>
+    <input type="range" id="s-shots" min="0" max="320" value="132">
+  </label>
+  <label>
+    <span class="row"><span>Clients strip</span><span id="o-strip">-30px</span></span>
+    <input type="range" id="s-strip" min="0" max="160" value="30">
+  </label>
+
+  <pre id="css-out"></pre>
+  <button id="copy">Copy CSS</button>
+  <button id="reset" class="reset">Reset to shipped values</button>
+</div>
+
+<main>
+  <section class="dark">
+    <div class="wrap hero">
+      <div>
+        <span class="tag tag--dark">Digital growth systems · Poznań</span>
+        <h1 class="d h1">Websites are only the <span class="accent">beginning</span>.</h1>
+        <p class="lead">I build websites, search visibility and AI-powered marketing systems that help service businesses get discovered, earn trust and turn attention into enquiries.</p>
+        <div class="hero-ctas">
+          <span class="btn">View projects</span>
+          <span class="btn-ghost">Discuss a project</span>
+        </div>
+      </div>
+      <div class="hero-shots">
+        <div class="shot" style="height:272px;background:#1C1C20;border-color:#2A2A2F;"><span class="mono" style="color:#6E6A63;">[ Permanent Guru ]</span></div>
+        <div class="row">
+          <div class="shot" style="height:170px;background:#142A45;border-color:#1E3D63;"><span class="mono" style="font-size:10px;color:#7CBAF8;">[ Massage4You ]</span></div>
+          <div class="shot" style="height:170px;background:#1F2A20;border-color:#2C3B2E;"><span class="mono" style="font-size:10px;color:#8FC49B;">[ Stin Tattoo ]</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap clients">
+      <span class="mono" style="white-space:nowrap;color:var(--on-dark-4);">Selected clients</span>
+      <ul>
+        <li><span class="d">Permanent Guru</span><span class="url">permanentguru.com</span></li>
+        <li><span class="d">Massage4You</span><span class="url">massage-4-you.com</span></li>
+        <li><span class="d">Stin Tattoo Studio</span><span class="url">stintattoostudio.com</span></li>
+        <li><span class="d">Beauty Massage</span><span class="url">beautymassage.cz</span></li>
+        <li><span class="d">Migrona OÜ</span><span class="url">migronaou.com</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section" id="services">
+    <div class="sec-head">
+      <div>
+        <div class="mono eyebrow">01 — What I do</div>
+        <h2 class="d h2" style="max-width:720px;">Six disciplines, built to work as <span class="accent">one system</span>.</h2>
+      </div>
+    </div>
+    <div class="spacer"><p>keep scrolling — then scroll back up</p></div>
+  </section>
+</main>
+
+<script src="../../assets/scrub.js" defer></script>
+<script>
+(function () {
+  var native = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
+  var sup = document.getElementById('support');
+  sup.className = 'support ' + (native ? 'yes' : 'no');
+  sup.textContent = native
+    ? '✓ Native CSS scroll-driven'
+    : '⚠ No native support — JS fallback';
+
+  var root = document.documentElement;
+  var ids = [['copy', '--scrub-copy'], ['shots', '--scrub-shots'], ['strip', '--scrub-strip']];
+  var DEFAULTS = { copy: 64, shots: 132, strip: 30 };
+
+  function render() {
+    var lines = ids.map(function (p) {
+      var v = document.getElementById('s-' + p[0]).value;
+      root.style.setProperty(p[1], '-' + v + 'px');
+      document.getElementById('o-' + p[0]).textContent = '-' + v + 'px';
+      return '  ' + p[1] + ': -' + v + 'px;';
+    });
+    document.getElementById('css-out').textContent = ':root {\n' + lines.join('\n') + '\n}';
+  }
+
+  ids.forEach(function (p) {
+    document.getElementById('s-' + p[0]).addEventListener('input', render);
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    ids.forEach(function (p) { document.getElementById('s-' + p[0]).value = DEFAULTS[p[0]]; });
+    render();
+  });
+
+  document.getElementById('copy').addEventListener('click', function (e) {
+    var t = document.getElementById('css-out').textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(t);
+    e.target.textContent = 'Copied';
+    setTimeout(function () { e.target.textContent = 'Copy CSS'; }, 1400);
+  });
+
+  // Live readout of how far through the scrub you are
+  var hero = document.querySelector('.hero > div:first-child');
+  function tick() {
+    var r = hero.getBoundingClientRect();
+    var p = r.bottom <= 0 ? 1 : r.top >= 0 ? 0 : Math.min(1, -r.top / r.height);
+    document.getElementById('p-out').textContent = Math.round(p * 100) + '%';
+    document.getElementById('p-bar').style.width = (p * 100) + '%';
+  }
+  addEventListener('scroll', tick, { passive: true });
+  render(); tick();
+})();
+</script>
+</body>
+</html>
