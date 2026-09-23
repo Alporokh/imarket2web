@@ -171,9 +171,54 @@ static page, which is already correct — nothing is hidden behind the animation
 Easing is `linear` on purpose. A scrub has to follow the finger 1:1; any curve
 makes it feel laggy and disconnected from the gesture.
 
-## Privacy page
+## Privacy, consent and fonts
 
-`/privacy/` exists because the estimator's consent checkbox links to it. It
-describes what the site actually does, but **the bracketed fields must be filled
-in before launch** — company name, address, tax number, email, retention period.
-It is not legal advice.
+### The site tracks nothing
+
+Worth knowing before anyone adds a script: **this site sets no cookies and makes
+no third-party requests.** The fonts are self-hosted (`assets/fonts/`, 16 woff2
+files, latin + latin-ext + cyrillic), so not even Google sees a visitor IP. The
+estimator does its maths in the browser.
+
+That is why the banner does not say "we use cookies" — it would be false.
+
+### Consent banner
+
+`assets/consent.js` injects it on every page. It is a consent gate for
+**analytics**, which is the only thing here that would ever need one.
+
+- Sets **Google Consent Mode v2 defaults to denied** before anything else runs,
+  which is what Consent Mode requires.
+- Choice is stored in `localStorage` (not a cookie) under `i2w-consent`.
+- Refusing is exactly as easy as accepting — same size, same prominence, one
+  click each. That is a GDPR requirement, not a style choice.
+- Withdrawable any time via **Privacy settings** in the footer
+  (any `[data-privacy-settings]` element reopens it).
+- Fires a `consent:changed` event if you want to hook anything else up.
+
+**To add GA4 later:** set `MEASUREMENT_ID` in `assets/consent.js`. That is all.
+The script loads gtag only after consent is granted and updates it on withdrawal,
+so nothing else needs touching.
+
+### Privacy page
+
+`/privacy/` is filled in with the real controller details: Olena Porokh,
+NIP 9721328238, imarket2web@gmail.com, 24-month retention.
+
+**One thing still missing:** the registered address, marked
+`[REGISTERED ADDRESS — add before launch]`. GDPR expects a controller postal
+address. Everything else is complete.
+
+This is written to be read by a human rather than to imitate a law firm, and it
+describes what the site actually does. It is not legal advice.
+
+### Fonts
+
+Self-hosted from `assets/fonts/`, declared at the top of `assets/site.css`.
+Archivo has no Cyrillic subset on Google Fonts, so Ukrainian text ("Українська")
+falls back to the system stack — it did before too; self-hosting did not change
+it. If you want Cyrillic in Archivo you need a different family or a subset from
+elsewhere.
+
+Do not re-add the Google Fonts `<link>` tags. That would reintroduce the only
+third-party request on the site and make the privacy page inaccurate.
