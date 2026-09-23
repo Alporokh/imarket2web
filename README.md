@@ -378,30 +378,55 @@ reachable.
 The row is full-bleed out of `.wrap` via negative margins, with a mask that
 fades cards at both edges rather than cutting them off.
 
-## Light wave - heading to the Enquiries card
+## Light wave - shimmer, then land on Enquiries
 
-`assets/lightwave.js`. A gleam leaves the first letter of "**E**very layer makes
-the next one cheaper", travels out and down, and lands on the blue Enquiries
-card. It draws the section's argument as a line: every layer leads to the one
-number that pays the bills.
+`assets/lightwave.js`. A shimmer runs letter by letter across "Every layer
+makes the next one cheaper", and where it finishes a gleam leaves the line,
+travels out and down, and lands on the blue Enquiries card.
 
-**Routing.** The cards are a 4×2 grid with the blue one bottom-right, which puts
-card 04 directly above it - a straight diagonal would cut across other cards.
-So the path leaves the heading, crosses the empty space right of the copy, drops
-through the gutter beside the grid, and curves back into the blue card from its
-right edge. It touches none of the other seven.
+**Splitting the heading.** Each letter needs its own element. Two things that
+normally break when text is split this way are handled:
 
-The route is **measured from the real elements** each time, so it survives copy
-changes and any viewport width. Nothing is hardcoded.
+- Words are wrapped too, as `inline-block`, so a line can only break between
+  words. Splitting into bare letters lets the browser break a word anywhere.
+- The heading keeps an `aria-label` with the original sentence, so screen
+  readers get a sentence rather than a pile of spans.
 
-The first letter is wrapped in a `.lw-start` span by the script, not in the
-markup - so the HTML stays clean and nothing is left behind if JS never runs.
+The split runs in JS, not in the markup, so the HTML stays readable. Verified
+that the rendered text is character-identical afterwards and the blue accent
+word survives intact.
 
-**Only runs at 900px and up.** Below that the gutter is too narrow to carry the
-line past the cards, and forcing it through would clip the corners of the very
-cards it exists to avoid. Reduced motion skips the travel entirely and simply
-lights the card, which is the meaning without the movement.
+The shimmer keyframe uses `color: inherit` at both ends, so cream letters
+return to cream and the accent word returns to blue - one keyframe, both cases.
 
-Plays once, on first view. Tuning: `TRAVEL` (1500ms) and `MIN_WIDTH` at the top
-of the file; colours and the arrival sweep are in the LIGHT WAVE block in
-`site.css`.
+**Routing.** The cards are a 4x2 grid with the blue one bottom-right, putting
+card 04 directly above it, so a straight diagonal would cut across other cards.
+The path instead leaves the last letter, crosses the space right of the copy,
+drops through the gutter beside the grid, and curves back into the blue card
+from its right edge. Verified by sampling the generated bezier against every
+card box: 01-07 clear, only 08 entered.
+
+Timing: `STAGGER` 18ms per letter, `SHIMMER` 620ms each, `TRAVEL` 1300ms.
+The wave crosses in about 580ms and the gleam leaves at about 700ms.
+
+Runs at 900px and up. Reduced motion skips the shimmer and the travel and
+simply lights the card.
+
+### Client screenshots
+
+The five project screenshots are in `images/work/` as WebP, 1400px wide.
+
+They were supplied as PNGs at ~2800px (11.29 MB for the five). Re-encoded at
+1400px WebP q80 they come to **0.25 MB total - 98% smaller**, which matters on
+a site whose own copy sells Core Web Vitals. The originals are still in
+`images/` if you need to re-export at another size; nothing on the site loads
+them.
+
+To re-do the optimisation after replacing a source file:
+
+```
+npx sharp-cli -i images/<file>.png -o images/work/<slug>.webp resize 1400 --withoutEnlargement -- webp --quality 80
+```
+
+Still placeholders: the three screenshot-strip images per case study
+(`<slug>-01/02/03.jpg`), which want interior shots rather than the homepage.

@@ -1005,14 +1005,16 @@ h1, h2, h3, p { margin: 0; }
   stroke-linecap: round;
 }
 
-/* The letter the light leaves from */
-.lw-start {
-  position: relative;
-  transition: color .45s ease, text-shadow .45s ease;
-}
-.lw-start.is-lit {
-  color: #fff;
-  text-shadow: 0 0 18px rgba(124,186,248,.85), 0 0 42px rgba(22,104,216,.55);
+/* Split heading: words hold the line breaks, letters carry the shimmer */
+.lw-w { display: inline-block; }
+.lw-l { display: inline-block; will-change: color, text-shadow; }
+
+/* inherit at both ends, so cream letters return to cream and the blue
+   accent word returns to blue - one keyframe serves both */
+@keyframes lwShimmer {
+  0%   { color: inherit; text-shadow: none; }
+  38%  { color: #fff; text-shadow: 0 0 16px rgba(124,186,248,.9), 0 0 40px rgba(22,104,216,.6); }
+  100% { color: inherit; text-shadow: none; }
 }
 
 /* The card it arrives at: a single sweep across, then a settled glow */
@@ -1034,5 +1036,6 @@ h1, h2, h3, p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   /* No travel and no sweep - the card simply arrives lit. */
   .layer--goal.is-lit::before { animation: none; opacity: 0; }
+  .lw-l { animation: none !important; }
   .lw { display: none; }
 }
