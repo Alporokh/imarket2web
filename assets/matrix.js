@@ -1,5 +1,5 @@
 /* =========================================================================
-   imarket2web — Matrix rain hero
+   imarket2web - Matrix rain hero
    =========================================================================
 
    Falling characters behind the hero copy, the way the film does it: each
@@ -13,7 +13,7 @@
        of the characters you actually type: braces, tags, operators, hex.
      - White with a blue leading glyph rather than green. The palette here is
        dark plus #4FA3F5, and film-green fights it. To go green anyway, set
-       --matrix-head and --matrix-body in site.css — nothing else changes.
+       --matrix-head and --matrix-body in site.css - nothing else changes.
 
    Performance: one canvas, one rAF loop, throttled to ~24fps because the
    effect looks better slightly steppy than perfectly smooth, and it keeps

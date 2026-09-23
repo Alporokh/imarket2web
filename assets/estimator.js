@@ -1,9 +1,9 @@
 /* =========================================================================
-   imarket2web — project estimator
+   imarket2web - project estimator
    =========================================================================
 
    ALL PRICES BELOW ARE FROM THE REAL RATE CARD. Edit this one object to
-   change what the calculator quotes — nothing else in this file needs
+   change what the calculator quotes - nothing else in this file needs
    touching.
 
    Two values are assumptions, not from the rate card, and are marked
@@ -32,7 +32,7 @@ const RATES = {
       price: 800,
       label: 'Website, up to 10 pages',
       weeks: [3, 5],
-      // This package already contains GBP — the engine will not charge for it twice.
+      // This package already contains GBP - the engine will not charge for it twice.
       bundles: ['gbp'],
       includes: [
         'Home + service pages (up to 10)',
@@ -99,8 +99,8 @@ const RATES = {
   },
 
   // ---- Modifiers --------------------------------------------------------
-  extraLanguagePct: 0.35, // ASSUMPTION — % of website base per extra language
-  rushPct: 0.25,          // ASSUMPTION — fast-track surcharge
+  extraLanguagePct: 0.35, // ASSUMPTION - % of website base per extra language
+  rushPct: 0.25,          // ASSUMPTION - fast-track surcharge
   rangeUpliftPct: 0.30    // top of the quoted range above the floor price
 };
 
@@ -111,7 +111,7 @@ const RATES = {
      Google Sheet, emails the estimate to the person who asked for it, and
      emails you a copy. No third party, no limits worth worrying about, and
      the mail comes from your own Gmail.
-     Setup: tools/apps-script/Code.gs — the instructions are at the top.
+     Setup: tools/apps-script/Code.gs - the instructions are at the top.
      Then paste the /exec URL into ENDPOINT below.
 
    PROVIDER = 'web3forms'
@@ -152,7 +152,7 @@ function price(addonKeys) {
     floor += site.price;
   }
 
-  // Extra languages scale the website build only — add-ons are language-agnostic.
+  // Extra languages scale the website build only - add-ons are language-agnostic.
   const extraLangs = Math.max(0, state.languages - 1);
   if (extraLangs > 0 && site.price > 0) {
     const langCost = site.price * RATES.extraLanguagePct * extraLangs;
@@ -167,7 +167,7 @@ function price(addonKeys) {
   }
 
   const bundled = site.bundles || [];
-  // Layers overlap in practice — they are not worked one after another — so
+  // Layers overlap in practice - they are not worked one after another - so
   // add-on weeks accumulate at a reduced rate rather than stacking in full.
   const OVERLAP = 0.6;
   let addonWeeks = 0;
@@ -215,11 +215,11 @@ function renderResult() {
 
   const rangeEl = document.getElementById('res-range');
   rangeEl.textContent = r.floor === 0
-    ? '—'
+    ? '-'
     : (r.hasFrom ? 'from ' : '') + fmt(r.floor) + ' – ' + fmt(r.ceiling);
 
   document.getElementById('res-weeks').textContent =
-    r.weeksMin === 0 ? '—' : r.weeksMin + '–' + r.weeksMax + ' weeks';
+    r.weeksMin === 0 ? '-' : r.weeksMin + '–' + r.weeksMax + ' weeks';
 
   document.getElementById('res-items').textContent =
     r.lines.filter(l => !l.included).length + ' line items';
@@ -285,21 +285,21 @@ function payloadFields() {
 
 function setTier(id, data, note) {
   document.getElementById('tier-' + id + '-price').textContent =
-    data.floor === 0 ? '—' : (data.hasFrom ? 'from ' : '') + fmt(data.floor);
+    data.floor === 0 ? '-' : (data.hasFrom ? 'from ' : '') + fmt(data.floor);
   document.getElementById('tier-' + id + '-weeks').textContent =
-    data.weeksMin === 0 ? '—' : data.weeksMin + '–' + data.weeksMax + ' weeks';
+    data.weeksMin === 0 ? '-' : data.weeksMin + '–' + data.weeksMax + ' weeks';
   document.getElementById('tier-' + id + '-note').textContent = note;
 }
 
-/** Plain-text estimate — this is the body that gets emailed. */
+/** Plain-text estimate - this is the body that gets emailed. */
 function plainText(r, t) {
   const L = [];
-  L.push('IMARKET2WEB — PROJECT ESTIMATE');
+  L.push('IMARKET2WEB - PROJECT ESTIMATE');
   L.push('Generated ' + new Date().toISOString().slice(0, 10));
   L.push('');
   L.push('YOUR ANSWERS');
-  L.push('  Goal:      ' + (state.goal || '—'));
-  L.push('  Website:   ' + ((RATES.site[state.site] || {}).label || '—'));
+  L.push('  Goal:      ' + (state.goal || '-'));
+  L.push('  Website:   ' + ((RATES.site[state.site] || {}).label || '-'));
   L.push('  Languages: ' + state.languages);
   L.push('  Timeline:  ' + (state.rush ? 'Fast-track' : 'Standard'));
   L.push('');
@@ -443,7 +443,7 @@ function wireForm() {
 
     if (!ENDPOINT || ENDPOINT.indexOf("PASTE-") === 0 || ENDPOINT.indexOf("YOUR-") === 0) {
       status.className = "form-status is-err";
-      status.textContent = "Email delivery is not set up yet — see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.";
+      status.textContent = "Email delivery is not set up yet - see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.";
       return;
     }
     if (!form.querySelector("[name=consent]").checked) {
@@ -466,7 +466,7 @@ function wireForm() {
       let ok;
       if (PROVIDER === "apps-script") {
         // A plain-string body is sent as text/plain, which is a "simple"
-        // request — no CORS preflight, which Apps Script cannot answer.
+        // request - no CORS preflight, which Apps Script cannot answer.
         const res = await fetch(ENDPOINT, { method: "POST", body: JSON.stringify(data) });
         const out = await res.json();
         ok = out.success;
@@ -482,7 +482,7 @@ function wireForm() {
         if (!ok) throw new Error(out.message || "Submission failed");
       }
       status.className = "form-status is-ok";
-      status.textContent = "Sent. Check your inbox — the estimate is on its way.";
+      status.textContent = "Sent. Check your inbox - the estimate is on its way.";
       form.reset();
     } catch (err) {
       status.className = "form-status is-err";

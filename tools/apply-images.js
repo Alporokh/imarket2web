@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* =========================================================================
-   apply-images.js — swap screenshot placeholders for real <img> tags
+   apply-images.js - swap screenshot placeholders for real <img> tags
    =========================================================================
 
    Every placeholder in the site carries the exact <img> tag it should become,
@@ -87,7 +87,7 @@ if (!WRITE && applied > 0) {
   console.log('\nDry run. Re-run with --write to apply.');
 }
 if (applied === 0 && missing > 0) {
-  console.log('\nNothing to do yet — drop the files into images/work/ first.');
+  console.log('\nNothing to do yet - drop the files into images/work/ first.');
   console.log('Naming: <slug>-cover.jpg, <slug>-hero.jpg, <slug>-01/02/03.jpg');
   console.log('Slugs:  permanent-guru, massage4you, stin-tattoo, beauty-massage, migrona');
 }

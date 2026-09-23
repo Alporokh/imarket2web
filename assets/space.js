@@ -1,5 +1,5 @@
 /* =========================================================================
-   Cinematic space hero — per-frame work
+   Cinematic space hero - per-frame work
    =========================================================================
    Original effect by Olena Porokh. Reviewed and adjusted:
      - Earth image self-hosted and resized (was a 1.24 MB hotlink to NASA at

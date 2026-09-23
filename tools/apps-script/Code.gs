@@ -1,5 +1,5 @@
 /**
- * imarket2web — estimator backend
+ * imarket2web - estimator backend
  * =============================================================================
  * One Google Apps Script that does all three jobs:
  *
@@ -11,7 +11,7 @@
  * goes out from your own Gmail address rather than a form vendor's servers.
  *
  * -----------------------------------------------------------------------------
- * SETUP — about five minutes, once
+ * SETUP - about five minutes, once
  * -----------------------------------------------------------------------------
  * 1. Open the Sheet:
  *      https://docs.google.com/spreadsheets/d/1hbBzRPIziBbClbMiWWLShFCCvewQb6drl6oHIAwo4XM/edit
@@ -20,7 +20,7 @@
  *    whole file in. Save.
  *
  * 3. Run the function `setup` once (pick it in the dropdown, press Run).
- *    Google will ask you to authorise it — that is it asking permission to
+ *    Google will ask you to authorise it - that is it asking permission to
  *    write to your own Sheet and send mail as you. Approve it.
  *    You will see "Google hasn't verified this app": choose Advanced ->
  *    Go to (project name). That warning is normal for your own scripts.
@@ -144,7 +144,7 @@ function sendAutoReply(d) {
 
   var body =
     'Hi ' + first + ',\n\n' +
-    'Here is the estimate you generated on imarket2web — ' + range +
+    'Here is the estimate you generated on imarket2web - ' + range +
     (d.timeline ? ', over roughly ' + d.timeline : '') + '.\n\n' +
     'The full breakdown is below so you have it in writing.\n\n' +
     '--------------------------------------------------------\n' +
@@ -154,7 +154,7 @@ function sendAutoReply(d) {
     'calculator, not a binding quote. What usually moves it is how competitive\n' +
     'your city is for your service, and how much of your content already exists.\n\n' +
     'I read every one of these myself. If you want to go further, reply to this\n' +
-    'email or call +48 516 492 854 and we can talk through the scope — no\n' +
+    'email or call +48 516 492 854 and we can talk through the scope - no\n' +
     'obligation, and I will tell you if I think you do not need half of it.\n\n' +
     'Olena Porokh\n' +
     'imarket2web · Poznań\n' +
@@ -166,7 +166,7 @@ function sendAutoReply(d) {
 
   MailApp.sendEmail({
     to: d.email,
-    subject: 'Your imarket2web estimate' + (d.estimate_low ? ' — ' + range : ''),
+    subject: 'Your imarket2web estimate' + (d.estimate_low ? ' - ' + range : ''),
     body: body,
     name: FROM_NAME,
     replyTo: REPLY_TO
@@ -177,14 +177,14 @@ function sendAutoReply(d) {
 function sendNotification(d) {
   var body =
     'New estimate request.\n\n' +
-    'Name:      ' + (d.name || '—') + '\n' +
-    'Email:     ' + (d.email || '—') + '\n' +
+    'Name:      ' + (d.name || '-') + '\n' +
+    'Email:     ' + (d.email || '-') + '\n' +
     'Estimate:  €' + (d.estimate_low || '?') + ' – €' + (d.estimate_high || '?') + '\n' +
-    'Timeline:  ' + (d.timeline || '—') + '\n' +
-    'Goal:      ' + (d.goal || '—') + '\n' +
-    'Website:   ' + (d.website || '—') + '\n' +
-    'Languages: ' + (d.languages || '—') + '\n' +
-    'Add-ons:   ' + (d.addons || '—') + '\n' +
+    'Timeline:  ' + (d.timeline || '-') + '\n' +
+    'Goal:      ' + (d.goal || '-') + '\n' +
+    'Website:   ' + (d.website || '-') + '\n' +
+    'Languages: ' + (d.languages || '-') + '\n' +
+    'Add-ons:   ' + (d.addons || '-') + '\n' +
     'Fast-track:' + (d.rush ? ' yes' : ' no') + '\n\n' +
     'Message:\n' + (d.message || '(none)') + '\n\n' +
     '--------------------------------------------------------\n' +
@@ -192,7 +192,7 @@ function sendNotification(d) {
 
   MailApp.sendEmail({
     to: NOTIFY_TO,
-    subject: 'Estimate request — ' + (d.name || d.email),
+    subject: 'Estimate request - ' + (d.name || d.email),
     body: body,
     replyTo: d.email || REPLY_TO
   });

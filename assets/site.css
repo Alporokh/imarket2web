@@ -1,7 +1,7 @@
 /* ============ Self-hosted fonts ============
    Served from this origin, so no visitor IP reaches Google and the site
    needs no font-related consent. Subsets: latin, latin-ext (Polish),
-   cyrillic (IBM Plex Mono only — Archivo has no Cyrillic on Google Fonts,
+   cyrillic (IBM Plex Mono only - Archivo has no Cyrillic on Google Fonts,
    so Ukrainian text falls back to the system stack, as it always did).
    ============================================ */
 /* latin-ext */
@@ -248,7 +248,7 @@ h1, h2, h3, p { margin: 0; }
 .eyebrow { margin-bottom: 16px; }
 .lead { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; color: var(--on-dark-2); text-wrap: pretty; }
 
-/* ============ Logo — direction 02 "Split weight" ============ */
+/* ============ Logo - direction 02 "Split weight" ============ */
 .logo { font-weight: 800; letter-spacing: -0.05em; font-size: 22px; line-height: 1; white-space: nowrap; color: var(--ink); }
 .logo span { color: var(--blue); }
 .dark .logo, .logo--on-dark { color: #fff; }
@@ -384,7 +384,7 @@ h1, h2, h3, p { margin: 0; }
 .split-card { padding: 34px 32px; border-radius: 22px; }
 .split-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 16px; color: var(--ink-2); }
 .split-card li { display: flex; gap: 12px; }
-.split-card li::before { content: "—"; color: #C4BFB5; }
+.split-card li::before { content: "-"; color: #C4BFB5; }
 .split-card--blue { background: var(--blue-tint); border-color: var(--blue-tint-line); }
 .split-card--blue li::before { color: #8FB6E4; }
 .split-card .mono { margin-bottom: 20px; }
@@ -538,7 +538,7 @@ h1, h2, h3, p { margin: 0; }
 .prose p { font-size: 17px; line-height: 1.65; color: var(--text); text-wrap: pretty; }
 .prose ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
 .prose li { display: flex; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--text); }
-.prose li::before { content: "—"; color: #C4BFB5; flex: none; }
+.prose li::before { content: "-"; color: #C4BFB5; flex: none; }
 .prose strong { color: var(--ink-2); font-weight: 600; }
 
 /* ---- Callouts inside a case ---- */
@@ -602,7 +602,7 @@ h1, h2, h3, p { margin: 0; }
 .clients a.url .ext { font-size: 9px; opacity: .55; transform: translateY(-1px); }
 .clients a.url:hover .ext { opacity: 1; }
 
-/* Visually hidden — read by screen readers, never painted */
+/* Visually hidden - read by screen readers, never painted */
 .vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 /* =======================================================================
@@ -710,7 +710,7 @@ h1, h2, h3, p { margin: 0; }
 }
 
 /* =======================================================================
-   SCROLL-SCRUB — hero into section 02
+   SCROLL-SCRUB - hero into section 02
    -----------------------------------------------------------------------
    Purpose: bridge a hard contrast edge (dark #121214 -> cream #F3F0E9) and
             open up depth between the hero layers as they leave.
@@ -807,7 +807,7 @@ h1, h2, h3, p { margin: 0; }
   transition: border-color .15s ease, background-color .15s ease;
 }
 /* GDPR: refusing must be no harder than accepting, so both buttons carry
-   the same weight, size and prominence — only the fill differs. */
+   the same weight, size and prominence - only the fill differs. */
 .consent-btn--yes { background: var(--blue); border-color: var(--blue); color: #fff; }
 @media (hover: hover) and (pointer: fine) {
   .consent-btn:hover { border-color: var(--blue-light); }
@@ -849,8 +849,8 @@ h1, h2, h3, p { margin: 0; }
    ======================================================================= */
 
 :root {
-  --matrix-head: #7CBAF8;      /* leading glyph — brand blue */
-  --matrix-body: 255,255,255;  /* the trail — white, as an r,g,b triplet */
+  --matrix-head: #7CBAF8;      /* leading glyph - brand blue */
+  --matrix-body: 255,255,255;  /* the trail - white, as an r,g,b triplet */
 }
 
 .matrix-hero { position: relative; overflow: hidden; isolation: isolate; }
@@ -886,7 +886,7 @@ h1, h2, h3, p { margin: 0; }
 
 
 /* =======================================================================
-   SHUFFLE — the eight process steps deal into place
+   SHUFFLE - the eight process steps deal into place
    -----------------------------------------------------------------------
    shuffle.js does the work with inline transforms. All the grid needs from
    CSS is a 3D context so the tilt has some depth, and a guarantee that the
@@ -898,7 +898,7 @@ h1, h2, h3, p { margin: 0; }
 .shuffle > * { transform-origin: 50% 55%; backface-visibility: hidden; }
 
 /* =======================================================================
-   SECTION 02 — INFINITE GALLERY
+   SECTION 02 - INFINITE GALLERY
    -----------------------------------------------------------------------
    Two rows of service cards scrolling in opposite directions, looping
    seamlessly. Pure CSS: the track holds three copies of its cards and
@@ -909,7 +909,7 @@ h1, h2, h3, p { margin: 0; }
    tabindex="-1", so assistive tech and the keyboard meet each service
    once, not three times.
 
-   WCAG 2.2.2 — moving content must be pausable. It pauses on hover and on
+   WCAG 2.2.2 - moving content must be pausable. It pauses on hover and on
    keyboard focus, and reduced motion stops it entirely and hands the row
    back to normal horizontal scrolling.
    ======================================================================= */
@@ -971,11 +971,11 @@ h1, h2, h3, p { margin: 0; }
 }
 
 /* =======================================================================
-   LIGHT WAVE — heading to the Enquiries card
+   LIGHT WAVE - heading to the Enquiries card
    -----------------------------------------------------------------------
    A gleam leaves the first letter of "Every layer makes the next one
    cheaper", runs out and down through the gutter beside the grid, and
-   lands on the blue Enquiries card — touching none of the other seven.
+   lands on the blue Enquiries card - touching none of the other seven.
 
    lightwave.js measures the route from the real elements, so it stays
    correct at any width. Everything here is presentation only; with no JS
@@ -1032,7 +1032,7 @@ h1, h2, h3, p { margin: 0; }
 @keyframes lwSweep { to { transform: translateX(120%); } }
 
 @media (prefers-reduced-motion: reduce) {
-  /* No travel and no sweep — the card simply arrives lit. */
+  /* No travel and no sweep - the card simply arrives lit. */
   .layer--goal.is-lit::before { animation: none; opacity: 0; }
   .lw { display: none; }
 }

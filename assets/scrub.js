@@ -1,5 +1,5 @@
 /* =========================================================================
-   imarket2web — scroll-scrub fallback
+   imarket2web - scroll-scrub fallback
    =========================================================================
 
    The hero parallax is done properly in CSS with scroll-driven animations
@@ -8,7 +8,7 @@
 
    But `animation-timeline: view()` only exists in Chrome/Edge 115+,
    Firefox 144+ and Safari 26+. Everywhere else the CSS @supports guard
-   degrades to a completely static hero — correct, but invisible.
+   degrades to a completely static hero - correct, but invisible.
 
    This file fills that gap: if the browser lacks support, it reproduces the
    same motion with a rAF-throttled scroll handler. It reads the SAME custom
@@ -58,7 +58,7 @@
     var ticking = false;
 
     /** 0 while the element is fully in view, 1 once it has completely left
-        the top of the viewport — the same span as CSS `exit 0%` → `exit 100%`. */
+        the top of the viewport - the same span as CSS `exit 0%` → `exit 100%`. */
     function exitProgress(el) {
       var r = el.getBoundingClientRect();
       if (r.bottom <= 0) return 1;      // gone

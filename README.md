@@ -1,4 +1,4 @@
-# imarket2web — agency site
+# imarket2web - agency site
 
 Static HTML. No build step. Deploy the folder as-is to any static host (Netlify, Vercel, Cloudflare Pages, nginx).
 
@@ -6,12 +6,12 @@ Static HTML. No build step. Deploy the folder as-is to any static host (Netlify,
 
 ```
 index.html                        Homepage
-work/index.html                   Portfolio index — all 5 projects
-work/permanent-guru/index.html    Case study — permanent makeup, Poznań PL
-work/massage4you/index.html       Case study — massage & wellness, Poznań PL
-work/stin-tattoo-studio/index.html Case study — tattoo studio, Prague CZ
-work/beauty-massage/index.html    Case study — massage studio, Prague 4 CZ
-work/migrona/index.html           Case study — freight forwarding, Tallinn EE
+work/index.html                   Portfolio index - all 5 projects
+work/permanent-guru/index.html    Case study - permanent makeup, Poznań PL
+work/massage4you/index.html       Case study - massage & wellness, Poznań PL
+work/stin-tattoo-studio/index.html Case study - tattoo studio, Prague CZ
+work/beauty-massage/index.html    Case study - massage studio, Prague 4 CZ
+work/migrona/index.html           Case study - freight forwarding, Tallinn EE
 assets/site.css                   All styles (Signal design system tokens + components)
 assets/site.js                    Mobile menu + footer year
 images/                           Logo files
@@ -36,13 +36,13 @@ This is deliberate: the site has to work in two places at once.
 
 | Target | URL | Works? |
 |--------|-----|--------|
-| GitHub Pages project site | `alporokh.github.io/imarket2web/` | yes — served from a subpath |
-| Custom domain | `imarket2web.com/` | yes — served from root |
+| GitHub Pages project site | `alporokh.github.io/imarket2web/` | yes - served from a subpath |
+| Custom domain | `imarket2web.com/` | yes - served from root |
 
 Root-absolute paths would 404 on GitHub Pages, because `/assets/site.css` resolves to
 `alporokh.github.io/assets/site.css` rather than `alporokh.github.io/imarket2web/assets/site.css`.
 **If you ever reintroduce a leading slash on an internal link, it will break the GitHub Pages
-build and work fine locally** — which is the worst combination. Keep them relative.
+build and work fine locally** - which is the worst combination. Keep them relative.
 
 `.nojekyll` (empty file, repo root) is required. Without it GitHub Pages runs Jekyll,
 which renders `README.md` as the site instead of serving `index.html`.
@@ -68,34 +68,34 @@ Drop files into `images/work/` using this naming:
 | `<slug>-01/02/03.jpg`             | Case study screenshot strip               | 800×600        |
 
 Slugs: `permanent-guru`, `massage4you`, `stin-tattoo`, `beauty-massage`, `migrona`.
-(The Migrona cover is full-width — use 1600×900.)
+(The Migrona cover is full-width - use 1600×900.)
 
 Then run:
 
 ```
-node tools/apply-images.js           # dry run — shows what it would change
+node tools/apply-images.js           # dry run - shows what it would change
 node tools/apply-images.js --write   # apply
 ```
 
 It finds each placeholder, checks whether the image actually exists, and swaps
 in the `<img>` tag with the right relative path, alt text, dimensions and
-`loading` attribute. Safe to run repeatedly — placeholders whose file is still
+`loading` attribute. Safe to run repeatedly - placeholders whose file is still
 missing are left alone and listed, so you can add images a few at a time.
 
 There are **30 image slots**: 5 covers (homepage + portfolio index share them),
 5 case-study heroes, and 20 screenshot-strip images (4 per case study).
 
-Keep `width`/`height` on every image — they prevent layout shift (Core Web Vitals).
+Keep `width`/`height` on every image - they prevent layout shift (Core Web Vitals).
 
 ## Placeholders still to fill
 
 These are deliberate. Nothing unverified was published as fact.
 
-- `[ADD VERIFIED DATA]` — results panels on all five case studies. Fill only from
+- `[ADD VERIFIED DATA]` - results panels on all five case studies. Fill only from
   GA4 / Search Console, and state the date range the number covers.
-- `[ CLIENT QUOTE — to collect ]` — testimonial blocks on each case study.
-- `[YOUR EMAIL]` and `[COMPANY / NIP DETAILS]` — footer, every page, plus `/privacy/`.
-- `WEB3FORMS_KEY` in `assets/estimator.js` — the estimator cannot email until this is set.
+- `[ CLIENT QUOTE - to collect ]` - testimonial blocks on each case study.
+- `[YOUR EMAIL]` and `[COMPANY / NIP DETAILS]` - footer, every page, plus `/privacy/`.
+- `WEB3FORMS_KEY` in `assets/estimator.js` - the estimator cannot email until this is set.
 - Layer checklists (`layers-list`) on each case study mark which of the 8 growth-system
   layers are live vs. in progress. Verify these match reality before launch.
 
@@ -104,13 +104,13 @@ These are deliberate. Nothing unverified was published as fact.
 The nav and footer link to pages that do not exist yet:
 `/services/` (and its 7 sub-pages), `/about/`, `/insights/`, `/contact/`,
 and the `/pl/` and `/uk/` language versions. These links were in the original
-homepage design. Build them or trim the nav before launch — live 404s in the
+homepage design. Build them or trim the nav before launch - live 404s in the
 main navigation hurt both trust and crawling.
 
 ## Project estimator (`/estimate/`)
 
 A six-step questionnaire that prices a project in the browser and can email the
-result. No backend — the maths runs client-side, so it works on GitHub Pages.
+result. No backend - the maths runs client-side, so it works on GitHub Pages.
 
 ### Changing prices
 
@@ -130,11 +130,11 @@ card:
 | n8n automation | from €300 |
 | Social optimisation + 16-post calendar + reels | €200 |
 
-**Two values are assumptions, not from the rate card** — change them to whatever
+**Two values are assumptions, not from the rate card** - change them to whatever
 you actually charge:
 
-- `extraLanguagePct: 0.35` — each additional language adds 35% of the website base
-- `rushPct: 0.25` — fast-track surcharge
+- `extraLanguagePct: 0.35` - each additional language adds 35% of the website base
+- `rushPct: 0.25` - fast-track surcharge
 
 `rangeUpliftPct: 0.30` sets how far above the floor the quoted range goes.
 
@@ -147,7 +147,7 @@ twice. Add the same key to any other package that already contains an add-on.
 1. Get a free access key at <https://web3forms.com> (they email it to you; no account).
 2. Put it in `WEB3FORMS_KEY` in `assets/estimator.js`. That single constant is
    pushed into the form's hidden field at runtime, so it is never set twice.
-3. In the Web3Forms dashboard, **turn on Auto Reply** — otherwise only you receive
+3. In the Web3Forms dashboard, **turn on Auto Reply** - otherwise only you receive
    the estimate and the client gets nothing.
 
 Until a key is set, the form shows a plain "not configured yet" message rather
@@ -157,7 +157,7 @@ than failing silently.
 
 - **The estimate is not gated.** People see the number before being asked for an
   email. Higher completion, and it avoids collecting personal data as the price of
-  information — which matters under GDPR.
+  information - which matters under GDPR.
 - **A honeypot field** (`botcheck`) catches bots without a CAPTCHA.
 - **The range is presented as a ballpark, not a quote**, in the UI and in the
   emailed text.
@@ -167,12 +167,12 @@ than failing silently.
 The hero-to-section-02 transition uses **CSS scroll-driven animations**
 (`animation-timeline: view()`), not a JavaScript scroll handler. It runs off the
 main thread, so it cannot drop frames while the page is still loading, and it
-tracks scroll position rather than playing a fixed timeline — so it is naturally
+tracks scroll position rather than playing a fixed timeline - so it is naturally
 interruptible and reversible.
 
 Guarded twice: `@supports (animation-timeline: view())` and
 `@media (prefers-reduced-motion: no-preference)`. Browsers without support get the
-static page, which is already correct — nothing is hidden behind the animation.
+static page, which is already correct - nothing is hidden behind the animation.
 
 Easing is `linear` on purpose. A scrub has to follow the finger 1:1; any curve
 makes it feel laggy and disconnected from the gesture.
@@ -186,7 +186,7 @@ no third-party requests.** The fonts are self-hosted (`assets/fonts/`, 16 woff2
 files, latin + latin-ext + cyrillic), so not even Google sees a visitor IP. The
 estimator does its maths in the browser.
 
-That is why the banner does not say "we use cookies" — it would be false.
+That is why the banner does not say "we use cookies" - it would be false.
 
 ### Consent banner
 
@@ -196,7 +196,7 @@ That is why the banner does not say "we use cookies" — it would be false.
 - Sets **Google Consent Mode v2 defaults to denied** before anything else runs,
   which is what Consent Mode requires.
 - Choice is stored in `localStorage` (not a cookie) under `i2w-consent`.
-- Refusing is exactly as easy as accepting — same size, same prominence, one
+- Refusing is exactly as easy as accepting - same size, same prominence, one
   click each. That is a GDPR requirement, not a style choice.
 - Withdrawable any time via **Privacy settings** in the footer
   (any `[data-privacy-settings]` element reopens it).
@@ -212,7 +212,7 @@ so nothing else needs touching.
 NIP 9721328238, imarket2web@gmail.com, 24-month retention.
 
 **One thing still missing:** the registered address, marked
-`[REGISTERED ADDRESS — add before launch]`. GDPR expects a controller postal
+`[REGISTERED ADDRESS - add before launch]`. GDPR expects a controller postal
 address. Everything else is complete.
 
 This is written to be read by a human rather than to imitate a law firm, and it
@@ -222,33 +222,33 @@ describes what the site actually does. It is not legal advice.
 
 Self-hosted from `assets/fonts/`, declared at the top of `assets/site.css`.
 Archivo has no Cyrillic subset on Google Fonts, so Ukrainian text ("Українська")
-falls back to the system stack — it did before too; self-hosting did not change
+falls back to the system stack - it did before too; self-hosting did not change
 it. If you want Cyrillic in Archivo you need a different family or a subset from
 elsewhere.
 
 Do not re-add the Google Fonts `<link>` tags. That would reintroduce the only
 third-party request on the site and make the privacy page inaccurate.
 
-## Estimator backend — Google Sheet + automated reply
+## Estimator backend - Google Sheet + automated reply
 
 The estimator posts to a **Google Apps Script** you own. That one script does
 three things: writes the lead into a Google Sheet, emails the estimate to the
 person who asked for it, and emails you a copy. No third-party form service,
 and the mail goes out from your own Gmail.
 
-**Sheet:** [imarket2web — Estimator leads](https://docs.google.com/spreadsheets/d/1hbBzRPIziBbClbMiWWLShFCCvewQb6drl6oHIAwo4XM/edit)
+**Sheet:** [imarket2web - Estimator leads](https://docs.google.com/spreadsheets/d/1hbBzRPIziBbClbMiWWLShFCCvewQb6drl6oHIAwo4XM/edit)
 
 ### Setup (once, ~5 minutes)
 
 1. Open the Sheet → **Extensions → Apps Script**.
 2. Delete the placeholder code, paste in all of `tools/apps-script/Code.gs`, save.
-3. Run the `setup` function once. Authorise it when asked — that is it asking
+3. Run the `setup` function once. Authorise it when asked - that is it asking
    permission to write to your own Sheet and send mail as you. The
    "Google hasn't verified this app" warning is normal for your own scripts:
    **Advanced → Go to (project name)**.
 4. **Deploy → New deployment → Web app.**
    - Execute as: **Me**
-   - Who has access: **Anyone** — not "Anyone with a Google account", or the
+   - Who has access: **Anyone** - not "Anyone with a Google account", or the
      website cannot reach it.
 5. Copy the `/exec` URL and paste it into `ENDPOINT` in `assets/estimator.js`.
 6. Submit a test from the live site. One row in the Sheet, two emails.
@@ -283,7 +283,7 @@ their free tier the auto-reply is a paid feature, so only you would get the mail
 
 Apps Script cannot answer a CORS preflight. Sending the body as a plain string
 makes it a "simple" request, which skips the preflight entirely. Do not add a
-`Content-Type: application/json` header to that fetch — it will start failing.
+`Content-Type: application/json` header to that fetch - it will start failing.
 
 ## Insights (`/insights/`)
 
@@ -294,7 +294,7 @@ planned article queue rather than filler posts.
 `insights/index.html` and uncomment the article grid below it. Each article is
 its own folder, e.g. `insights/why-one-page-per-treatment/index.html`.
 
-## Hero — Matrix rain
+## Hero - Matrix rain
 
 `assets/matrix.js` draws falling characters behind the hero copy. The old
 screenshot placeholders are gone; the hero is now one column with the rain
@@ -313,8 +313,8 @@ Defaults are white with a brand-blue leading glyph, because film-green fights
 the palette. **For classic green:** `--matrix-head: #7CFFB2;` and
 `--matrix-body: 120,255,170;`. Nothing else changes.
 
-The glyphs are code characters rather than katakana — braces, tags, operators,
-hex — since the brief was "as if someone writes code".
+The glyphs are code characters rather than katakana - braces, tags, operators,
+hex - since the brief was "as if someone writes code".
 
 Costs close to nothing: one canvas, throttled to 24fps, and it stops entirely
 when the hero scrolls out of view or the tab is hidden. Reduced motion renders
@@ -323,7 +323,7 @@ one static frame, so the texture survives and the movement goes.
 A radial mask keeps the rain off the headline. If you change the hero copy
 width, adjust `.matrix-hero::after`.
 
-## Section 05 — the eight steps shuffle and deal
+## Section 05 - the eight steps shuffle and deal
 
 `assets/shuffle.js`. The process cards gather into a loose pile, then deal out
 to their real grid positions in order, 01 through 08. The order is the point:
@@ -334,7 +334,7 @@ It is a FLIP run backwards, and the grid is never touched:
 
 1. Measure where each card actually is.
 2. Transform it back toward the centre of the grid, rotated and slightly
-   small, with no transition — so the stacking is never seen.
+   small, with no transition - so the stacking is never seen.
 3. Remove the transform with a transition and a per-card delay, so they
    travel out to their real places one after another.
 
@@ -346,13 +346,13 @@ Tuning is at the top of the file: `STAGGER` (70ms between cards),
 `DURATION` (620ms each), `SPREAD` (how tightly they pile) and `TILT`
 (max rotation). Total run is about 1.1s.
 
-Plays **once**, when the section first comes into view — repeating it on every
+Plays **once**, when the section first comes into view - repeating it on every
 scroll past would turn a nice moment into a tic. Reduced motion gets a plain
 staggered fade instead, which still shows the order.
 
 To use it elsewhere, add `class="shuffle" data-shuffle` to any grid container.
 
-## Section 02 — infinite gallery
+## Section 02 - infinite gallery
 
 The six service cards scroll as two rows moving in opposite directions,
 looping forever. Pure CSS, no JS.
@@ -367,7 +367,7 @@ Only the first copy is real. The other two carry `aria-hidden="true"` and
 not three times.
 
 Speed is per row: `galScroll 64s` and `galScrollRev 74s`. Deliberately
-mismatched — equal speeds make the two rows look mechanically linked.
+mismatched - equal speeds make the two rows look mechanically linked.
 
 **It pauses on hover and on keyboard focus.** That is not decoration: WCAG
 2.2.2 requires moving content to be pausable, and these cards are text people
@@ -378,7 +378,7 @@ reachable.
 The row is full-bleed out of `.wrap` via negative margins, with a mask that
 fades cards at both edges rather than cutting them off.
 
-## Light wave — heading to the Enquiries card
+## Light wave - heading to the Enquiries card
 
 `assets/lightwave.js`. A gleam leaves the first letter of "**E**very layer makes
 the next one cheaper", travels out and down, and lands on the blue Enquiries
@@ -386,7 +386,7 @@ card. It draws the section's argument as a line: every layer leads to the one
 number that pays the bills.
 
 **Routing.** The cards are a 4×2 grid with the blue one bottom-right, which puts
-card 04 directly above it — a straight diagonal would cut across other cards.
+card 04 directly above it - a straight diagonal would cut across other cards.
 So the path leaves the heading, crosses the empty space right of the copy, drops
 through the gutter beside the grid, and curves back into the blue card from its
 right edge. It touches none of the other seven.
@@ -395,7 +395,7 @@ The route is **measured from the real elements** each time, so it survives copy
 changes and any viewport width. Nothing is hardcoded.
 
 The first letter is wrapped in a `.lw-start` span by the script, not in the
-markup — so the HTML stays clean and nothing is left behind if JS never runs.
+markup - so the HTML stays clean and nothing is left behind if JS never runs.
 
 **Only runs at 900px and up.** Below that the gutter is too narrow to carry the
 line past the cards, and forcing it through would clip the corners of the very

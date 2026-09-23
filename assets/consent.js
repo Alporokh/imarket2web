@@ -1,11 +1,11 @@
 /* =========================================================================
-   imarket2web — consent
+   imarket2web - consent
    =========================================================================
 
    This site currently sets NO cookies and makes NO third-party requests.
    Fonts are self-hosted, so nothing about a visitor reaches anyone else.
 
-   So this banner is not a "we use cookies" notice — that would be untrue.
+   So this banner is not a "we use cookies" notice - that would be untrue.
    It is a consent gate for analytics, which is the only thing that would
    ever need one, and it is wired for Google Consent Mode v2 so that the
    moment GA4 is added it respects the visitor's choice automatically.
@@ -15,7 +15,7 @@
    1. Paste the usual gtag snippet into each page's <head>, AFTER this file.
       This file sets consent defaults to "denied" before gtag runs, which is
       exactly what Consent Mode v2 requires.
-   2. Set MEASUREMENT_ID below. Nothing else changes — granting or
+   2. Set MEASUREMENT_ID below. Nothing else changes - granting or
       withdrawing consent updates gtag on its own.
 
    The visitor's choice is stored in localStorage, not a cookie, and can be
@@ -26,7 +26,7 @@
   'use strict';
 
   var KEY = 'i2w-consent';
-  var MEASUREMENT_ID = ''; // e.g. 'G-XXXXXXXXXX' — leave empty until GA4 is added
+  var MEASUREMENT_ID = ''; // e.g. 'G-XXXXXXXXXX' - leave empty until GA4 is added
 
   /* ---- Consent Mode v2 defaults: denied until the visitor says otherwise -- */
   window.dataLayer = window.dataLayer || [];
@@ -46,7 +46,7 @@
     try { return localStorage.getItem(KEY); } catch (e) { return null; }
   }
   function write(v) {
-    try { localStorage.setItem(KEY, v); } catch (e) { /* private mode — session only */ }
+    try { localStorage.setItem(KEY, v); } catch (e) { /* private mode - session only */ }
   }
 
   function apply(choice) {
@@ -88,7 +88,7 @@
       '<div class="consent-inner">' +
         '<div class="consent-copy">' +
           '<p class="d">This site does not track you.</p>' +
-          '<p>No cookies, no third-party scripts, and the fonts are served from here rather than Google — so nothing about your visit reaches anyone else. May I turn on privacy-friendly analytics to see which pages are useful? ' +
+          '<p>No cookies, no third-party scripts, and the fonts are served from here rather than Google - so nothing about your visit reaches anyone else. May I turn on privacy-friendly analytics to see which pages are useful? ' +
           '<a href="' + p + 'privacy/">What I collect</a>.</p>' +
         '</div>' +
         '<div class="consent-btns">' +

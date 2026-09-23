@@ -1,4 +1,4 @@
-// imarket2web — shared behaviour (mobile menu + footer year)
+// imarket2web - shared behaviour (mobile menu + footer year)
 (function () {
   var header = document.querySelector('.site-header');
   var btn = document.getElementById('menu-toggle');

@@ -1,5 +1,5 @@
 /* =========================================================================
-   imarket2web — light wave
+   imarket2web - light wave
    =========================================================================
 
    A gleam leaves the first letter of "Every layer makes the next one
@@ -10,7 +10,7 @@
    Routing
    -------
    The cards sit in a 4x2 grid and the blue one is bottom-right, which puts
-   card 04 directly above it — so a straight diagonal would cut across other
+   card 04 directly above it - so a straight diagonal would cut across other
    cards. Instead the path leaves the heading, crosses the empty space to the
    right of the copy, drops through the outer gutter beside the grid, and
    curves back in to the blue card from its right edge. It touches nothing

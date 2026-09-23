@@ -1,5 +1,5 @@
 /* =========================================================================
-   imarket2web — shuffle and deal
+   imarket2web - shuffle and deal
    =========================================================================
 
    The eight process cards gather into a loose pile, then deal out to their
@@ -10,7 +10,7 @@
    How it works
    ------------
    The grid is never touched. The cards stay exactly where CSS puts them, and
-   the animation is a transform applied on top and then removed — a FLIP, in
+   the animation is a transform applied on top and then removed - a FLIP, in
    effect, run backwards:
 
      1. Measure where each card actually is.

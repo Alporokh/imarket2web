@@ -27,7 +27,7 @@
 
 /* ---- Shorter variant -------------------------------------------------------
    The full 360vh journey suits a homepage, where the scene IS the arrival.
-   On a page whose job is to get you to content — the blog index — three and a
+   On a page whose job is to get you to content - the blog index - three and a
    half screens before the first article is too much, so this variant runs the
    same five beats over ~200vh. The JS derives progress from the section's own
    height, so the beats simply compress; nothing else needs changing.
