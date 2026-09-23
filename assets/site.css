@@ -884,59 +884,15 @@ h1, h2, h3, p { margin: 0; }
   #matrix-canvas { opacity: .22; }
 }
 
-/* =======================================================================
-   SECTION 02 — SERVICE CARDS IN 3D
-   -----------------------------------------------------------------------
-   Cards travel toward the viewer through a perspective stage, in the manner
-   of pear.no's Questions section.
 
-   Everything below only applies once cards3d.js adds .is-3d. Without JS,
-   with reduced motion, or under 900px, the markup stays the responsive grid
-   it already was — the depth is an enhancement on a layout that works.
+/* =======================================================================
+   SHUFFLE — the eight process steps deal into place
+   -----------------------------------------------------------------------
+   shuffle.js does the work with inline transforms. All the grid needs from
+   CSS is a 3D context so the tilt has some depth, and a guarantee that the
+   stacked pile cannot widen the page for a frame.
    ======================================================================= */
 
-.cards3d-track { position: relative; }
-
-.is-3d.cards3d-track { height: 420vh; }
-.is-3d .cards3d-stage {
-  position: sticky; top: 0;
-  height: 100vh;
-  perspective: 1400px;
-  perspective-origin: 50% 46%;
-  transform-style: preserve-3d;
-  display: block;
-}
-/* The stage takes over positioning, so the grid rules must stand down */
-.is-3d .cards3d-stage .grid-3 { display: block; height: 100%; position: relative; }
-
-.is-3d .svc {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  will-change: transform, opacity, filter;
-  box-shadow: 0 30px 80px rgba(23,23,26,.18);
-  transition: box-shadow .4s ease;
-  margin: 0;
-}
-/* Body copy and chips hold back until the card reaches the focal plane —
-   the detail arrives when it is actually readable. */
-.is-3d .svc > p,
-.is-3d .svc > .chips {
-  opacity: 0;
-  transition: opacity .5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.is-3d .svc.is-focus > p,
-.is-3d .svc.is-focus > .chips { opacity: 1; }
-.is-3d .svc.is-focus { box-shadow: 0 40px 110px rgba(23,23,26,.26); }
-
-/* A quiet cue that this section scrolls differently */
-.is-3d .cards3d-stage::after {
-  content: "";
-  position: absolute; left: 50%; bottom: 34px; width: 1px; height: 46px;
-  background: linear-gradient(to bottom, transparent, var(--line));
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .is-3d.cards3d-track { height: auto; }
-  .is-3d .cards3d-stage { position: static; height: auto; perspective: none; }
-}
+.shuffle { perspective: 1200px; overflow: clip; }
+@supports not (overflow: clip) { .shuffle { overflow: hidden; } }
+.shuffle > * { transform-origin: 50% 55%; backface-visibility: hidden; }

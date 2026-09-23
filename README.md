@@ -323,18 +323,31 @@ one static frame, so the texture survives and the movement goes.
 A radial mask keeps the rain off the headline. If you change the hero copy
 width, adjust `.matrix-hero::after`.
 
-## Section 02 — service cards in 3D
+## Section 05 — the eight steps shuffle and deal
 
-`assets/cards3d.js`, in the manner of pear.no's Questions section. A tall
-`.cards3d-track` holds a sticky `.cards3d-stage` carrying the perspective;
-the six cards sit at different depths and travel toward the viewer as you
-scroll, each fading its body copy in as it reaches the focal plane and
-blurring out past the camera.
+`assets/shuffle.js`. The process cards gather into a loose pile, then deal out
+to their real grid positions in order, 01 through 08. The order is the point:
+the section says "Eight steps, then it loops", so watching them land in
+sequence says the same thing as the copy.
 
-Tuning is at the top of the file: `DEPTH_GAP` (distance between cards),
-`CARD_W` / `CARD_H`, and `SLOTS` (the x/y scatter, as fractions of the stage).
-Track height is `.is-3d.cards3d-track { height: 420vh }` in `site.css`.
+It is a FLIP run backwards, and the grid is never touched:
 
-**It only engages above 900px with motion allowed.** Below that, or with
-reduced motion, or with JS off, the markup stays the ordinary responsive grid
-it already was — the depth is layered on top of a layout that works without it.
+1. Measure where each card actually is.
+2. Transform it back toward the centre of the grid, rotated and slightly
+   small, with no transition — so the stacking is never seen.
+3. Remove the transform with a transition and a per-card delay, so they
+   travel out to their real places one after another.
+
+Because the end state is *no transform*, the layout stays correct at every
+width and nothing is left pinned to a hardcoded position. If the script never
+runs, the cards are simply already where they belong.
+
+Tuning is at the top of the file: `STAGGER` (70ms between cards),
+`DURATION` (620ms each), `SPREAD` (how tightly they pile) and `TILT`
+(max rotation). Total run is about 1.1s.
+
+Plays **once**, when the section first comes into view — repeating it on every
+scroll past would turn a nice moment into a tic. Reduced motion gets a plain
+staggered fade instead, which still shows the order.
+
+To use it elsewhere, add `class="shuffle" data-shuffle` to any grid container.
