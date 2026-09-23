@@ -70,14 +70,20 @@ Drop files into `images/work/` using this naming:
 Slugs: `permanent-guru`, `massage4you`, `stin-tattoo`, `beauty-massage`, `migrona`.
 (The Migrona cover is full-width — use 1600×900.)
 
-Then swap the placeholder, e.g.:
+Then run:
 
-```html
-<div class="shot">
-  <img src="/images/work/permanent-guru-cover.jpg"
-       alt="Permanent Guru website homepage" loading="lazy" width="1200" height="800">
-</div>
 ```
+node tools/apply-images.js           # dry run — shows what it would change
+node tools/apply-images.js --write   # apply
+```
+
+It finds each placeholder, checks whether the image actually exists, and swaps
+in the `<img>` tag with the right relative path, alt text, dimensions and
+`loading` attribute. Safe to run repeatedly — placeholders whose file is still
+missing are left alone and listed, so you can add images a few at a time.
+
+There are **30 image slots**: 5 covers (homepage + portfolio index share them),
+5 case-study heroes, and 20 screenshot-strip images (4 per case study).
 
 Keep `width`/`height` on every image — they prevent layout shift (Core Web Vitals).
 
