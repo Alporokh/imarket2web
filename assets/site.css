@@ -743,8 +743,7 @@ h1, h2, h3, p { margin: 0; }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
 
-    .hero > div:first-child,
-    .hero-shots,
+    .hero--matrix,
     .clients {
       animation-timing-function: linear;
       animation-fill-mode: both;
@@ -753,9 +752,8 @@ h1, h2, h3, p { margin: 0; }
       animation-range: exit 0% exit 100%;
       will-change: transform, opacity;
     }
-    .hero > div:first-child { animation-name: heroLift; }
-    .hero-shots             { animation-name: heroSink; }
-    .clients                { animation-name: heroFloor; }
+    .hero--matrix { animation-name: heroLift; }
+    .clients      { animation-name: heroFloor; }
 
     /* Section 02 rises to meet it, so the handover reads as one movement */
     #services > .sec-head {
@@ -773,8 +771,7 @@ h1, h2, h3, p { margin: 0; }
    scrub.js adds .scrub-js to <html> only when view() is unsupported and the
    visitor has not asked for reduced motion. It then writes the same
    transforms inline, so the effect looks identical everywhere.          */
-.scrub-js .hero > div:first-child,
-.scrub-js .hero-shots,
+.scrub-js .hero--matrix,
 .scrub-js .clients { will-change: transform, opacity; }
 
 /* =======================================================================
@@ -842,3 +839,104 @@ h1, h2, h3, p { margin: 0; }
 /* The space hero puts the crumbs on a dark backdrop */
 .space-copy .crumbs a { color: var(--on-dark-3); }
 .space-copy .crumbs a:hover { color: var(--blue-light); }
+
+/* =======================================================================
+   MATRIX RAIN HERO
+   -----------------------------------------------------------------------
+   The rain sits behind the copy, not beside it, so the hero is one column
+   instead of a text/screenshot split. Swap the two colours below for
+   film-green if you want it: --matrix-head #7CFFB2, --matrix-body 120,255,170.
+   ======================================================================= */
+
+:root {
+  --matrix-head: #7CBAF8;      /* leading glyph — brand blue */
+  --matrix-body: 255,255,255;  /* the trail — white, as an r,g,b triplet */
+}
+
+.matrix-hero { position: relative; overflow: hidden; isolation: isolate; }
+#matrix-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 0; opacity: .42; pointer-events: none;
+}
+/* Keeps the rain off the headline: dense at the edges, clear behind the text */
+.matrix-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 58% 62% at 30% 48%, #121214 28%, rgba(18,18,20,.72) 55%, transparent 78%),
+    linear-gradient(to bottom, rgba(18,18,20,.55), transparent 22%, transparent 74%, #121214 100%);
+}
+.matrix-hero > .wrap { position: relative; z-index: 2; }
+
+.hero--matrix {
+  display: block;
+  padding-top: clamp(64px, 9vw, 132px);
+  padding-bottom: clamp(56px, 7vw, 104px);
+  max-width: 940px;
+}
+.hero--matrix .h1 { margin-top: 24px; }
+.hero--matrix .lead { margin-top: 26px; max-width: 620px; }
+
+@media (max-width: 980px) {
+  .hero--matrix { padding-top: 44px; padding-bottom: 40px; }
+  #matrix-canvas { opacity: .32; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #matrix-canvas { opacity: .22; }
+}
+
+/* =======================================================================
+   SECTION 02 — SERVICE CARDS IN 3D
+   -----------------------------------------------------------------------
+   Cards travel toward the viewer through a perspective stage, in the manner
+   of pear.no's Questions section.
+
+   Everything below only applies once cards3d.js adds .is-3d. Without JS,
+   with reduced motion, or under 900px, the markup stays the responsive grid
+   it already was — the depth is an enhancement on a layout that works.
+   ======================================================================= */
+
+.cards3d-track { position: relative; }
+
+.is-3d.cards3d-track { height: 420vh; }
+.is-3d .cards3d-stage {
+  position: sticky; top: 0;
+  height: 100vh;
+  perspective: 1400px;
+  perspective-origin: 50% 46%;
+  transform-style: preserve-3d;
+  display: block;
+}
+/* The stage takes over positioning, so the grid rules must stand down */
+.is-3d .cards3d-stage .grid-3 { display: block; height: 100%; position: relative; }
+
+.is-3d .svc {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+  box-shadow: 0 30px 80px rgba(23,23,26,.18);
+  transition: box-shadow .4s ease;
+  margin: 0;
+}
+/* Body copy and chips hold back until the card reaches the focal plane —
+   the detail arrives when it is actually readable. */
+.is-3d .svc > p,
+.is-3d .svc > .chips {
+  opacity: 0;
+  transition: opacity .5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.is-3d .svc.is-focus > p,
+.is-3d .svc.is-focus > .chips { opacity: 1; }
+.is-3d .svc.is-focus { box-shadow: 0 40px 110px rgba(23,23,26,.26); }
+
+/* A quiet cue that this section scrolls differently */
+.is-3d .cards3d-stage::after {
+  content: "";
+  position: absolute; left: 50%; bottom: 34px; width: 1px; height: 46px;
+  background: linear-gradient(to bottom, transparent, var(--line));
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-3d.cards3d-track { height: auto; }
+  .is-3d .cards3d-stage { position: static; height: auto; perspective: none; }
+}

@@ -293,3 +293,48 @@ planned article queue rather than filler posts.
 **To publish the first article:** delete the `.empty-state` block in
 `insights/index.html` and uncomment the article grid below it. Each article is
 its own folder, e.g. `insights/why-one-page-per-treatment/index.html`.
+
+## Hero — Matrix rain
+
+`assets/matrix.js` draws falling characters behind the hero copy. The old
+screenshot placeholders are gone; the hero is now one column with the rain
+behind it.
+
+**Colours** are two CSS variables in `site.css`:
+
+```css
+:root {
+  --matrix-head: #7CBAF8;      /* leading glyph */
+  --matrix-body: 255,255,255;  /* the trail, as r,g,b */
+}
+```
+
+Defaults are white with a brand-blue leading glyph, because film-green fights
+the palette. **For classic green:** `--matrix-head: #7CFFB2;` and
+`--matrix-body: 120,255,170;`. Nothing else changes.
+
+The glyphs are code characters rather than katakana — braces, tags, operators,
+hex — since the brief was "as if someone writes code".
+
+Costs close to nothing: one canvas, throttled to 24fps, and it stops entirely
+when the hero scrolls out of view or the tab is hidden. Reduced motion renders
+one static frame, so the texture survives and the movement goes.
+
+A radial mask keeps the rain off the headline. If you change the hero copy
+width, adjust `.matrix-hero::after`.
+
+## Section 02 — service cards in 3D
+
+`assets/cards3d.js`, in the manner of pear.no's Questions section. A tall
+`.cards3d-track` holds a sticky `.cards3d-stage` carrying the perspective;
+the six cards sit at different depths and travel toward the viewer as you
+scroll, each fading its body copy in as it reaches the focal plane and
+blurring out past the camera.
+
+Tuning is at the top of the file: `DEPTH_GAP` (distance between cards),
+`CARD_W` / `CARD_H`, and `SLOTS` (the x/y scatter, as fractions of the stage).
+Track height is `.is-3d.cards3d-track { height: 420vh }` in `site.css`.
+
+**It only engages above 900px with motion allowed.** Below that, or with
+reduced motion, or with JS off, the markup stays the ordinary responsive grid
+it already was — the depth is layered on top of a layout that works without it.

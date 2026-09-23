@@ -28,11 +28,9 @@
   // uniform squeeze of the long one: at 200vh a straight compression leaves the
   // Earth barely 120px of scrolling, so the long "light speed" stretch gives up
   // some of its room to the arrival, which is the part worth seeing.
-  var SHORT = journey.classList.contains('space-journey--short');
-  var T = SHORT ? {
-    warp:[.14,.44], fade:[.66,.96], copyOut:[.06,.26], hint:[.02,.14],
-    earthIn:[.42,.60], earthGrow:[.50,1], msgIn:[.60,.74], msgOut:[.80,.93]
-  } : {
+  // One set of beat thresholds. The short variant simply compresses them,
+  // which is what was asked for and is less code than two presets.
+  var T = {
     warp:[.18,.58], fade:[.72,.98], copyOut:[.08,.31], hint:[.02,.16],
     earthIn:[.52,.68], earthGrow:[.62,1], msgIn:[.66,.78], msgOut:[.82,.94]
   };

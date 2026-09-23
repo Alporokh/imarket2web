@@ -35,10 +35,9 @@
   if (reduced) return;
 
   document.addEventListener('DOMContentLoaded', function () {
-    var copy = document.querySelector('.hero > div:first-child');
-    var shots = document.querySelector('.hero-shots');
+    var copy = document.querySelector('.hero--matrix');
     var strip = document.querySelector('.clients');
-    if (!copy && !shots && !strip) return; // not the homepage
+    if (!copy && !strip) return; // not the homepage
 
     document.documentElement.classList.add('scrub-js');
 
@@ -49,12 +48,10 @@
       return isNaN(v) ? fallback : v;
     }
     var D_COPY = px('--scrub-copy', -64);
-    var D_SHOTS = px('--scrub-shots', -132);
     var D_STRIP = px('--scrub-strip', -30);
 
     var layers = [
       { el: copy,  dist: D_COPY,  minOpacity: 0.25 },
-      { el: shots, dist: D_SHOTS, minOpacity: 0.35 },
       { el: strip, dist: D_STRIP, minOpacity: 0.30 }
     ].filter(function (l) { return l.el; });
 
