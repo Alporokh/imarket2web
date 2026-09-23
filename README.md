@@ -377,3 +377,31 @@ reachable.
 
 The row is full-bleed out of `.wrap` via negative margins, with a mask that
 fades cards at both edges rather than cutting them off.
+
+## Light wave — heading to the Enquiries card
+
+`assets/lightwave.js`. A gleam leaves the first letter of "**E**very layer makes
+the next one cheaper", travels out and down, and lands on the blue Enquiries
+card. It draws the section's argument as a line: every layer leads to the one
+number that pays the bills.
+
+**Routing.** The cards are a 4×2 grid with the blue one bottom-right, which puts
+card 04 directly above it — a straight diagonal would cut across other cards.
+So the path leaves the heading, crosses the empty space right of the copy, drops
+through the gutter beside the grid, and curves back into the blue card from its
+right edge. It touches none of the other seven.
+
+The route is **measured from the real elements** each time, so it survives copy
+changes and any viewport width. Nothing is hardcoded.
+
+The first letter is wrapped in a `.lw-start` span by the script, not in the
+markup — so the HTML stays clean and nothing is left behind if JS never runs.
+
+**Only runs at 900px and up.** Below that the gutter is too narrow to carry the
+line past the cards, and forcing it through would clip the corners of the very
+cards it exists to avoid. Reduced motion skips the travel entirely and simply
+lights the card, which is the meaning without the movement.
+
+Plays once, on first view. Tuning: `TRAVEL` (1500ms) and `MIN_WIDTH` at the top
+of the file; colours and the arrival sweep are in the LIGHT WAVE block in
+`site.css`.
