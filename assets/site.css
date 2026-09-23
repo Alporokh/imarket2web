@@ -360,14 +360,15 @@ h1, h2, h3, p { margin: 0; }
 .link-mono { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); white-space: nowrap; }
 
 /* ============ Case study band ============ */
-.case { background: var(--peach); }
-.case-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: start; margin-top: 26px; }
+/* One column since the screenshot box was removed: the copy is held to the
+   width the gradient scrim actually covers, so it never runs onto petals. */
+.case-grid { margin-top: 26px; max-width: 620px; }
 .case h2 { font-size: clamp(30px, 3.05vw, 44px); line-height: 1.04; margin-bottom: 20px; }
 .case p { font-size: 17px; line-height: 1.6; color: var(--text-2); }
 .case p + p { margin-top: 16px; }
 .case .btn { margin-top: 28px; }
-.case .shot { height: 380px; background: #fff; border-color: var(--peach-line); }
-.case .shot .mono { color: var(--peach-ink); }
+
+
 .case-stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 36px; }
 .stat { background: #fff; border-radius: 18px; padding: 26px 28px; }
 .stat .d { font-size: 22px; margin-bottom: 14px; }
@@ -455,7 +456,7 @@ h1, h2, h3, p { margin: 0; }
   .sec-head { flex-direction: column; align-items: flex-start; gap: 18px; }
   .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
-  .case-grid, .analytics, .about { grid-template-columns: 1fr; gap: 36px; }
+  .analytics, .about { grid-template-columns: 1fr; gap: 36px; }
   .case-stats { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid > :first-child { grid-column: 1 / -1; }
@@ -470,7 +471,6 @@ h1, h2, h3, p { margin: 0; }
   .project { padding: 14px 14px 20px; }
   .project .shot { height: 220px; }
   .project-meta .d { font-size: 22px; }
-  .case .shot { height: 240px; }
   .quote { padding: 28px 22px; }
   .quote blockquote { font-size: 20px; }
   .cta-btns a { width: 100%; }
@@ -1116,9 +1116,7 @@ h1, h2, h3, p { margin: 0; }
 .case h2 { color: #fff; }
 .case p { color: #BCCBD3; }
 
-/* Screenshot frame, matched to the band rather than to the old peach */
-.case .shot { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); }
-.case .shot .mono { color: #8FA8B4; }
+
 
 /* Cards become glass, so the photograph still reads behind them */
 .case .stat,
