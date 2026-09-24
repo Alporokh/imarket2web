@@ -596,3 +596,32 @@ disperses the field at the end of the work page journey.
 
 The reason it is a panel at all: the estimator's job is to get people into the
 calculator, and a four-screen scroll in front of it would work against that.
+
+### Using a different scene on a page
+
+Two things must agree, and a third sets the sampling:
+
+```html
+<section class="orbit-track orbit-track--panel" data-orbit
+         data-orbit-focus="0.78"
+         data-orbit-sample="1300"
+         style="--orbit-img: url(../images/your-scene.webp);">
+  <canvas class="orbit-canvas" data-src="../images/your-scene.webp"></canvas>
+```
+
+- `--orbit-img` is the CSS underlay
+- `data-src` is what the particle sampler reads
+- `data-orbit-sample` is the width it samples at; it is clamped to the image's
+  own width, because upscaling cannot invent detail, it only blurs
+
+**Source resolution decides whether this effect works at all.** Particle spacing
+on a 1400px hero, measured:
+
+| source | sampled | particles | spacing | result |
+|---|---|---|---|---|
+| 1200x800 | 1200, step 3 | 55,153 | 3.5px | fine dust |
+| 2400x1029 | 1300, step 3 | 28,709 | 3.2px | fine dust |
+| 182x148 | 182, step 1 | 19,254 | 7.7px | coarse dot matrix |
+
+Below roughly 1000px wide there is no setting that recovers it, because the
+particle grid cannot be finer than the pixels it samples.

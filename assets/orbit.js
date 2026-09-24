@@ -129,7 +129,11 @@
     function build(image) {
       /* ---- Sample the scene ------------------------------------------- */
       var ratio = image.naturalHeight / image.naturalWidth;
-      var sw = SAMPLE_W, sh = Math.round(SAMPLE_W * ratio);
+      // A smaller source should be sampled at its own resolution rather than
+      // upscaled: upscaling cannot invent detail, it only blurs what is there.
+      var sampleW = parseInt(track.getAttribute("data-orbit-sample"), 10) || SAMPLE_W;
+      sampleW = Math.min(sampleW, image.naturalWidth);
+      var sw = sampleW, sh = Math.round(sampleW * ratio);
       var off = document.createElement('canvas');
       off.width = sw; off.height = sh;
       var octx = off.getContext('2d', { willReadFrequently: true });
@@ -207,9 +211,9 @@
         // Near the end the currents strengthen, so the scene comes apart
         var gust = 1 + smooth(0.9, 1, p) * 5;
 
-        var scale = (H / (SAMPLE_W * ratio)) * ZOOM;
-        var sceneW = SAMPLE_W * scale;
-        var sceneH = SAMPLE_W * ratio * scale;
+        var scale = (H / (sw * ratio)) * ZOOM;
+        var sceneW = sw * scale;
+        var sceneH = sw * ratio * scale;
         var camX = Math.max(0, sceneW - W) * travel;
         var camY = (sceneH - H) * 0.5;
 

@@ -1206,7 +1206,9 @@ h1, h2, h3, p { margin: 0; }
 
 .orbit-stage::before {
   z-index: 0;
-  background: url(../images/orbit-scene.webp) center / cover no-repeat;
+  /* Follows --orbit-img so a page can use a different scene; the canvas
+     data-src must be set to the same file. */
+  background: var(--orbit-img, url(../images/orbit-scene.webp)) center / cover no-repeat;
   transition: opacity .8s ease;
 }
 .orbit-track.is-live .orbit-stage::before { opacity: .2; }
