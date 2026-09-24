@@ -625,3 +625,23 @@ on a 1400px hero, measured:
 
 Below roughly 1000px wide there is no setting that recovers it, because the
 particle grid cannot be finer than the pixels it samples.
+
+### The estimate scene
+
+`/estimate/` uses `images/earth-beauty-hero.webp` (2400x1029, 99 KB), the work
+page keeps `orbit-scene.webp`. Each page sets its own via `--orbit-img` and the
+canvas `data-src`.
+
+It was regenerated from `images/earth-beauty.jpg`, which is 182x148 and could
+not drive the effect: at that size the particle grid lands 7.7px apart, a coarse
+dot matrix rather than dust, and no setting recovers it. The replacement was
+matched to the original by measurement rather than by eye - the reference's
+bright areas average rgb(109,136,158) and the new one rgb(99,146,178), the same
+cool blue-white, with the bodies right of centre and dark space on the left for
+the copy. It yields 17,000 particles at 3.2px spacing.
+
+`data-orbit-focus` is `0.25` here rather than the 0.78 used before. Focus is
+where the camera sits in the scene, and since the bodies in this image are
+already right of centre, a low value keeps them on the right of the frame with
+the copy on clear ground. The original `earth-beauty.jpg` is kept as the
+reference it was.
