@@ -75,10 +75,25 @@
         <a href="../">Home</a><span>/</span><span aria-current="page">Services</span>
       </nav>
     </div>
-    <div class="svc-hero">
-      <!-- Three layers, because they move at different rates: the planet
+    <div class="svc-hero"
+         data-portal
+         data-portal-image="../images/services-hero-v2.webp"
+         data-portal-count="1600"
+         data-portal-radius="0.34"
+         data-portal-x="0.74"
+         data-portal-y="0.46"
+         data-portal-swirl="0.35"
+         data-portal-glow="1"
+         data-portal-flow="in"
+         data-portal-color-a="#1668D8"
+         data-portal-color-b="#9FD2FF"
+         data-portal-cursor="0.07">
+      <!-- Four layers, because they move at different rates: the planet
            turns, the sun blooms on the spot where it actually is in the
-           photograph, and the scrim keeps the copy readable over both. -->
+           photograph, the portal opens a vortex onto that same photograph
+           over on the right, and the scrim keeps the copy readable over all
+           of them. The portal is added by portal.js and only if WebGL is
+           there to draw it - without it this is the scene it always was. -->
       <div class="svc-hero-bg" aria-hidden="true"></div>
       <div class="svc-hero-sun" aria-hidden="true"></div>
       <div class="svc-hero-scrim" aria-hidden="true"></div>
@@ -449,6 +464,7 @@
 </footer>
 
 <script src="../assets/site.js" defer></script>
+<script src="../assets/portal.js" defer></script>
 <script src="../assets/consent.js" defer></script>
 <script>document.getElementById("pp-date").textContent=new Date().toISOString().slice(0,10);</script>
 </body>
