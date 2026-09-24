@@ -118,6 +118,11 @@
       return;
     }
 
+    // One frame before anything is observed, for the same reason as portal.js:
+    // an observer that fires late, or never, must not be the difference
+    // between the grid existing and not.
+    frame(0);
+
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (e) {
         e[0].isIntersecting ? start() : stop();

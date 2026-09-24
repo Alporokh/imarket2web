@@ -69,6 +69,7 @@
   'use strict';
 
   var MAX_DPR = 1.75;        // beyond this the fill cost stops buying anything
+  var MAX_BUFFER = 2600;     // px on the longest edge of the drawing buffer
   var SMALL = 900;           // px - below this the portals recentre
 
   var DEFAULTS = {
@@ -380,9 +381,33 @@
       return p;
     });
 
+    /* A drawing buffer bigger than the context can handle does not error - it
+       renders nothing, silently. A phone never comes close to the limit; a
+       wide monitor at devicePixelRatio 2 can sail past it, which looks
+       exactly like "the effect works on mobile but not on desktop". Ask the
+       context for its own ceiling rather than assuming 4096. */
+    var GL_MAX = (function () {
+      var t = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 4096;
+      var v = gl.getParameter(gl.MAX_VIEWPORT_DIMS);
+      var vmin = (v && v.length) ? Math.min(v[0], v[1]) : 4096;
+      var r = gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) || 4096;
+      return Math.max(1024, Math.min(t, vmin, r));
+    }());
+
     function resize() {
       var rect = stage.getBoundingClientRect();
       dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      /* Cap the buffer, not just the ratio. A 2560-wide monitor at
+         devicePixelRatio 2 asks for a 4480px buffer; a phone never asks for
+         more than about 1200. Somewhere above ~2500px this stops drawing on
+         real hardware long before any limit the context admits to - which is
+         exactly the shape of "it works on my phone and not on my desktop".
+
+         A blurred background effect does not need more pixels than this, so
+         giving them up costs nothing visible and buys the effect existing. */
+      var longest = Math.max(rect.width, rect.height) * dpr;
+      var ceiling = Math.min(GL_MAX, MAX_BUFFER);
+      if (longest > ceiling) dpr *= ceiling / longest;
       W = Math.max(1, Math.round(rect.width * dpr));
       H = Math.max(1, Math.round(rect.height * dpr));
       canvas.width = W;
@@ -503,6 +528,17 @@
       window.addEventListener('resize', once);
       return;
     }
+
+    /* Paint one frame straight away, before anything is observed.
+
+       The loop is still gated on visibility - there is no reason to run a
+       shader for a hero nobody is looking at - but the FIRST frame must not
+       be. An IntersectionObserver that fires late, or not at all, used to
+       mean a canvas that existed, reported no error, and never drew: the
+       hero silently fell back to the photograph with nothing to explain it.
+       Drawing once up front makes the effect appear no matter what the
+       observer does afterwards. */
+    frame(0);
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
