@@ -528,16 +528,22 @@ readable while everything is moving.
 
 | | |
 |---|---|
-| particles | 5,242 |
-| frame cost | 2.88ms (budget 16.6ms) |
-| respawns | ~27 per frame |
-| drift | avg 77px, max 98px before returning home |
+| particles | 28,709 |
+| on screen at once | ~8,300 (the rest are culled) |
+| frame cost | 4.92ms (budget 16.6ms) |
+| drift | avg 131px against a 723px Earth, about 18% |
 
-`NOISE_STRENGTH` is **0.14, tuned rather than guessed**. At 0.34 the average
-drift was 143px, and since the Earth is only about 400px across in the scene it
-smeared into illegibility. If you want a wilder field, raise it and watch that
-drift number - past roughly 100px average the scene stops reading.
+Two optimisations pay for that density. A **trig lookup table**: cos and sin
+were called twice per particle per frame, and the flow field does not need more
+than 1024 angular steps. And **off-screen culling**: the camera only shows part
+of the scene, so around 20,000 particles sit outside the viewport at any moment
+and their physics is skipped entirely. Together they took the frame from 9.70ms
+to 4.92ms, which is what made 28,709 particles affordable instead of 5,242.
 
+`NOISE_STRENGTH` is **0.14, tuned rather than guessed**. Drift is meaningful
+only relative to the bodies: at 18% of the Earth diameter the scene still reads,
+and past roughly 25% it smears. If you change `SAMPLE_W` or `ZOOM` the scene
+scale changes with them, so re-measure rather than assuming the number still holds.
 ### Two implementation notes
 
 **Offsets, not absolute positions.** Each particle stores an offset from its

@@ -45,16 +45,16 @@
   'use strict';
 
   /* ---- Tuning, in ParticleImage's terms -------------------------------- */
-  var SAMPLE_W = 900;       // width the scene is sampled at
-  var STEP = 5;             // sampling grid - lower is denser and slower
+  var SAMPLE_W = 1300;      // width the scene is sampled at
+  var STEP = 3;             // sampling grid - lower is denser and slower
   var LUM_MIN = 26;         // below this, a sample is empty space
-  var PARTICLE_SIZE = 2;    // px
+  var PARTICLE_SIZE = 1;    // px - a fine dust, as in the reference
   var SPEED = 0.00022;      // how fast the flow field evolves
   var NOISE_SCALE = 0.0012; // lower = longer, smoother currents
   var NOISE_STRENGTH = 0.14; // tuned so the scene stays legible while it swirls
   var DAMPING = 0.94;       // velocity retained per frame
   var LIFESPAN = 190;       // frames before a particle returns home
-  var CURSOR_RADIUS = 150;  // px
+  var CURSOR_RADIUS = 180;  // px
   var CURSOR_STRENGTH = 2.4;
   var ZOOM = 1.28;          // >1 so there is room to travel
   var MAX_DPR = 1.5;
@@ -86,6 +86,17 @@
       lerp(grad(perm[perm[X] + Y + 1], x, y - 1), grad(perm[perm[X + 1] + Y + 1], x - 1, y - 1), u),
       v);
   }
+
+  /* ---- Trig lookup ------------------------------------------------------
+     cos and sin are called twice per particle per frame. At thirty thousand
+     particles that is the single most expensive thing in the loop, and the
+     flow field does not need more angular precision than 1024 steps. */
+  var LUT = 1024, COS = new Float32Array(LUT), SIN = new Float32Array(LUT);
+  for (var li = 0; li < LUT; li++) {
+    var la = li / LUT * Math.PI * 2;
+    COS[li] = Math.cos(la); SIN[li] = Math.sin(la);
+  }
+  var LUT_K = LUT / (Math.PI * 2);
 
   function smooth(a, b, x) {
     x = Math.max(0, Math.min(1, (x - a) / (b - a)));
@@ -199,18 +210,25 @@
         var r2 = CURSOR_RADIUS * dpr, r2sq = r2 * r2;
 
         for (var i = 0; i < N; i++) {
+          var homeX = hx[i] * sceneW - camX;
+
+          // The camera only ever shows part of the scene, so roughly a
+          // quarter of the particles are off to one side at any moment.
+          // Skipping their physics entirely is the cheapest win available.
+          if (homeX < -120 || homeX > W + 120) continue;
+
           if (age[i]++ >= LIFESPAN) {
             age[i] = 0; ox[i] = 0; oy[i] = 0; vx[i] = 0; vy[i] = 0;
           }
-          var homeX = hx[i] * sceneW - camX;
           var homeY = hy[i] * sceneH - camY;
           var cx = homeX + ox[i], cy = homeY + oy[i];
 
           // Flow field, sampled in scene space so the currents belong to
           // the scene rather than drifting with the camera
           var a = perlin((cx + camX) * NOISE_SCALE + t, (cy + camY) * NOISE_SCALE) * Math.PI * 4;
-          vx[i] += Math.cos(a) * NOISE_STRENGTH * gust;
-          vy[i] += Math.sin(a) * NOISE_STRENGTH * gust;
+          var k = ((a * LUT_K) | 0) & (LUT - 1);
+          vx[i] += COS[k] * NOISE_STRENGTH * gust;
+          vy[i] += SIN[k] * NOISE_STRENGTH * gust;
 
           // Pointer momentum
           var dx = cx - pxr, dy = cy - pyr;
