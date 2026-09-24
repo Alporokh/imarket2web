@@ -148,7 +148,7 @@ const RATES = {
    silently, and the estimate stays visible on the page.
    ------------------------------------------------------------------------ */
 const PROVIDER = 'apps-script';
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycby_qzVqUzfd-_Mm8W4TLByXyTEWXg1SwoCT3NPUQEd_yOBLtaC3io4L5X4zD6L5up1TzA/exec';
+const ENDPOINT = 'https://imarket2web-leads.imarket2web.workers.dev/';
 
 /* ========================================================================= */
 
