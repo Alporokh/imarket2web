@@ -1824,6 +1824,60 @@ h1, h2, h3, p { margin: 0; }
    second, blurrier sun competing with it. */
 .svc-hero.has-portal .svc-hero-sun { filter: opacity(.34); }
 
+/* If portal.js never draws - no WebGL, a context a privacy extension has
+   blocked, graphics acceleration switched off, an old browser - the hero was
+   a still photograph and nothing else. This is the same composition in plain
+   gradients: a cool ring where the lens belongs, a warm body where the sun
+   is. It is visible by default and fades out the moment .has-portal says the
+   real thing is running, so nobody ever sees both. */
+.svc-hero-css {
+  position: absolute; inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+.svc-hero-css::before,
+.svc-hero-css::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: opacity;
+}
+/* the lens: a ring, because a window is dark in the middle */
+.svc-hero-css::before {
+  left: 74%; top: 46%;
+  width: min(34%, 46vh);
+  background: radial-gradient(circle,
+    transparent 56%,
+    rgba(60,150,255,.10) 62%,
+    rgba(90,175,255,.62) 69%,
+    rgba(22,104,216,.14) 75%,
+    transparent 82%);
+  animation: svcBreathe 9s ease-in-out infinite;
+}
+/* the sun: filled, because a star is not */
+.svc-hero-css::after {
+  left: 90%; top: 26%;
+  width: min(17%, 23vh);
+  background: radial-gradient(circle,
+    rgba(255,246,222,.95) 0%,
+    rgba(255,184,92,.85) 34%,
+    rgba(255,130,40,.38) 58%,
+    rgba(255,120,30,.10) 74%,
+    transparent 84%);
+  animation: svcBreathe 7s ease-in-out infinite reverse;
+}
+@keyframes svcBreathe {
+  0%, 100% { opacity: .72; }
+  50%      { opacity: 1; }
+}
+.svc-hero.has-portal .svc-hero-css { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .svc-hero-css::before, .svc-hero-css::after { animation: none; }
+}
+
 /* The twinkling grid. twinkle.js appends it last, so at this z-index it sits
    above both the portals and the scrim but still below the copy - the squares
    stay bright over the sun, where the scrim is nearly transparent anyway, and
