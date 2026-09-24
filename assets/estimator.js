@@ -6,8 +6,9 @@
    change what the calculator quotes - nothing else in this file needs
    touching.
 
-   Two values are assumptions, not from the rate card, and are marked
-   ASSUMPTION. Set them to whatever you actually charge.
+   Values marked ASSUMPTION are NOT from the rate card - they are
+   placeholders so the calculator stays usable. Set them to whatever you
+   actually charge before sending anyone here.
    ========================================================================= */
 
 const RATES = {
@@ -95,6 +96,30 @@ const RATES = {
       label: 'Social profile optimisation + 16-post calendar + reel automation',
       short: 'Social & content calendar',
       weeks: [1, 2]
+    },
+    contentAuto: {
+      price: 250,            // ASSUMPTION
+      label: 'Content automation: repurposing pipeline, scheduling, approval gate',
+      short: 'Content automation',
+      weeks: [1, 2]
+    },
+    backlinks: {
+      price: 300,            // ASSUMPTION
+      label: 'Backlink strategy: link gap audit, target list, digital PR angles',
+      short: 'Backlink strategy',
+      weeks: [2, 3]
+    },
+    ads: {
+      price: 350,            // ASSUMPTION - one-off build
+      label: 'Google Ads: campaign build, conversion tracking, landing page brief',
+      short: 'Google Ads setup',
+      weeks: [1, 2],
+      // Ads are the one layer that keeps costing after launch. The monthly
+      // fee is quoted on its own line so it never hides inside a project
+      // total, and the ad budget itself is paid to Google, not to us.
+      monthly: 200,          // ASSUMPTION - management per month
+      monthlyLabel: 'Google Ads management, per month',
+      monthlyNote: 'Your ad budget is paid to Google directly and is not included here'
     }
   },
 
@@ -142,6 +167,8 @@ const fmt = n => RATES.symbol + Math.round(n).toLocaleString('en-US');
 function price(addonKeys) {
   const site = RATES.site[state.site] || RATES.site.none;
   const lines = [];
+  const monthlyLines = [];   // recurring fees, deliberately outside the project total
+  let monthlyTotal = 0;
   let floor = 0;
   let weeksMin = site.weeks[0];
   let weeksMax = site.weeks[1];
@@ -180,6 +207,10 @@ function price(addonKeys) {
     }
     lines.push({ label: a.label, price: a.price, from: a.from });
     floor += a.price;
+    if (a.monthly) {
+      monthlyLines.push({ label: a.monthlyLabel, price: a.monthly, note: a.monthlyNote });
+      monthlyTotal += a.monthly;
+    }
     if (a.from) hasFrom = true;
     weeksMin = Math.max(weeksMin, a.weeks[0]);
     addonWeeks += a.weeks[1];
@@ -195,7 +226,7 @@ function price(addonKeys) {
   }
 
   const ceiling = floor * (1 + RATES.rangeUpliftPct);
-  return { lines, floor, ceiling, weeksMin, weeksMax, hasFrom };
+  return { lines, floor, ceiling, weeksMin, weeksMax, hasFrom, monthlyLines, monthlyTotal };
 }
 
 /** The three comparison tiers. */
@@ -239,6 +270,27 @@ function renderResult() {
     row.append(left, right);
     tbody.append(row);
   });
+
+  // Recurring fees, shown apart from the project so the headline number
+  // is never mistaken for the whole cost of running ads.
+  const mWrap = document.getElementById('res-monthly-wrap');
+  const mBody = document.getElementById('res-monthly');
+  if (mWrap && mBody) {
+    mBody.innerHTML = '';
+    r.monthlyLines.forEach(l => {
+      const row = document.createElement('div');
+      row.className = 'bd-row';
+      const left = document.createElement('div');
+      left.innerHTML = '<span class="bd-label">' + escapeHtml(l.label) + '</span>' +
+        (l.note ? '<span class="bd-note">' + escapeHtml(l.note) + '</span>' : '');
+      const right = document.createElement('span');
+      right.className = 'bd-price';
+      right.textContent = fmt(l.price) + ' /mo';
+      row.append(left, right);
+      mBody.append(row);
+    });
+    mWrap.hidden = r.monthlyLines.length === 0;
+  }
 
   // What's included
   const inc = document.getElementById('res-includes');
@@ -312,6 +364,15 @@ function plainText(r, t) {
   L.push('');
   L.push('ESTIMATE:  ' + (r.hasFrom ? 'from ' : '') + fmt(r.floor) + ' – ' + fmt(r.ceiling));
   L.push('TIMELINE:  ' + r.weeksMin + '–' + r.weeksMax + ' weeks');
+  if (r.monthlyLines.length) {
+    L.push('');
+    L.push('THEN, MONTHLY');
+    r.monthlyLines.forEach(l => {
+      L.push('  ' + l.label);
+      L.push('      ' + fmt(l.price) + ' /month');
+      if (l.note) L.push('      ' + l.note);
+    });
+  }
   L.push('');
   L.push('COMPARISON');
   L.push('  Essential:   ' + fmt(t.essential.floor));

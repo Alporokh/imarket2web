@@ -212,6 +212,29 @@
           <span>Who takes the photos and video today?</span>
           <input type="text" name="content_source" data-q="Who makes content" placeholder="Me, on a phone, when I remember">
         </label>
+
+        <label class="fld fld--light">
+          <span>How much of the posting should run by itself?</span>
+          <select name="content_automation" data-q="Content automation">
+            <option value="">Choose one</option>
+            <option>Fully automated - I approve a calendar, it publishes</option>
+            <option>Semi-automated - drafts prepared, I press publish</option>
+            <option>Just a calendar, I post manually</option>
+            <option>Not sure what is realistic</option>
+          </select>
+        </label>
+
+        <div class="fld fld--light">
+          <span>Where should one piece of content end up?</span>
+          <div class="chk-grid">
+            <label class="chk"><input type="checkbox" data-group="Distribution" value="Instagram posts"><span>Instagram posts</span></label>
+            <label class="chk"><input type="checkbox" data-group="Distribution" value="Reels / shorts"><span>Reels / shorts</span></label>
+            <label class="chk"><input type="checkbox" data-group="Distribution" value="Facebook"><span>Facebook</span></label>
+            <label class="chk"><input type="checkbox" data-group="Distribution" value="Google Business posts"><span>Google Business posts</span></label>
+            <label class="chk"><input type="checkbox" data-group="Distribution" value="Newsletter"><span>Newsletter</span></label>
+            <label class="chk"><input type="checkbox" data-group="Distribution" value="Blog"><span>Blog</span></label>
+          </div>
+        </div>
       </fieldset>
 
       <!-- ---- 4. CONTENT & BLOG ---- -->
@@ -259,9 +282,86 @@
         </div>
       </fieldset>
 
-      <!-- ---- 5. AUTOMATION & MEASUREMENT ---- -->
+      <!-- ---- 5. GOOGLE ADS ---- -->
+      <fieldset class="brief-sec" data-section="Google Ads">
+        <legend><span class="mono">05</span> <span class="d">Google Ads</span></legend>
+        <p class="brief-hint">Ads buy the top of the page while SEO earns it. They stop the day you stop paying, so they work best on a site that already converts.</p>
+
+        <label class="fld fld--light">
+          <span>Have you run Google Ads before?</span>
+          <select name="ads_history" data-q="Ads history">
+            <option value="">Choose one</option>
+            <option>Never</option>
+            <option>Running now, managed by me</option>
+            <option>Running now, managed by an agency</option>
+            <option>Ran them before and stopped</option>
+          </select>
+        </label>
+
+        <label class="fld fld--light">
+          <span>What monthly ad budget are you considering?</span>
+          <select name="ads_budget" data-q="Ad budget">
+            <option value="">Choose one</option>
+            <option>Under 300 EUR a month</option>
+            <option>300-600 EUR a month</option>
+            <option>600-1500 EUR a month</option>
+            <option>Over 1500 EUR a month</option>
+            <option>No idea - tell me what is sensible</option>
+          </select>
+        </label>
+
+        <label class="fld fld--light">
+          <span>Which services are actually worth advertising?</span>
+          <textarea name="ads_services" data-q="Services to advertise" rows="3" placeholder="The treatments with the best margin, or the ones you want more of"></textarea>
+        </label>
+
+        <label class="fld fld--light">
+          <span>What counts as a result you would pay for?</span>
+          <select name="ads_goal" data-q="Ads goal">
+            <option value="">Choose one</option>
+            <option>Phone calls</option>
+            <option>Form enquiries</option>
+            <option>Online bookings</option>
+            <option>Visits to the studio</option>
+          </select>
+        </label>
+      </fieldset>
+
+      <!-- ---- 6. BACKLINKS & AUTHORITY ---- -->
+      <fieldset class="brief-sec" data-section="Backlinks and authority">
+        <legend><span class="mono">06</span> <span class="d">Backlinks &amp; authority</span></legend>
+        <p class="brief-hint">Earned links only. I will not buy them - for a local business they rarely help and occasionally cause damage.</p>
+
+        <label class="fld fld--light">
+          <span>Has anyone built links for you before?</span>
+          <select name="links_history" data-q="Link history">
+            <option value="">Choose one</option>
+            <option>No, never</option>
+            <option>Yes, and I know what they did</option>
+            <option>Yes, and I have no idea what they did</option>
+            <option>I think links were bought at some point</option>
+          </select>
+        </label>
+
+        <label class="fld fld--light">
+          <span>Who already mentions you, online or off?</span>
+          <textarea name="links_mentions" data-q="Existing mentions" rows="3" placeholder="Suppliers, associations, venues you work from, local press, partners, training schools"></textarea>
+        </label>
+
+        <label class="fld fld--light">
+          <span>What do you have that is genuinely worth citing?</span>
+          <textarea name="links_assets" data-q="Link-worthy assets" rows="3" placeholder="A qualification nobody local has, before-and-after data, an unusual method, a strong opinion about your industry"></textarea>
+        </label>
+
+        <label class="fld fld--light">
+          <span>Which competitors keep outranking you?</span>
+          <textarea name="links_competitors" data-q="Competitors to compare" rows="2" placeholder="Names or URLs - I compare who cites them and not you"></textarea>
+        </label>
+      </fieldset>
+
+      <!-- ---- 7. AUTOMATION & MEASUREMENT ---- -->
       <fieldset class="brief-sec" data-section="Automation and measurement">
-        <legend><span class="mono">05</span> <span class="d">Automation &amp; measurement</span></legend>
+        <legend><span class="mono">07</span> <span class="d">Automation &amp; measurement</span></legend>
         <p class="brief-hint">The repetitive half of the work, and the part that tells you whether any of it worked.</p>
 
         <label class="fld fld--light">
@@ -298,9 +398,9 @@
         </label>
       </fieldset>
 
-      <!-- ---- 6. PRACTICAL ---- -->
+      <!-- ---- 8. PRACTICAL ---- -->
       <fieldset class="brief-sec" data-section="Practical">
-        <legend><span class="mono">06</span> <span class="d">The practical part</span></legend>
+        <legend><span class="mono">08</span> <span class="d">The practical part</span></legend>
         <p class="brief-hint">The two questions that decide what is realistic.</p>
 
         <label class="fld fld--light">
@@ -401,13 +501,16 @@
       </div>
       <nav class="footer-col" aria-label="Services">
         <span class="mono">Services</span>
-        <a href="../services/web-design/">Web design &amp; development</a>
-        <a href="../services/seo/">SEO</a>
-        <a href="../services/local-seo/">Local SEO</a>
-        <a href="../services/content-strategy/">Content strategy</a>
-        <a href="../services/ai-search-geo/">AI search &amp; GEO</a>
-        <a href="../services/marketing-automation/">Marketing automation</a>
-        <a href="../services/social-google-business/">Social &amp; Google Business</a>
+        <a href="../services/#web-design">Web design &amp; development</a>
+        <a href="../services/#seo">SEO</a>
+        <a href="../services/#local-seo">Local SEO</a>
+        <a href="../services/#content-strategy">Content strategy</a>
+        <a href="../services/#ai-search-geo">AI search &amp; GEO</a>
+        <a href="../services/#marketing-automation">Marketing automation</a>
+        <a href="../services/#social-google-business">Social &amp; Google Business</a>
+        <a href="../services/#content-automation">Content automation</a>
+        <a href="../services/#google-ads">Google Ads</a>
+        <a href="../services/#backlinks">Backlink strategy</a>
       </nav>
       <nav class="footer-col" aria-label="Work">
         <span class="mono">Work</span>

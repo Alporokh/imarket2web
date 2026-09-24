@@ -213,6 +213,18 @@
           <span class="opt-t">Social &amp; content calendar <span class="opt-p">€200</span></span>
           <span class="opt-d">Profile optimisation, a 16-post calendar and reel automation.</span>
         </button>
+        <button type="button" class="opt" data-addon="contentAuto" aria-pressed="false">
+          <span class="opt-t">Content automation <span class="opt-p">&euro;250</span></span>
+          <span class="opt-d">One piece of work turned into posts, reels and Google Business updates, published on a calendar you approve in advance.</span>
+        </button>
+        <button type="button" class="opt" data-addon="backlinks" aria-pressed="false">
+          <span class="opt-t">Backlink strategy <span class="opt-p">&euro;300</span></span>
+          <span class="opt-d">Link gap audit, a target list worth earning, and the digital PR angles to earn them. Ongoing outreach is quoted separately.</span>
+        </button>
+        <button type="button" class="opt" data-addon="ads" aria-pressed="false">
+          <span class="opt-t">Google Ads <span class="opt-p">&euro;350 + &euro;200/mo</span></span>
+          <span class="opt-d">Campaign build and conversion tracking, then monthly management. Your ad budget is paid to Google separately.</span>
+        </button>
       </div>
       <div class="step-nav">
         <button type="button" class="btn-back" data-prev>← Back</button>
@@ -261,6 +273,12 @@
 
       <h3 class="d res-h3">Breakdown</h3>
       <div class="breakdown" id="res-breakdown"></div>
+
+      <!-- Only appears when something recurring was selected. -->
+      <div id="res-monthly-wrap" hidden>
+        <h3 class="d res-h3">Then, monthly</h3>
+        <div class="breakdown" id="res-monthly"></div>
+      </div>
 
       <h3 class="d res-h3">Included in the website build</h3>
       <ul class="res-includes" id="res-includes"></ul>
@@ -386,6 +404,9 @@
         <a href="../services/#ai-search-geo">AI search &amp; GEO</a>
         <a href="../services/#marketing-automation">Marketing automation</a>
         <a href="../services/#social-google-business">Social &amp; Google Business</a>
+        <a href="../services/#content-automation">Content automation</a>
+        <a href="../services/#google-ads">Google Ads</a>
+        <a href="../services/#backlinks">Backlink strategy</a>
       </nav>
       <nav class="footer-col" aria-label="Work">
         <span class="mono">Work</span>
