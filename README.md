@@ -734,3 +734,29 @@ It posts to the same Apps Script endpoint as the estimator with `form: "brief"`,
 and `Code.gs` routes it to a separate **Briefs** tab, created on first use, with
 its own columns and its own auto-reply. A brief and an estimate are different
 shapes; squeezing the brief into the Leads columns would have lost most of it.
+
+### The services hero
+
+`images/services-hero.webp` (1920x1080, 218 KB) with two CSS animations over it.
+Both are CSS rather than JS, so they run off the main thread and cost nothing to
+keep going.
+
+**The planet turns.** The image is inset 5-7% past the frame on every side, so it
+can drift horizontally without an edge ever entering view. 108s, `ease-in-out`,
+`alternate` - slow enough that the reversal is not perceptible, which is what
+lets a two-way animation read as one-way rotation.
+
+**The sun blooms.** A radial bloom centred on **48% across, 17% down** - measured
+from the photograph's brightest pixel, not guessed - swelling and fading on a
+19s loop, so it crests rather than pulses. `mix-blend-mode: screen` so it adds
+light instead of painting a disc on top.
+
+The two periods, 108s and 19s, are deliberately not related. Equal or harmonic
+periods make a scene read as one mechanism rather than two things that happen to
+share a sky.
+
+Reduced motion keeps the scene and drops the movement.
+
+To swap the image: replace the file and re-measure the brightest point, because
+the bloom position is tied to where the sun actually is. The snippet that finds
+it is in the commit for this change.

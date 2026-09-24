@@ -72,11 +72,18 @@
         <a href="../">Home</a><span>/</span><span aria-current="page">Services</span>
       </nav>
     </div>
-    <div class="wrap about-hero">
-      <div>
+    <div class="svc-hero">
+      <!-- Three layers, because they move at different rates: the planet
+           turns, the sun blooms on the spot where it actually is in the
+           photograph, and the scrim keeps the copy readable over both. -->
+      <div class="svc-hero-bg" aria-hidden="true"></div>
+      <div class="svc-hero-sun" aria-hidden="true"></div>
+      <div class="svc-hero-scrim" aria-hidden="true"></div>
+
+      <div class="wrap svc-hero-copy">
         <span class="tag tag--dark">Six disciplines · One system</span>
-        <h1 class="d h2-xl" style="color:#fff;">Buy them separately and you get six things that <span class="accent">never talk to each other</span>.</h1>
-        <p class="lead">Everything below can be bought on its own. It works better in order, because each layer makes the next one cheaper - a site with no search visibility is a brochure, rankings with no content have nothing to rank, and content with no measurement is a guess.</p>
+        <h1 class="d h2-xl" style="color:#fff;max-width:920px;">Buy them separately and you get six things that <span class="accent">never talk to each other</span>.</h1>
+        <p class="lead" style="max-width:640px;">Everything below can be bought on its own. It works better in order, because each layer makes the next one cheaper - a site with no search visibility is a brochure, rankings with no content have nothing to rank, and content with no measurement is a guess.</p>
         <div class="hero-ctas">
           <a href="../estimate/" class="btn">See what it costs
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#FFFFFF" stroke-width="1.7" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
@@ -84,22 +91,6 @@
           <a href="../brief/" class="btn-ghost">Fill in a project brief</a>
         </div>
       </div>
-
-      <!-- HERO PHOTO
-           Drop an image at images/services-hero.jpg (4:5, 1000px+ wide).
-           It renders as particles like the About portrait. Until then this
-           frame says so. -->
-      <figure class="about-photo">
-        <div class="orbit-track orbit-track--portrait" data-orbit data-orbit-focus="0.5"
-             data-orbit-zoom="1" data-orbit-sample="700"
-             data-orbit-noise="0.012" data-orbit-cursor="0.35" data-orbit-cursor-radius="90"
-             style="--orbit-img: url(../images/services-hero.jpg);" aria-hidden="true">
-          <div class="orbit-stage">
-            <canvas class="orbit-canvas" data-src="../images/services-hero.jpg"></canvas>
-            <span class="photo-placeholder mono">[ HERO PHOTO - images/services-hero.jpg ]</span>
-          </div>
-        </div>
-      </figure>
     </div>
 
     <div class="wrap clients" style="border-top:1px solid var(--dark-line);">
@@ -370,7 +361,6 @@
 
 <script src="../assets/site.js" defer></script>
 <script src="../assets/consent.js" defer></script>
-<script src="../assets/orbit.js" defer></script>
 <script>document.getElementById("pp-date").textContent=new Date().toISOString().slice(0,10);</script>
 </body>
 </html>
