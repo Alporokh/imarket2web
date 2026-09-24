@@ -1453,7 +1453,10 @@ h1, h2, h3, p { margin: 0; }
 .svc-hero-bg {
   /* Inset past the frame, so the drift never exposes an edge */
   inset: -5% -7%;
-  background: url(../images/services-hero.webp) center / cover no-repeat;
+  /* Versioned filename: replacing an image in place leaves everyone who has
+     already visited looking at the cached old one. Bump the number when the
+     photograph changes and the URL changes with it. */
+  background: url(../images/services-hero-v2.webp) center / cover no-repeat;
   animation: earthTurn 108s ease-in-out infinite alternate;
   will-change: transform;
 }

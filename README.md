@@ -783,3 +783,32 @@ is most of what makes a list look deliberate rather than accidental.
 
 The six superseded rules were deleted rather than overridden, so the stylesheet
 has one definition per marker instead of four competing ones.
+
+## Favicons
+
+A full set, generated from the mark already in use - a blue "2" on the dark
+tile. The wordmark logo is 344x117 and unreadable at 16px, which is why the
+mark and not the logo.
+
+| file | purpose |
+|---|---|
+| `favicon.ico` | 16/32/48 in one container. Browsers request `/favicon.ico` whether or not you link it |
+| `favicon.svg` | modern browsers, scales to any size |
+| `apple-touch-icon.png` | 180px. iOS requests `/apple-touch-icon.png` by default |
+| `icon-192.png`, `icon-512.png` | Android and the manifest |
+| `site.webmanifest` | name, theme colour, icons |
+
+Before this the only icon was an SVG data URI in every page head: fine in a
+modern browser, but `/favicon.ico` and `/apple-touch-icon.png` both returned
+404 on every visit. The data URI is gone; the head is shorter for it.
+
+Regenerate with `esttest/favicon.js` if the mark changes. It checks that the
+glyph actually rendered rather than trusting the font resolved.
+
+## Cache-busting images
+
+`images/services-hero-v2.webp` carries a version in its name deliberately.
+Replacing an image **in place** leaves everyone who has already visited looking
+at the cached old one - GitHub Pages sends `Cache-Control: max-age=600` and
+browsers hold it longer than that. Bump the number when the photograph changes
+and the URL changes with it.
