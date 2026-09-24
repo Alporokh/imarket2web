@@ -1600,6 +1600,11 @@ h1, h2, h3, p { margin: 0; }
   line-height: 1.55;
 }
 .svc-list--dark li::before { color: var(--blue-light); }
+/* The dark modifier recoloured the tick but left the text on the
+   light-surface colour, so a list on a dark card sat flatter than the copy
+   around it. The text is half the list. */
+.svc-list--dark li { color: var(--on-dark-2); }
+.svc-list--dark strong { color: #fff; }
 .layer .stat li::before,
 .dark .stat li::before { color: var(--blue-light); }
 

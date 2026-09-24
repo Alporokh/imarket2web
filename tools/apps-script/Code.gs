@@ -51,7 +51,11 @@
 var NOTIFY_TO   = 'imarket2web@gmail.com';   // where your own copy goes
 var FROM_NAME   = 'Olena · imarket2web';     // the name on the auto-reply
 var REPLY_TO    = 'imarket2web@gmail.com';
-var SHEET_NAME  = 'Leads';
+var SHEET_NAME  = 'Leads';              // SQL: estimates and briefs
+var MQL_SHEET   = 'MQL';                // people who only asked to be called
+
+var MQL_HEADERS = ['Received', 'Name', 'Prefer', 'Phone', 'Email',
+                   'Message', 'Consent', 'Came from'];
 
 /**
  * Both forms land in this one table. Type says which form it was and Stage
@@ -124,6 +128,8 @@ function setup() {
   }
 
   syncHeaders(sh, HEADERS, 'Details');
+  syncHeaders(ss.getSheetByName(MQL_SHEET) || ss.insertSheet(MQL_SHEET),
+              MQL_HEADERS, 'Message');
   SpreadsheetApp.flush();
   Logger.log('Ready. Now deploy as a web app (see the notes at the top).');
 }
@@ -137,6 +143,22 @@ function doPost(e) {
     if (data.botcheck) {
       return json({ success: true, skipped: 'bot' });
     }
+    // A contact request may leave a phone instead of an email. The other two
+    // forms always have an address, because an estimate and a proposal are
+    // things that get sent somewhere.
+    if (data.form === 'contact') {
+      if (!data.email && !data.phone) {
+        return json({ success: false, message: 'A phone number or an email address is required.' });
+      }
+      if (data.email && !isEmail(data.email)) {
+        return json({ success: false, message: 'That email address does not look right.' });
+      }
+      writeMql(data);
+      notify(data);
+      if (data.email) sendContactReply(data);
+      return json({ success: true, message: 'Sent' });
+    }
+
     if (!data.email || !isEmail(data.email)) {
       return json({ success: false, message: 'A valid email address is required.' });
     }
@@ -147,7 +169,7 @@ function doPost(e) {
     writeRow(data);
     if (data.form === "brief") sendBriefReply(data);
     else sendAutoReply(data);
-    sendNotification(data);
+    notify(data);
 
     return json({ success: true, message: 'Sent' });
   } catch (err) {
@@ -177,7 +199,10 @@ function writeRow(d) {
   sh.appendRow([
     new Date(),
     isBrief ? 'Brief' : 'Estimate',
-    isBrief ? 'MQL' : 'SQL',
+    // Everything in this tab is sales-qualified: an estimate means they have
+    // priced the work, a brief means they have described the job they want
+    // done. The MQL tab holds the people who have only asked to be called.
+    'SQL',
     d.name || '',
     d.email || '',
     d.company || '',
@@ -200,6 +225,173 @@ function writeRow(d) {
     d.consent ? 'yes' : 'no',
     d.estimate || ''
   ]);
+}
+
+/** Contact requests are their own tab: a different shape, and a different
+    question - these are people to chase, not proposals to send. */
+function writeMql(d) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(MQL_SHEET) || ss.insertSheet(MQL_SHEET);
+  syncHeaders(sh, MQL_HEADERS, 'Message');
+  sh.appendRow([
+    new Date(), d.name || '', d.prefer || '', d.phone || '', d.email || '',
+    d.message || '', d.consent ? 'yes' : 'no', d.page || ''
+  ]);
+}
+
+/** Short, because they only asked to be contacted. */
+function sendContactReply(d) {
+  var first = String(d.name || '').trim().split(/\s+/)[0] || 'there';
+  MailApp.sendEmail({
+    to: d.email,
+    subject: 'Got your message - imarket2web',
+    name: FROM_NAME,
+    replyTo: REPLY_TO,
+    body:
+      'Hi ' + first + ',\n\n' +
+      'Your message reached me and I will come back to you' +
+      (d.prefer ? ' by ' + String(d.prefer).toLowerCase() : '') + ', usually\n' +
+      'within one working day.\n\n' +
+      'If it is urgent, call +48 516 492 854 and you will get me directly.\n\n' +
+      'Olena Porokh\n' +
+      'imarket2web - Poznan\n' +
+      'imarket2web@gmail.com - +48 516 492 854\n\n' +
+      '--\n' +
+      'You are receiving this because you asked to be contacted on\n' +
+      'imarket2web.com. You are not on a mailing list.'
+  });
+}
+
+// ---- Telegram ---------------------------------------------------------------
+/*
+ * The bot token is a password - anyone holding it can post as your bot - and
+ * this file lives in a public repository, so it is deliberately NOT in here.
+ * Put it in Project Settings -> Script properties:
+ *
+ *   TELEGRAM_TOKEN     123456:AA...   from @BotFather
+ *   TELEGRAM_CHAT_ID   123456789      run telegramWhoAmI() to find yours
+ *
+ * With either missing, sendTelegram does nothing and says so, and the email
+ * notification carries on exactly as before. Nothing is ever lost because
+ * Telegram is not set up yet.
+ */
+function tgProp(k) {
+  return PropertiesService.getScriptProperties().getProperty(k);
+}
+
+function sendTelegram(text) {
+  var token = tgProp('TELEGRAM_TOKEN'), chat = tgProp('TELEGRAM_CHAT_ID');
+  if (!token || !chat || !text) return false;
+  try {
+    var res = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+      method: 'post',
+      payload: {
+        chat_id: chat,
+        text: text,
+        parse_mode: 'HTML',
+        disable_web_page_preview: 'true'
+      },
+      muteHttpExceptions: true
+    });
+    return res.getResponseCode() === 200;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Run this by hand once: message your bot in Telegram (press Start), then
+ * pick this function and press Run. It logs the chat id to paste into
+ * Script properties.
+ */
+function telegramWhoAmI() {
+  var token = tgProp('TELEGRAM_TOKEN');
+  if (!token) {
+    Logger.log('Set TELEGRAM_TOKEN in Project Settings -> Script properties first.');
+    return;
+  }
+  var res = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/getUpdates',
+                              { muteHttpExceptions: true });
+  var data = JSON.parse(res.getContentText());
+  if (!data.ok) { Logger.log('Telegram said: ' + res.getContentText()); return; }
+  if (!data.result || !data.result.length) {
+    Logger.log('No messages yet. Open the bot in Telegram, press Start, then run this again.');
+    return;
+  }
+  var seen = {};
+  data.result.forEach(function (u) {
+    var m = u.message || u.channel_post;
+    if (m && m.chat) seen[m.chat.id] = m.chat.title || m.chat.first_name || m.chat.username || '';
+  });
+  Object.keys(seen).forEach(function (id) {
+    Logger.log('TELEGRAM_CHAT_ID = ' + id + '   (' + seen[id] + ')');
+  });
+}
+
+/** Telegram's HTML mode only needs these three escaped. */
+function tgEsc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** What you read on your phone. Short enough to act on without opening the Sheet. */
+function telegramText(d) {
+  var L = [];
+
+  if (d.form === 'contact') {
+    L.push('\u26aa <b>MQL \u00b7 contact request</b>');
+    L.push('');
+    L.push('<b>' + tgEsc(d.name || '-') + '</b>');
+    L.push('Prefers: ' + tgEsc(d.prefer || '-'));
+    if (d.phone) L.push('Phone/handle: ' + tgEsc(d.phone));
+    if (d.email) L.push('Email: ' + tgEsc(d.email));
+    if (d.page) L.push('Came from: ' + tgEsc(d.page));
+    if (d.message) { L.push(''); L.push(tgEsc(d.message)); }
+    return L.join('\n');
+  }
+
+  if (d.form === 'brief') {
+    L.push('🟢 <b>SQL \u00b7 project brief</b> \u2014 wants to work with you');
+    L.push('');
+    L.push('<b>' + tgEsc(d.name || '-') + '</b>' + (d.company ? ' \u00b7 ' + tgEsc(d.company) : ''));
+    if (d.email) L.push(tgEsc(d.email));
+    if (d.website) L.push('Site now: ' + tgEsc(d.website));
+    L.push('');
+    L.push('Timing: <b>' + tgEsc(d.timing || '-') + '</b>');
+    L.push('Budget: <b>' + tgEsc(d.budget || '-') + '</b>');
+    if (d.message) { L.push(''); L.push(tgEsc(d.message)); }
+    return L.join('\n');
+  }
+
+  L.push('🔵 <b>SQL \u00b7 estimate</b>');
+  L.push('');
+  L.push('<b>' + tgEsc(d.name || '-') + '</b>');
+  if (d.email) L.push(tgEsc(d.email));
+  L.push('');
+  L.push('\u2248 <b>\u20ac' + tgEsc(d.estimate_low || '?') + ' \u2013 \u20ac' + tgEsc(d.estimate_high || '?') + '</b>');
+  if (d.monthly) L.push('then <b>\u20ac' + tgEsc(d.monthly) + ' / month</b>');
+  if (d.timeline) L.push(tgEsc(d.timeline));
+  L.push('');
+  if (d.website) L.push('Package: ' + tgEsc(d.website));
+  if (d.addons) L.push('Layers: ' + tgEsc(d.addons));
+  var meta = [];
+  if (d.languages) meta.push(d.languages + ' language' + (d.languages > 1 ? 's' : ''));
+  if (d.rush) meta.push('fast-track');
+  if (d.goal) meta.push(d.goal);
+  if (meta.length) L.push(tgEsc(meta.join(' \u00b7 ')));
+  if (d.message) { L.push(''); L.push(tgEsc(d.message)); }
+  return L.join('\n');
+}
+
+/**
+ * Telegram for everything, because that is where you actually look.
+ * Email as well for an SQL - those are the ones you act on, and you should
+ * not need Telegram open to find them later. An MQL only falls back to email
+ * when Telegram is not configured, so the inbox stays for real leads.
+ */
+function notify(d) {
+  var onTelegram = sendTelegram(telegramText(d));
+  if (d.form !== 'contact' || !onTelegram) sendNotification(d);
 }
 
 /** The automated reply to the person who filled the form. */
@@ -243,6 +435,25 @@ function sendAutoReply(d) {
 /** Your own copy, so you can act on it without opening the Sheet. */
 function sendNotification(d) {
   var isBrief = d.form === 'brief';
+
+  // Only reached for a contact request when Telegram is not configured, but
+  // when it is reached it should not pretend to be an estimate.
+  if (d.form === 'contact') {
+    MailApp.sendEmail({
+      to: NOTIFY_TO,
+      subject: 'Contact request - ' + (d.name || d.phone || d.email),
+      replyTo: d.email || REPLY_TO,
+      body:
+        'Someone asked to be contacted (MQL).\n\n' +
+        'Name:    ' + (d.name || '-') + '\n' +
+        'Prefers: ' + (d.prefer || '-') + '\n' +
+        'Phone:   ' + (d.phone || '-') + '\n' +
+        'Email:   ' + (d.email || '-') + '\n' +
+        'Page:    ' + (d.page || '-') + '\n\n' +
+        'Message:\n' + (d.message || '(none)')
+    });
+    return;
+  }
 
   var head = isBrief
     ? 'New project brief (MQL).\n\n' +
