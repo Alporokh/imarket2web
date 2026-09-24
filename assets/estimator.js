@@ -324,6 +324,9 @@ function payloadFields() {
   return {
     estimate_low: r ? Math.round(r.floor) : '',
     estimate_high: r ? Math.round(r.ceiling) : '',
+    // Recurring fees are deliberately outside the project total, so they
+    // need their own column or they vanish from the Sheet entirely.
+    monthly: r && r.monthlyTotal ? Math.round(r.monthlyTotal) : '',
     currency: RATES.currency,
     timeline: r ? r.weeksMin + '–' + r.weeksMax + ' weeks' : '',
     goal: state.goal || '',

@@ -142,6 +142,10 @@
         email: email,
         company: (form.querySelector('[name="company"]') || {}).value || '',
         website: (form.querySelector('[name="current_site"]') || {}).value || '',
+        // Both are in the composed text as well, but as columns they are
+        // what you sort and filter a list of briefs by.
+        timing: (form.querySelector('[name="timing"]') || {}).value || '',
+        budget: (form.querySelector('[name="budget"]') || {}).value || '',
         message: (form.querySelector('[name="anything"]') || {}).value || '',
         consent: true,
         estimate: body,

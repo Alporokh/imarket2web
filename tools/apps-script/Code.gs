@@ -54,10 +54,39 @@ var REPLY_TO    = 'imarket2web@gmail.com';
 var SHEET_NAME  = 'Leads';
 
 var HEADERS = [
-  'Received', 'Name', 'Email', 'Estimate low', 'Estimate high', 'Currency',
-  'Timeline', 'Goal', 'Website', 'Languages', 'Fast-track', 'Add-ons',
-  'Message', 'Consent', 'Full estimate', 'Source'
+  'Received', 'Name', 'Email', 'Estimate low', 'Estimate high', 'Monthly',
+  'Currency', 'Timeline', 'Goal', 'Website', 'Languages', 'Fast-track',
+  'Add-ons', 'Message', 'Consent', 'Full estimate', 'Source'
 ];
+
+/**
+ * Writes the header row, or corrects it, and returns the sheet. Used by both
+ * tabs so the two cannot drift apart.
+ */
+function syncHeaders(sh, headers, wideCol) {
+  var current = sh.getLastRow() === 0
+    ? []
+    : sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  if (current.join('|') !== headers.join('|')) {
+    if (sh.getLastRow() === 0) {
+      sh.appendRow(headers);
+    } else {
+      // Rows written under the old headings keep their old column order, so
+      // say so rather than silently mislabelling them.
+      Logger.log('WARNING: headers changed while ' + (sh.getLastRow() - 1) +
+                 ' row(s) already exist. Check the older rows still line up.');
+      sh.getRange(1, 1, 1, headers.length).setValues([headers]);
+    }
+  }
+  sh.getRange(1, 1, 1, headers.length)
+    .setFontWeight('bold').setBackground('#121214').setFontColor('#FFFFFF');
+  sh.setFrozenRows(1);
+  sh.setColumnWidth(1, 150);
+  // Found by name, not by a number that goes stale the moment a column moves.
+  var wide = headers.indexOf(wideCol);
+  if (wide >= 0) sh.setColumnWidth(wide + 1, 460);
+  return sh;
+}
 
 /**
  * Run this once by hand after pasting the file in.
@@ -81,25 +110,14 @@ function setup() {
     }
   }
 
-  // Write the header row if the sheet is empty, or replace it if the columns
-  // do not match what doPost will be writing.
-  var current = sh.getLastRow() === 0
-    ? []
-    : sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
-  if (current.join('|') !== HEADERS.join('|')) {
-    if (sh.getLastRow() === 0) {
-      sh.appendRow(HEADERS);
-    } else {
-      sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
-    }
-  }
-  sh.getRange(1, 1, 1, HEADERS.length)
-    .setFontWeight('bold')
-    .setBackground('#121214')
-    .setFontColor('#FFFFFF');
-  sh.setFrozenRows(1);
-  sh.setColumnWidth(1, 150);  // Received
-  sh.setColumnWidth(15, 420); // Full estimate
+  syncHeaders(sh, HEADERS, 'Full estimate');
+
+  // Lay the Briefs tab out too. It is created on first use anyway, but that
+  // means the first person to send a brief is the one who finds out whether
+  // it works.
+  var bs = ss.getSheetByName(BRIEF_SHEET) || ss.insertSheet(BRIEF_SHEET);
+  syncHeaders(bs, BRIEF_HEADERS, 'Full brief');
+
   SpreadsheetApp.flush();
   Logger.log('Ready. Now deploy as a web app (see the notes at the top).');
 }
@@ -159,6 +177,7 @@ function writeRow(d) {
     d.email || '',
     d.estimate_low || '',
     d.estimate_high || '',
+    d.monthly || '',
     d.currency || 'EUR',
     d.timeline || '',
     d.goal || '',
@@ -237,24 +256,20 @@ function sendNotification(d) {
 }
 
 var BRIEF_SHEET = "Briefs";
-var BRIEF_HEADERS = ["Received", "Name", "Email", "Business", "Current site", "Notes", "Consent", "Full brief"];
+var BRIEF_HEADERS = ["Received", "Name", "Email", "Business", "Current site",
+                     "Timing", "Budget", "Notes", "Consent", "Full brief"];
 
 /** The brief lands in its own tab, created on first use. */
 function writeBrief(d) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(BRIEF_SHEET);
-  if (!sh) {
-    sh = ss.insertSheet(BRIEF_SHEET);
-    sh.appendRow(BRIEF_HEADERS);
-    sh.getRange(1, 1, 1, BRIEF_HEADERS.length)
-      .setFontWeight("bold").setBackground("#121214").setFontColor("#FFFFFF");
-    sh.setFrozenRows(1);
-    sh.setColumnWidth(1, 150);
-    sh.setColumnWidth(8, 520);
-  }
+  if (!sh) sh = ss.insertSheet(BRIEF_SHEET);
+  syncHeaders(sh, BRIEF_HEADERS, "Full brief");
+
   sh.appendRow([
     new Date(), d.name || "", d.email || "", d.company || "",
-    d.website || "", d.message || "", d.consent ? "yes" : "no", d.estimate || ""
+    d.website || "", d.timing || "", d.budget || "", d.message || "",
+    d.consent ? "yes" : "no", d.estimate || ""
   ]);
 }
 
