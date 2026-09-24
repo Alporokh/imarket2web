@@ -537,6 +537,17 @@ h1, h2, h3, p { margin: 0; }
 .prose li { font-size: 16px; line-height: 1.55; color: var(--text); }
 .prose strong { color: var(--ink-2); font-weight: 600; }
 
+/* The picture at the top of an article. Same rounding and border as a .shot,
+   but full width and unclipped - it is the subject, not a thumbnail. */
+.article-cover {
+  margin: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--blue-tint);
+}
+.article-cover img { display: block; width: 100%; height: auto; }
+
 /* ---- Callouts inside a case ---- */
 .pull { border-left: 3px solid var(--blue); padding: 6px 0 6px 24px; }
 .pull p { font-size: 20px; line-height: 1.45; color: var(--ink-2); font-weight: 500; }
