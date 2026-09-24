@@ -704,3 +704,33 @@ Only the About page exists in Polish and Ukrainian. Every other nav link on
 those pages goes to the English version, which is normal mid-rollout but should
 not stay that way. The next pages worth translating are `/estimate/` and the
 Permanent Guru case study, in that order - one converts, the other proves.
+
+## Project brief (`/brief/`)
+
+The long questionnaire, as opposed to the estimator. The estimator answers
+"roughly what does this cost"; the brief answers "what do you actually need".
+
+Six sections: website, Google Business Profile, social, content and blog,
+automation and measurement, and the practical part (timing, budget, what success
+looks like).
+
+**Only name and email are required.** That is deliberate: a brief demanding
+twenty answers gets abandoned at question six, while one that accepts whatever
+you give it comes back half-filled - still far more than a contact form. The
+progress bar counts sections *started*, not completed, for the same reason.
+
+Two questions reveal follow-ups only when they are relevant (`data-reveal`), so
+a "no" on the blog hides the "who writes it" question rather than leaving the
+reader to work out which ones to skip.
+
+`assets/brief.js` composes the answers into readable prose, not a field dump -
+it should be legible on a phone. Multi-line answers keep their indentation, so a
+list of pages reads as a list. There is also a **Copy my answers** button, since
+someone who has spent ten minutes on this should not lose it to a failed send.
+
+### Where it goes
+
+It posts to the same Apps Script endpoint as the estimator with `form: "brief"`,
+and `Code.gs` routes it to a separate **Briefs** tab, created on first use, with
+its own columns and its own auto-reply. A brief and an estimate are different
+shapes; squeezing the brief into the Leads columns would have lost most of it.

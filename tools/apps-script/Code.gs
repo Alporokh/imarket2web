@@ -117,6 +117,15 @@ function doPost(e) {
       return json({ success: false, message: 'A valid email address is required.' });
     }
 
+    // A project brief is a different shape from an estimate, so it goes to its
+    // own tab rather than being squeezed into the Leads columns.
+    if (data.form === "brief") {
+      writeBrief(data);
+      sendBriefReply(data);
+      sendNotification(data);
+      return json({ success: true, message: "Sent" });
+    }
+
     writeRow(data);
     sendAutoReply(data);
     sendNotification(data);
@@ -224,6 +233,58 @@ function sendNotification(d) {
     subject: 'Estimate request - ' + (d.name || d.email),
     body: body,
     replyTo: d.email || REPLY_TO
+  });
+}
+
+var BRIEF_SHEET = "Briefs";
+var BRIEF_HEADERS = ["Received", "Name", "Email", "Business", "Current site", "Notes", "Consent", "Full brief"];
+
+/** The brief lands in its own tab, created on first use. */
+function writeBrief(d) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(BRIEF_SHEET);
+  if (!sh) {
+    sh = ss.insertSheet(BRIEF_SHEET);
+    sh.appendRow(BRIEF_HEADERS);
+    sh.getRange(1, 1, 1, BRIEF_HEADERS.length)
+      .setFontWeight("bold").setBackground("#121214").setFontColor("#FFFFFF");
+    sh.setFrozenRows(1);
+    sh.setColumnWidth(1, 150);
+    sh.setColumnWidth(8, 520);
+  }
+  sh.appendRow([
+    new Date(), d.name || "", d.email || "", d.company || "",
+    d.website || "", d.message || "", d.consent ? "yes" : "no", d.estimate || ""
+  ]);
+}
+
+/** A brief deserves a different reply from an estimate: it promises a person. */
+function sendBriefReply(d) {
+  var first = String(d.name || "").trim().split(/\s+/)[0] || "there";
+  var body =
+    "Hi " + first + ",\n\n" +
+    "Thank you - your brief came through and I have it in front of me.\n\n" +
+    "I read these myself, so what happens next is that I go through your\n" +
+    "answers and come back with a proposal for the parts that will actually\n" +
+    "move things, and a note on anything I would not spend your money on yet.\n\n" +
+    "Usually within two working days. If it is urgent, call +48 516 492 854.\n\n" +
+    "Here is a copy of what you sent, so you have it:\n\n" +
+    "--------------------------------------------------------\n" +
+    (d.estimate || "") + "\n" +
+    "--------------------------------------------------------\n\n" +
+    "Olena Porokh\n" +
+    "imarket2web - Poznan\n" +
+    "imarket2web@gmail.com - +48 516 492 854\n\n" +
+    "--\n" +
+    "You are receiving this because you sent a project brief on imarket2web.\n" +
+    "You are not on a mailing list. To have your data deleted, just reply and ask.";
+
+  MailApp.sendEmail({
+    to: d.email,
+    subject: "Your imarket2web project brief",
+    body: body,
+    name: FROM_NAME,
+    replyTo: REPLY_TO
   });
 }
 
