@@ -198,6 +198,19 @@
       var zoom = parseFloat(track.getAttribute("data-orbit-zoom"));
       if (isNaN(zoom)) zoom = ZOOM;
 
+      // Drift is absolute pixels, not a proportion of the frame. The strength
+      // that reads as a gentle current across a 2000px scene would tear a face
+      // apart inside a 420px portrait, so small frames set their own.
+      var noise = parseFloat(track.getAttribute("data-orbit-noise"));
+      if (isNaN(noise)) noise = NOISE_STRENGTH;
+
+      // Same reasoning for the pointer: a push tuned for a full-width scene
+      // would scatter a portrait the moment the cursor crossed it.
+      var cursorK = parseFloat(track.getAttribute("data-orbit-cursor"));
+      if (isNaN(cursorK)) cursorK = CURSOR_STRENGTH;
+      var cursorR = parseFloat(track.getAttribute("data-orbit-cursor-radius"));
+      if (isNaN(cursorR)) cursorR = CURSOR_RADIUS;
+
       function progress() {
         var range = track.offsetHeight - window.innerHeight;
         if (range <= 8) return FOCUS;
@@ -224,7 +237,7 @@
 
         var size = PARTICLE_SIZE * (dpr > 1.2 ? 1 : 0.5) | 0;
         if (size < 1) size = 1;
-        var r2 = CURSOR_RADIUS * dpr, r2sq = r2 * r2;
+        var r2 = cursorR * dpr, r2sq = r2 * r2;
 
         for (var i = 0; i < N; i++) {
           var homeX = hx[i] * sceneW - camX;
@@ -244,14 +257,14 @@
           // the scene rather than drifting with the camera
           var a = perlin((cx + camX) * NOISE_SCALE + t, (cy + camY) * NOISE_SCALE) * Math.PI * 4;
           var k = ((a * LUT_K) | 0) & (LUT - 1);
-          vx[i] += COS[k] * NOISE_STRENGTH * gust;
-          vy[i] += SIN[k] * NOISE_STRENGTH * gust;
+          vx[i] += COS[k] * noise * gust;
+          vy[i] += SIN[k] * noise * gust;
 
           // Pointer momentum
           var dx = cx - pxr, dy = cy - pyr;
           var d = dx * dx + dy * dy;
           if (d < r2sq && d > 0.01) {
-            var f = (1 - Math.sqrt(d) / r2) * CURSOR_STRENGTH;
+            var f = (1 - Math.sqrt(d) / r2) * cursorK;
             var inv = 1 / Math.sqrt(d);
             vx[i] += dx * inv * f;
             vy[i] += dy * inv * f;

@@ -663,8 +663,28 @@ third mode: `data-orbit-zoom="1"` fits the whole frame instead of cropping, and
 the fixed focus holds it still, so only the particles move and the cursor pushes
 them. It is wired on all three pages.
 
-Until that file exists the frame says `[ PORTRAIT - images/alena.jpg ]`. There is
-deliberately no stand-in face.
+The photo is in: `images/alena.jpg`, 1200x1500, cropped 4:5 at full height from
+the 2400x1792 original so nothing is cut top or bottom.
+
+**The portrait needs its own physics, and this is the part worth understanding.**
+Drift is measured in absolute pixels, not as a proportion of the frame. The
+default `NOISE_STRENGTH` of 0.14 reads as a gentle current across a 2000px
+scene; inside a 420px portrait the same setting moves particles 147px, which is
+23% of the frame width - the face stops being a face. Measured:
+
+| noise | drift | % of frame | result |
+|---|---|---|---|
+| 0.14 (default) | 147px | 23.3% | face destroyed |
+| 0.05 | 59px | 9.4% | face destroyed |
+| 0.02 | 25px | 4.0% | reads as a face |
+| **0.012 (used)** | **15px** | **2.4%** | **reads, clearly alive** |
+
+The pointer needed the same treatment: `data-orbit-cursor` 0.35 and a 90px
+radius, against 2.4 and 180px on the scenes. A push tuned for a full-width
+scene scatters a portrait the moment the cursor crosses it.
+
+26,175 particles at 4.27ms a frame - cheap, because the buffer is the portrait
+frame rather than the whole viewport.
 
 ### Still open on this page
 
