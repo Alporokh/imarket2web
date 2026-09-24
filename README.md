@@ -645,3 +645,42 @@ where the camera sits in the scene, and since the bodies in this image are
 already right of centre, a low value keeps them on the right of the frame with
 the copy on clear ground. The original `earth-beauty.jpg` is kept as the
 reference it was.
+
+## About page
+
+Three languages, same content: `/about/` (en), `/pl/o-mnie/`, `/uk/pro-mene/`.
+All four hreflang alternates on each, plus `x-default` to the English page.
+
+The Polish draft arrived without diacritics; they are restored. Polish written
+without ogonki and kreski reads as machine output, which is the opposite of
+what this page argues.
+
+### The portrait
+
+Drop a photo at **`images/alena.jpg`** - portrait, 4:5, at least 1000px wide -
+and it renders as particles through the same engine as the space scenes, in a
+third mode: `data-orbit-zoom="1"` fits the whole frame instead of cropping, and
+the fixed focus holds it still, so only the particles move and the cursor pushes
+them. It is wired on all three pages.
+
+Until that file exists the frame says `[ PORTRAIT - images/alena.jpg ]`. There is
+deliberately no stand-in face.
+
+### Still open on this page
+
+- **`[MONTH/YEAR YOU STARTED AEO WORK]`** appears on all three pages. It is the
+  one claim on the page that is specific and unverifiable by me.
+- **One real number.** You said you had none, so none is invented. The
+  attribution paragraph is qualitative on purpose. When a figure exists, it
+  belongs in the dark band beside the "since 2020" tiles.
+- **`sameAs`** in the Person schema is an empty array with a comment. Add the
+  LinkedIn URL when the profile is live; that is what connects the page to a
+  real identity for search engines.
+- **Client names.** Kept as categories, since written permission is outstanding.
+
+### What the language rollout still needs
+
+Only the About page exists in Polish and Ukrainian. Every other nav link on
+those pages goes to the English version, which is normal mid-rollout but should
+not stay that way. The next pages worth translating are `/estimate/` and the
+Permanent Guru case study, in that order - one converts, the other proves.

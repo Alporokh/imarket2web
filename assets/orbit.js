@@ -193,6 +193,11 @@
       var FOCUS = parseFloat(track.getAttribute("data-orbit-focus"));
       if (isNaN(FOCUS)) FOCUS = 0.5;
 
+      // A wide scene wants zoom > 1 so the camera has room to travel. A
+      // portrait wants the whole frame, so it sets 1.
+      var zoom = parseFloat(track.getAttribute("data-orbit-zoom"));
+      if (isNaN(zoom)) zoom = ZOOM;
+
       function progress() {
         var range = track.offsetHeight - window.innerHeight;
         if (range <= 8) return FOCUS;
@@ -211,7 +216,7 @@
         // Near the end the currents strengthen, so the scene comes apart
         var gust = 1 + smooth(0.9, 1, p) * 5;
 
-        var scale = (H / (sw * ratio)) * ZOOM;
+        var scale = (H / (sw * ratio)) * zoom;
         var sceneW = sw * scale;
         var sceneH = sw * ratio * scale;
         var camX = Math.max(0, sceneW - W) * travel;

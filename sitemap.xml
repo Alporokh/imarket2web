@@ -50,4 +50,19 @@
     <lastmod>2026-09-22</lastmod>
     <priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://imarket2web.com/about/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/o-mnie/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/pro-mene/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
