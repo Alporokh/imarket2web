@@ -19,7 +19,7 @@
   'use strict';
 
   // Same endpoint as the estimator. Kept in one place there.
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycby_qzVqUzfd-_Mm8W4TLByXyTEWXg1SwoCT3NPUQEd_yOBLtaC3io4L5X4zD6L5up1TzA/exec';
+  var ENDPOINT = 'https://imarket2web-leads.imarket2web.workers.dev/';
 
   function init() {
     var form = document.getElementById('brief-form');
