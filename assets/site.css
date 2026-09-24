@@ -1251,6 +1251,9 @@ h1, h2, h3, p { margin: 0; }
   .orbit-stage { position: relative; height: auto; min-height: 640px; }
   .orbit-canvas { display: none; }
   .orbit-track.is-live .orbit-stage::before { opacity: 1; }
+  /* No particles here, so the photograph is already at full strength - a
+     second masked copy of it would decode the same image for nothing. */
+  .orbit-track--portrait .orbit-face { display: none; }
 }
 
 /* Push mode enters from below, so the clip that keeps the pile tidy would
@@ -1302,6 +1305,26 @@ h1, h2, h3, p { margin: 0; }
 }
 .orbit-track--portrait .orbit-copy { display: none; }
 .orbit-track--portrait.is-live .orbit-stage::before { opacity: .28; }
+
+/* The particles are the effect, but a portrait has one job: being a face you
+   can actually see. At 28% under a few thousand particles, she was not.
+
+   This is the same photograph at full strength, masked to an ellipse over the
+   head and sitting ABOVE the particle canvas - so the effect reads as
+   something happening around her rather than over her. The ellipse is placed
+   on where the face measurably is in alena.jpg (skin-tone profile: head spans
+   x 0.33-0.70, y 0.16-0.35), and feathered from 55% out, so there is no
+   cut-out edge - the particles simply thin as they approach her. */
+.orbit-track--portrait .orbit-face {
+  position: absolute; inset: 0; z-index: 2;
+  pointer-events: none;
+  background: var(--orbit-img) center / cover no-repeat;
+  -webkit-mask-image: radial-gradient(ellipse 34% 30% at 50% 32%, #000 55%, rgba(0,0,0,0) 100%);
+          mask-image: radial-gradient(ellipse 34% 30% at 50% 32%, #000 55%, rgba(0,0,0,0) 100%);
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+.orbit-track--portrait.is-live .orbit-face { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .orbit-track--portrait .orbit-stage { aspect-ratio: 4 / 5; min-height: 0; }
