@@ -384,7 +384,6 @@ h1, h2, h3, p { margin: 0; }
 /* ============ AI / human ============ */
 .split-card { padding: 34px 32px; border-radius: 22px; }
 .split-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 16px; color: var(--ink-2); }
-.split-card li { display: flex; gap: 12px; }
 .split-card--blue { background: var(--blue-tint); border-color: var(--blue-tint-line); }
 .split-card .mono { margin-bottom: 20px; }
 .fineprint { margin-top: 24px; font-size: 16px; color: var(--text); max-width: 760px; line-height: 1.6; }
@@ -535,7 +534,7 @@ h1, h2, h3, p { margin: 0; }
 .prose h3 { font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 700; margin-top: 32px; }
 .prose p { font-size: 17px; line-height: 1.65; color: var(--text); text-wrap: pretty; }
 .prose ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
-.prose li { display: flex; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--text); }
+.prose li { font-size: 16px; line-height: 1.55; color: var(--text); }
 .prose strong { color: var(--ink-2); font-weight: 600; }
 
 /* ---- Callouts inside a case ---- */
@@ -661,7 +660,7 @@ h1, h2, h3, p { margin: 0; }
 .bd-row--inc .bd-price { color: var(--green-ink); }
 
 .res-includes { list-style: none; margin: 0 0 44px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
-.res-includes li { display: flex; gap: 10px; font-size: 15px; color: var(--text); }
+.res-includes li { font-size: 15px; color: var(--text); }
 
 .tiers { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-bottom: 44px; }
 .tier { padding: 26px 28px; }
@@ -1354,7 +1353,7 @@ h1, h2, h3, p { margin: 0; }
 .svc-box--peach .mono { color: var(--peach-ink); }
 
 .svc-list { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 11px; }
-.svc-list li { display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: var(--text); }
+.svc-list li { font-size: 15px; line-height: 1.55; color: var(--text); }
 .svc-list--dark li { color: var(--on-dark-2); }
 
 /* The jump strip reuses the clients strip, but its items are single links */
@@ -1518,9 +1517,10 @@ h1, h2, h3, p { margin: 0; }
      tick     something you receive
      number   a step in a sequence (the queue and the process cards)
 
-   Everything shares one alignment: the marker is flex: none so it never
-   shrinks, and it sits on the first line's optical centre, so a wrapped
-   line aligns under the text rather than under the marker.
+   Everything shares one alignment: the marker is absolutely positioned out
+   of the text flow and the item carries a matching padding-left, so a
+   wrapped line - and a bold lead-in's sentence - returns to the same left
+   edge on every row.
    ======================================================================= */
 
 .prose ul,
@@ -1533,21 +1533,33 @@ h1, h2, h3, p { margin: 0; }
 .prose ul { margin-bottom: 0; }
 .svc-list { margin-bottom: 18px; }
 
+/* Hanging indent, not a flex row. A flex container blockifies every inline
+   child, so a "<li><strong>Term.</strong> Sentence." became two columns: the
+   term shrank into a narrow first column and wrapped, and the sentence began
+   at whatever x that column happened to end at - a different x on every row.
+   With the marker taken out of flow the item is ordinary text again, so the
+   lead-in and its sentence run together and every wrapped line returns to the
+   same left edge. Same model as .queue above. */
 .prose li,
 .split-card li,
 .stat li,
 .svc-list li,
 .res-includes li {
-  display: flex; align-items: flex-start; gap: 12px;
+  position: relative;
+  padding-left: 18px;
+  text-wrap: pretty;
 }
+.svc-list li,
+.res-includes li,
+.stat li { padding-left: 22px; }   /* the tick is wider than the square */
 
 /* ---- The square: a fact ---- */
 .prose li::before,
 .split-card li::before {
   content: "";
-  flex: none;
+  position: absolute;
+  left: 0; top: .52em;        /* optical centre of the first line */
   width: 6px; height: 6px;
-  margin-top: .52em;          /* optical centre of the first line */
   border-radius: 2px;
   background: var(--blue);
 }
@@ -1559,7 +1571,8 @@ h1, h2, h3, p { margin: 0; }
 .res-includes li::before,
 .stat li::before {
   content: "✓";
-  flex: none;
+  position: absolute;
+  left: 0; top: 0;
   color: var(--blue);
   font-weight: 700;
   font-size: .92em;
