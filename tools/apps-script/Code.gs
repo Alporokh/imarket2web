@@ -13,37 +13,54 @@
  * -----------------------------------------------------------------------------
  * SETUP - about five minutes, once
  * -----------------------------------------------------------------------------
- * 1. Open the Sheet:
+ * 1. Open the Sheet - the one owned by imarket2web@gmail.com:
  *      https://docs.google.com/spreadsheets/d/1rQQSdr7Lj_7mefZ7xW31CBGxCdlrwrV9mr-VtntRUMg/edit
  *
- * 2. Extensions -> Apps Script. Delete whatever is in Code.gs, then paste in
- *    the CONTENTS of this file - every line below, starting with the comment
- *    block. Do NOT paste the file's path. If line 1 of the script editor
- *    reads "tools/apps-script/Code.gs" you have pasted the path, and the web
- *    app will answer every request with
+ *    There is a second spreadsheet with almost the same name in the
+ *    alporokh@gmail.com account. SHEET_ID below pins this script to the
+ *    right one, so it no longer matters which Sheet the script is attached
+ *    to - but it does matter which one you open to read the leads.
+ *
+ * 2. Extensions -> Apps Script. Select everything already in Code.gs and
+ *    DELETE it, then paste in the CONTENTS of this file - every line,
+ *    starting with the comment block you are reading.
+ *
+ *    Do NOT paste the file's path. If line 1 of the editor reads
+ *    "tools/apps-script/Code.gs" then the path went in instead of the file,
+ *    and the web app will answer every single request with
  *        ReferenceError: tools is not defined (line 1, file "Code")
  *    Save when the code is in.
  *
- * 3. Run the function `setup` once (pick it in the dropdown, press Run).
- *    Google will ask you to authorise it - that is it asking permission to
- *    write to your own Sheet and send mail as you. Approve it.
- *    You will see "Google hasn't verified this app": choose Advanced ->
- *    Go to (project name). That warning is normal for your own scripts.
+ * 3. Run 'setup' once (pick it in the dropdown, press Run). Google will ask
+ *    you to authorise it - that is it asking permission to write to your own
+ *    Sheet and send mail as you. "Google hasn't verified this app" is normal
+ *    for your own scripts: Advanced -> Go to (project name).
  *
- * 4. Deploy -> New deployment -> type "Web app".
+ * 4. Telegram, if you want it. The token is a password and this file lives in
+ *    a public repository, so it is NOT stored here. In @BotFather run /newbot
+ *    and copy the token, then Project Settings -> Script properties:
+ *        TELEGRAM_TOKEN     123456:AA...
+ *    Open the bot in Telegram and press Start, then run 'telegramWhoAmI' and
+ *    paste the id it logs:
+ *        TELEGRAM_CHAT_ID   123456789
+ *    Skip this and everything still works - notifications just go by email.
+ *
+ * 5. Deploy -> New deployment -> type "Web app".
  *      Execute as:      Me
- *      Who has access:  Anyone            <-- must be "Anyone", not "Anyone with Google account"
- *    Deploy, then copy the Web app URL. It looks like:
- *      https://script.google.com/macros/s/AKfycb..../exec
+ *      Who has access:  Anyone     <-- "Anyone", not "Anyone with a Google account"
+ *    Deploy, then copy the Web app URL (it ends in /exec).
  *
- * 5. Paste that URL into ENDPOINT in assets/estimator.js, and set
- *    PROVIDER to 'apps-script'.
+ * 6. Run 'selfTest'. It checks both tabs and their headers, writes a real row
+ *    and removes it again, sends a Telegram message and an email, and logs
+ *    PASS or FAIL for each. Opening the /exec URL in a browser answers the
+ *    same question more briefly.
  *
- * 6. Test it from the live site. A row should appear in the Sheet and two
- *    emails should arrive.
+ * The ENDPOINT in assets/estimator.js, assets/brief.js and assets/contact.js
+ * must match the /exec URL. It currently does.
  *
- * If you ever change this code, you must Deploy -> Manage deployments ->
- * edit -> New version, or the live site keeps running the old copy.
+ * WHENEVER YOU CHANGE THIS FILE: Deploy -> Manage deployments -> pencil ->
+ * Version: New version -> Deploy. Without that the live site keeps running
+ * the previous copy, and nothing you just fixed is fixed.
  * -----------------------------------------------------------------------------
  */
 
@@ -51,6 +68,21 @@
 var NOTIFY_TO   = 'imarket2web@gmail.com';   // where your own copy goes
 var FROM_NAME   = 'Olena · imarket2web';     // the name on the auto-reply
 var REPLY_TO    = 'imarket2web@gmail.com';
+/* Which spreadsheet to write into.
+
+   getActiveSpreadsheet() answers "whichever Sheet this script is attached
+   to". That is null in a standalone script project, and it is the wrong file
+   if the script was made from a copy - and there are two spreadsheets with
+   almost the same name, one per Google account:
+
+     1rQQSdr7...  imarket2web - estimator leads   owned by imarket2web@gmail.com  <- this one
+     16svq5Nm...  imarket2web - Estimator leads   owned by alporokh@gmail.com
+
+   Naming the file explicitly is the difference between leads arriving and
+   leads arriving somewhere nobody looks. Set it to '' to go back to using
+   whatever Sheet the script is attached to. */
+var SHEET_ID    = '1rQQSdr7Lj_7mefZ7xW31CBGxCdlrwrV9mr-VtntRUMg';
+
 var SHEET_NAME  = 'Leads';              // SQL: estimates and briefs
 var MQL_SHEET   = 'MQL';                // people who only asked to be called
 
@@ -75,6 +107,19 @@ var HEADERS = [
   'Goal', 'Languages', 'Fast-track', 'Add-ons',
   'Message', 'Consent', 'Details'
 ];
+
+/** The spreadsheet every tab lives in. */
+function book() {
+  var ss = SHEET_ID
+    ? SpreadsheetApp.openById(SHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    throw new Error('No spreadsheet found. Either set SHEET_ID at the top of ' +
+                    'this file, or create the script from the Sheet itself ' +
+                    '(Extensions -> Apps Script) rather than as a standalone project.');
+  }
+  return ss;
+}
 
 /**
  * Writes the header row, or corrects it, and returns the sheet. Used by both
@@ -110,7 +155,7 @@ function syncHeaders(sh, headers, wideCol) {
  * Creates the Leads tab and writes the header row.
  */
 function setup() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = book();
   var sh = ss.getSheetByName(SHEET_NAME);
 
   // If there is no Leads tab yet but the spreadsheet has a single sheet, adopt
@@ -190,7 +235,8 @@ function doPost(e) {
 function doGet() {
   var out = { ok: true, service: 'imarket2web forms' };
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = book();
+    out.spreadsheet = ss.getName();
     out.tabs = ss.getSheets().map(function (sh) { return sh.getName(); });
     var leads = ss.getSheetByName(SHEET_NAME);
     out.leadsReady = !!leads && leads.getLastRow() > 0 &&
@@ -220,8 +266,9 @@ function selfTest() {
     L.push((pass ? 'PASS  ' : 'FAIL  ') + label + (detail ? '   - ' + detail : ''));
   }
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = book();
   L.push('Spreadsheet: ' + ss.getName());
+  L.push('Id:          ' + ss.getId() + (SHEET_ID ? '  (pinned by SHEET_ID)' : '  (the attached Sheet)'));
   L.push('Tabs: ' + ss.getSheets().map(function (sh) { return sh.getName(); }).join(', '));
   L.push('');
 
@@ -286,7 +333,7 @@ function selfTest() {
 // ---- Pieces -----------------------------------------------------------------
 
 function writeRow(d) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = book();
   var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sh.getLastRow() === 0) sh.appendRow(HEADERS);
 
@@ -326,7 +373,7 @@ function writeRow(d) {
 /** Contact requests are their own tab: a different shape, and a different
     question - these are people to chase, not proposals to send. */
 function writeMql(d) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = book();
   var sh = ss.getSheetByName(MQL_SHEET) || ss.insertSheet(MQL_SHEET);
   syncHeaders(sh, MQL_HEADERS, 'Message');
   sh.appendRow([
