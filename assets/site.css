@@ -1579,12 +1579,14 @@ h1, h2, h3, p { margin: 0; }
    Gated on a real pointer: a touch tap fires :hover too, and on a phone the
    lift then sticks until you tap something else. */
 @media (hover: hover) and (pointer: fine) {
-  .svc-box {
+  .svc-box,
+  .card.svc {
     transition: transform .17s cubic-bezier(0.23, 1, 0.32, 1),
                 box-shadow .17s cubic-bezier(0.23, 1, 0.32, 1),
                 border-color .17s ease;
   }
-  .card.svc-box:hover {
+  .card.svc-box:hover,
+  .card.svc:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 34px rgba(23, 23, 26, .09);
     border-color: var(--blue-tint-line);
@@ -1594,10 +1596,13 @@ h1, h2, h3, p { margin: 0; }
     box-shadow: 0 16px 34px rgba(0, 0, 0, .34);
     border-color: var(--dark-border);
   }
+  /* Not inside the home page's scrolling gallery: those cards are one moving
+     band, and a card stepping out of it breaks the band. */
+  .gal-track > .card.svc:hover { transform: none; box-shadow: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .svc-box { transition: box-shadow .17s ease, border-color .17s ease; }
-  .card.svc-box:hover, .layer.svc-box:hover { transform: none; }
+  .svc-box, .card.svc { transition: box-shadow .17s ease, border-color .17s ease; }
+  .card.svc-box:hover, .layer.svc-box:hover, .card.svc:hover { transform: none; }
 }
 
 .svc-box { padding: 30px 32px; }
@@ -1818,6 +1823,22 @@ h1, h2, h3, p { margin: 0; }
 /* The CSS bloom becomes a soft halo behind the portal sun rather than a
    second, blurrier sun competing with it. */
 .svc-hero.has-portal .svc-hero-sun { filter: opacity(.34); }
+
+/* The twinkling grid. twinkle.js appends it last, so at this z-index it sits
+   above both the portals and the scrim but still below the copy - the squares
+   stay bright over the sun, where the scrim is nearly transparent anyway, and
+   the headline keeps the contrast the scrim guarantees.
+
+   The falloff around the sun is a mask rather than per-cell maths: the GPU
+   does it for nothing, and it stays correct when the hero resizes. Centred on
+   (90%, 26%), which is where the sun portal is. */
+.twinkle {
+  position: absolute; inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 46% 62% at 90% 26%, #000 8%, rgba(0,0,0,.55) 45%, rgba(0,0,0,0) 100%);
+          mask-image: radial-gradient(ellipse 46% 62% at 90% 26%, #000 8%, rgba(0,0,0,.55) 45%, rgba(0,0,0,0) 100%);
+}
 
 .svc-hero-copy { position: relative; z-index: 3; }
 .svc-hero-copy .h2-xl { margin-top: 18px; }
