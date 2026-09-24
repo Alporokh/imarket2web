@@ -385,9 +385,7 @@ h1, h2, h3, p { margin: 0; }
 .split-card { padding: 34px 32px; border-radius: 22px; }
 .split-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 16px; color: var(--ink-2); }
 .split-card li { display: flex; gap: 12px; }
-.split-card li::before { content: "-"; color: #C4BFB5; }
 .split-card--blue { background: var(--blue-tint); border-color: var(--blue-tint-line); }
-.split-card--blue li::before { color: #8FB6E4; }
 .split-card .mono { margin-bottom: 20px; }
 .fineprint { margin-top: 24px; font-size: 16px; color: var(--text); max-width: 760px; line-height: 1.6; }
 
@@ -538,7 +536,6 @@ h1, h2, h3, p { margin: 0; }
 .prose p { font-size: 17px; line-height: 1.65; color: var(--text); text-wrap: pretty; }
 .prose ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
 .prose li { display: flex; gap: 12px; font-size: 16px; line-height: 1.55; color: var(--text); }
-.prose li::before { content: "-"; color: #C4BFB5; flex: none; }
 .prose strong { color: var(--ink-2); font-weight: 600; }
 
 /* ---- Callouts inside a case ---- */
@@ -665,7 +662,6 @@ h1, h2, h3, p { margin: 0; }
 
 .res-includes { list-style: none; margin: 0 0 44px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
 .res-includes li { display: flex; gap: 10px; font-size: 15px; color: var(--text); }
-.res-includes li::before { content: "✓"; color: var(--blue); }
 
 .tiers { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-bottom: 44px; }
 .tier { padding: 26px 28px; }
@@ -1359,9 +1355,7 @@ h1, h2, h3, p { margin: 0; }
 
 .svc-list { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 11px; }
 .svc-list li { display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: var(--text); }
-.svc-list li::before { content: "+"; color: var(--blue); flex: none; font-weight: 600; }
 .svc-list--dark li { color: var(--on-dark-2); }
-.svc-list--dark li::before { color: var(--blue-light); }
 
 /* The jump strip reuses the clients strip, but its items are single links */
 .services-jump li { flex-direction: row; }
@@ -1440,7 +1434,7 @@ h1, h2, h3, p { margin: 0; }
    drift without an edge ever entering view. 108s, ease-in-out, alternate -
    slow enough that the reversal is not perceptible.
 
-   The sun: a bloom centred on 48% / 17%, which is where the brightest
+   The sun: a bloom centred on 56% / 20%, which is where the brightest
    point of the photograph actually is - measured, not guessed. It swells
    and fades on a 19s loop, so the sun crests rather than pulses.
    ======================================================================= */
@@ -1470,7 +1464,7 @@ h1, h2, h3, p { margin: 0; }
 
 .svc-hero-sun {
   z-index: 1;
-  background: radial-gradient(circle 26vmax at 48% 17%,
+  background: radial-gradient(circle 26vmax at 56% 20%,
     rgba(255,238,205,.50) 0%,
     rgba(255,214,150,.22) 28%,
     rgba(120,170,230,.10) 52%,
@@ -1507,4 +1501,75 @@ h1, h2, h3, p { margin: 0; }
   .svc-hero-bg, .svc-hero-sun { animation: none; }
   .svc-hero-bg { transform: none; }
   .svc-hero-sun { opacity: .7; transform: none; }
+}
+
+/* =======================================================================
+   LISTS - one system for the whole site
+   -----------------------------------------------------------------------
+   Before this there were four different markers for the same kind of
+   content - an em dash turned hyphen, a plus, a tick, and in one case no
+   marker at all - which made identical things look different from page to
+   page. Now a marker means something:
+
+     square   a fact, a feature, a description
+     tick     something you receive
+     number   a step in a sequence (the queue and the process cards)
+
+   Everything shares one alignment: the marker is flex: none so it never
+   shrinks, and it sits on the first line's optical centre, so a wrapped
+   line aligns under the text rather than under the marker.
+   ======================================================================= */
+
+.prose ul,
+.split-card ul,
+.stat ul,
+.svc-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 11px;
+}
+.prose ul { margin-bottom: 0; }
+.svc-list { margin-bottom: 18px; }
+
+.prose li,
+.split-card li,
+.stat li,
+.svc-list li,
+.res-includes li {
+  display: flex; align-items: flex-start; gap: 12px;
+}
+
+/* ---- The square: a fact ---- */
+.prose li::before,
+.split-card li::before {
+  content: "";
+  flex: none;
+  width: 6px; height: 6px;
+  margin-top: .52em;          /* optical centre of the first line */
+  border-radius: 2px;
+  background: var(--blue);
+}
+.split-card--blue li::before { background: var(--blue-hover); }
+.dark .prose li::before { background: var(--blue-light); }
+
+/* ---- The tick: something you receive ---- */
+.svc-list li::before,
+.res-includes li::before,
+.stat li::before {
+  content: "✓";
+  flex: none;
+  color: var(--blue);
+  font-weight: 700;
+  font-size: .92em;
+  line-height: 1.55;
+}
+.svc-list--dark li::before { color: var(--blue-light); }
+.layer .stat li::before,
+.dark .stat li::before { color: var(--blue-light); }
+
+/* res-includes keeps its two-column grid, but takes the shared alignment */
+.res-includes { list-style: none; margin: 0 0 44px; padding: 0;
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+
+@media (max-width: 640px) {
+  .res-includes { grid-template-columns: 1fr; }
 }

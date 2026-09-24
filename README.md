@@ -746,7 +746,7 @@ can drift horizontally without an edge ever entering view. 108s, `ease-in-out`,
 `alternate` - slow enough that the reversal is not perceptible, which is what
 lets a two-way animation read as one-way rotation.
 
-**The sun blooms.** A radial bloom centred on **48% across, 17% down** - measured
+**The sun blooms.** A radial bloom centred on **56% across, 20% down** - measured
 from the photograph's brightest pixel, not guessed - swelling and fading on a
 19s loop, so it crests rather than pulses. `mix-blend-mode: screen` so it adds
 light instead of painting a disc on top.
@@ -760,3 +760,26 @@ Reduced motion keeps the scene and drops the movement.
 To swap the image: replace the file and re-measure the brightest point, because
 the bloom position is tied to where the sun actually is. The snippet that finds
 it is in the commit for this change.
+
+## Lists
+
+One system across the site. Before this there were four different markers for
+the same kind of content - an em dash that the hyphen sweep turned into a stray
+`-`, a `+`, a `✓`, and in one case no marker at all - so identical things looked
+different from page to page.
+
+Now a marker means something:
+
+| marker | meaning | used by |
+|---|---|---|
+| small blue square | a fact, a feature, a description | `.prose`, `.split-card` |
+| ✓ | something you receive | `.svc-list`, `.res-includes`, `.stat` |
+| number | a step in a sequence | `.queue`, the process cards |
+
+All of them share one alignment: the marker is `flex: none` so it never shrinks,
+and sits on the first line's optical centre (`margin-top: .52em`), so a wrapped
+line aligns under the **text** rather than under the marker. That hanging indent
+is most of what makes a list look deliberate rather than accidental.
+
+The six superseded rules were deleted rather than overridden, so the stylesheet
+has one definition per marker instead of four competing ones.
