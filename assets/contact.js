@@ -31,7 +31,7 @@
 (function () {
   'use strict';
 
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycby_qzVqUzfd-_Mm8W4TLByXyTEWXg1SwoCT3NPUQEd_yOBLtaC3io4L5X4zD6L5up1TzA/exec';
+  var ENDPOINT = 'https://imarket2web-leads.imarket2web.workers.dev/';
 
   /* ---- The form, as markup, so the dialog can build its own copy -------- */
   function fields() {
