@@ -28,11 +28,10 @@
       "email": "imarket2web@gmail.com",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "ul. Jasielska 10a",
-        "postalCode": "60-476",
         "addressLocality": "Poznań",
         "addressCountry": "PL"
-      }
+      },
+      "areaServed": ["Poznań", "Poland", "Czechia", "Estonia"]
     }
   }
   </script>
@@ -111,7 +110,7 @@
         <ul class="svc-list svc-list--dark" style="margin-top:22px;">
           <li><strong>Phone.</strong> <a href="tel:+48516492854">+48 516 492 854</a> - Polish, English or Ukrainian.</li>
           <li><strong>Email.</strong> <a href="mailto:imarket2web@gmail.com">imarket2web@gmail.com</a></li>
-          <li><strong>In person.</strong> ul. Jasielska 10a, 60-476 Poznań.</li>
+          <li><strong>Where.</strong> Poznań, working with clients across Poland, Czechia and the Baltics.</li>
         </ul>
 
         <!-- Kept on the dark column rather than in a card: .btn-ghost is
@@ -127,7 +126,7 @@
       </div>
 
       <div>
-        <form id="contact-form" novalidate>
+        <form id="contact-form" data-contact-form novalidate>
           <label class="fld">
             <span>Your name <em>required</em></span>
             <input type="text" name="name" autocomplete="name" placeholder="Anna Kowalska">
@@ -161,7 +160,7 @@
           <!-- Honeypot: bots fill this, humans never see it -->
           <input type="checkbox" name="botcheck" class="vh" tabindex="-1" autocomplete="off">
 
-          <label class="consent">
+          <label class="form-consent">
             <input type="checkbox" name="consent">
             <span>Contact me about this. No list, no newsletter - see the <a href="../privacy/">privacy note</a>.</span>
           </label>
