@@ -2,9 +2,11 @@
    imarket2web - portal
    =========================================================================
 
-   A circular portal for the services hero: a vortex lens that drags the
+   Circular portals for the services hero: a vortex lens that drags the
    photograph behind it into a spiral, a glowing rim, and particles winding
-   in toward the centre.
+   in toward the centre. The hero runs two of them - the blue lens over the
+   Earth, and the sun in the top corner as a hotter, looser portal with its
+   wind blowing outward.
 
    Why a shader and not more canvas particles
    ------------------------------------------
@@ -16,8 +18,15 @@
    photograph through a swirled coordinate, plus a few thousand GL_POINTS for
    the particles. Cost is roughly flat in particle count.
 
-   Two passes, two blend modes
-   ---------------------------
+   Why one context for all of them
+   -------------------------------
+   Every portal is the same two programs with different uniforms, so a second
+   portal costs a second pair of draw calls and nothing else. Giving each one
+   its own canvas would mean a second WebGL context, a second set of compiled
+   shaders and a second rAF loop running at 60fps - all to draw a circle.
+
+   Two passes per portal, two blend modes
+   --------------------------------------
      1. the disc, blended normally, so it sits over the hero photograph
      2. the particles, blended additively, so overlaps build light
 
@@ -25,25 +34,32 @@
    --------------------------
    The canvas starts transparent and is only faded in once a frame has
    actually been drawn. No WebGL, a failed shader compile, a texture that
-   will not load, or reduced motion all leave the hero exactly as it was:
-   the CSS background image, unchanged. Nothing here is load-bearing.
+   will not load, a lost context, or reduced motion all leave the hero as it
+   was: the CSS background image, unchanged. Nothing here is load-bearing.
 
    Customising it
    --------------
-   Every value below is overridable per element, so the same file can drive a
-   different portal on another page without editing this one:
+   Put data-portal on the element the canvas should cover. That element's own
+   data-portal-* attributes describe one portal; for several, add a hidden
+   [data-portal-item] child per portal and put the attributes on those
+   instead.
 
      data-portal-image    URL of the photograph to look through (optional -
                           without it the portal is purely procedural)
      data-portal-count    particle count                        (1600)
      data-portal-radius   disc radius, fraction of min(w,h)     (0.34)
      data-portal-x        centre, fraction of width             (0.74)
-     data-portal-y        centre, fraction of height            (0.46)
+     data-portal-y        centre, fraction of height, from top  (0.46)
      data-portal-swirl    vortex strength                       (0.35)
-     data-portal-speed    global time scale                     (1)
+     data-portal-turb     turbulence; 0 is glassy, >1 is stormy (1)
+     data-portal-rim      rim width; small is a hard ring,
+                          large is a corona                     (0.05)
+     data-portal-speed    time scale                            (1)
      data-portal-glow     rim brightness                        (1)
+     data-portal-fill     0 is a window you look through, 1 is a
+                          filled glowing body - a star          (0)
      data-portal-flow     in | out | orbit                      (in)
-     data-portal-color-a  inner//cool colour, hex               (#1668D8)
+     data-portal-color-a  inner/cool colour, hex                (#1668D8)
      data-portal-color-b  outer/hot colour, hex                 (#9FD2FF)
      data-portal-cursor   how far the pointer pulls the centre,
                           as a fraction of the radius           (0.07)
@@ -53,7 +69,7 @@
   'use strict';
 
   var MAX_DPR = 1.75;        // beyond this the fill cost stops buying anything
-  var SMALL = 900;           // px - below this the portal recentres
+  var SMALL = 900;           // px - below this the portals recentre
 
   var DEFAULTS = {
     count: 1600,
@@ -61,8 +77,11 @@
     x: 0.74,
     y: 0.46,
     swirl: 0.35,
+    turb: 1,
+    rim: 0.05,
     speed: 1,
     glow: 1,
+    fill: 0,
     flow: 'in',
     colorA: '#1668D8',
     colorB: '#9FD2FF',
@@ -83,7 +102,10 @@
     'uniform float uRadius;',
     'uniform float uTime;',
     'uniform float uSwirl;',
+    'uniform float uTurb;',
+    'uniform float uRimW;',
     'uniform float uGlow;',
+    'uniform float uFill;',
     'uniform vec3  uColA;',
     'uniform vec3  uColB;',
     'uniform sampler2D uTex;',
@@ -123,6 +145,7 @@
 
     // Turbulence sampled in polar space, so the detail spirals with the disc.
     '  float n = fbm(vec2(a2 * 1.7, r * 2.6 - uTime * 0.5));',
+    '  n = clamp(0.45 + (n - 0.45) * uTurb, 0.0, 1.5);',
 
     // Look through the portal: the scene, dragged round by that same vortex.
     '  vec2 warp = uCenter + vec2(cos(a2), sin(a2)) * (r * uRadius) * (0.94 + 0.10 * n);',
@@ -131,7 +154,7 @@
 
     // pow() is undefined for a negative base in GLSL ES, and both of these
     // bases go negative inside the disc. Square by multiplying instead.
-    '  float rw = (r - 0.965) / 0.05;',
+    '  float rw = (r - 0.965) / max(uRimW, 0.005);',
     '  float hw = (r - 1.02) * 2.0;',
     '  float inside = 1.0 - smoothstep(0.80, 1.0, r);',
     '  float rim    = exp(-rw * rw);',
@@ -142,7 +165,14 @@
     '  vec3 col = scene * inside * (0.72 + 0.85 * n);',
     '  col += energy * (rim * uGlow + core * 0.5 + haze * 0.7 + n * 0.18 * inside);',
 
-    '  float alpha = clamp(inside * (0.55 + 0.6 * n) + rim * uGlow * 0.9 + haze, 0.0, 1.0);',
+    // A lens is a window and so is dark in the middle; a star is not.
+    // uFill pours the energy colour through the whole disc, granulated by
+    // the same turbulence, so one shader draws both.
+    '  float body = inside * (0.45 + 0.55 * n) * mix(0.55, 1.0, core);',
+    '  col += energy * uFill * body;',
+
+    '  float alpha = clamp(inside * (0.55 + 0.6 * n) + rim * uGlow * 0.9 + haze',
+    '                    + uFill * body * 0.85, 0.0, 1.0);',
     '  gl_FragColor = vec4(col, alpha);',
     '}'
   ].join('\n');
@@ -241,24 +271,34 @@
     return u;
   }
 
-  /* ---- One portal ------------------------------------------------------ */
+  function readConfig(el) {
+    var flow = el.getAttribute('data-portal-flow') || DEFAULTS.flow;
+    return {
+      count: Math.max(0, Math.round(num(el, 'count', DEFAULTS.count))),
+      radius: num(el, 'radius', DEFAULTS.radius),
+      x: num(el, 'x', DEFAULTS.x),
+      y: num(el, 'y', DEFAULTS.y),
+      swirl: num(el, 'swirl', DEFAULTS.swirl),
+      turb: num(el, 'turb', DEFAULTS.turb),
+      rimW: num(el, 'rim', DEFAULTS.rim),
+      speed: num(el, 'speed', DEFAULTS.speed),
+      glow: num(el, 'glow', DEFAULTS.glow),
+      fill: num(el, 'fill', DEFAULTS.fill),
+      cursor: num(el, 'cursor', DEFAULTS.cursor),
+      flow: flow === 'out' ? -1 : flow === 'orbit' ? 0 : 1,
+      colA: rgb(el.getAttribute('data-portal-color-a') || DEFAULTS.colorA),
+      colB: rgb(el.getAttribute('data-portal-color-b') || DEFAULTS.colorB),
+      src: el.getAttribute('data-portal-image') || ''
+    };
+  }
+
+  /* ---- One stage, any number of portals -------------------------------- */
 
   function build(stage) {
-    var cfg = {
-      count: Math.max(0, Math.round(num(stage, 'count', DEFAULTS.count))),
-      radius: num(stage, 'radius', DEFAULTS.radius),
-      x: num(stage, 'x', DEFAULTS.x),
-      y: num(stage, 'y', DEFAULTS.y),
-      swirl: num(stage, 'swirl', DEFAULTS.swirl),
-      speed: num(stage, 'speed', DEFAULTS.speed),
-      glow: num(stage, 'glow', DEFAULTS.glow),
-      cursor: num(stage, 'cursor', DEFAULTS.cursor),
-      flow: stage.getAttribute('data-portal-flow') || DEFAULTS.flow,
-      colA: rgb(stage.getAttribute('data-portal-color-a') || DEFAULTS.colorA),
-      colB: rgb(stage.getAttribute('data-portal-color-b') || DEFAULTS.colorB),
-      src: stage.getAttribute('data-portal-image') || ''
-    };
-    var flow = cfg.flow === 'out' ? -1 : cfg.flow === 'orbit' ? 0 : 1;
+    var items = stage.querySelectorAll('[data-portal-item]');
+    var configs = items.length
+      ? Array.prototype.map.call(items, readConfig)
+      : [readConfig(stage)];
 
     var canvas = document.createElement('canvas');
     canvas.className = 'svc-hero-portal';
@@ -274,72 +314,71 @@
     if (!pPortal || !pPart) return;
 
     var uP = uniforms(gl, pPortal, ['uRes', 'uCenter', 'uRadius', 'uTime', 'uSwirl',
-                                    'uGlow', 'uColA', 'uColB', 'uTex', 'uHasTex', 'uTexScale']);
+                                    'uTurb', 'uRimW', 'uGlow', 'uFill', 'uColA', 'uColB',
+                                    'uTex', 'uHasTex', 'uTexScale']);
     var uQ = uniforms(gl, pPart, ['uRes', 'uCenter', 'uRadius', 'uTime', 'uFlow',
                                   'uDpr', 'uColA', 'uColB']);
 
-    // Fullscreen quad
     var quad = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, quad);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     var aPos = gl.getAttribLocation(pPortal, 'aPos');
-
-    // Particle seeds. Nothing changes per frame - the vertex shader derives
-    // the whole trajectory from the seed and the clock, so there is no buffer
-    // upload after this one.
-    var seeds = new Float32Array(cfg.count * 4);
-    for (var i = 0; i < cfg.count; i++) {
-      seeds[i * 4]     = Math.random() * Math.PI * 2;      // start angle
-      seeds[i * 4 + 1] = 0.35 + Math.random() * 1.05;      // orbit radius
-      seeds[i * 4 + 2] = Math.random();                    // phase + speed
-      seeds[i * 4 + 3] = Math.random();                    // tone + size
-    }
-    var pbuf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, pbuf);
-    gl.bufferData(gl.ARRAY_BUFFER, seeds, gl.STATIC_DRAW);
     var aSeed = gl.getAttribLocation(pPart, 'aSeed');
 
-    // A 1x1 texture stands in until (or instead of) the photograph, so the
-    // sampler is always bound to something real.
-    var tex = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-                  new Uint8Array([0, 0, 0, 255]));
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-
-    var hasTex = 0, imgW = 1, imgH = 1;
-    if (cfg.src) {
-      var img = new Image();
-      img.decoding = 'async';
-      img.onload = function () {
-        // An image the context may not read (a cross-origin file, or any
-        // image at all when the page is opened over file://) makes this
-        // throw. That is survivable - the portal simply runs procedural.
-        try {
-          gl.bindTexture(gl.TEXTURE_2D, tex);
-          // The photograph is not a power of two, so: no mipmaps, clamped wrap.
-          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-          imgW = img.naturalWidth;
-          imgH = img.naturalHeight;
-          hasTex = 1;
-        } catch (e) { hasTex = 0; }
-        // Held on a single frame, nothing would redraw once the photograph
-        // arrives, so the lens would stay procedural. Redraw it.
-        if (staticMode) frame(0);
-      };
-      img.src = cfg.src;
-    }
-
-    var W = 0, H = 0, dpr = 1;
-    var cx = 0, cy = 0, radius = 0;     // resolved in device pixels
-    var px = 0, py = 0;                 // pointer offset, eased
-    var tx = 0, ty = 0;                 // pointer offset, target
     var running = false, drawn = false, raf = 0, staticMode = false;
+    var W = 0, H = 0, dpr = 1;
+    var px = 0, py = 0, tx = 0, ty = 0;   // pointer offset, eased and target
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    var portals = configs.map(function (cfg) {
+      // Seeds never change - the vertex shader derives the whole trajectory
+      // from the seed and the clock, so there is no upload after this one.
+      var seeds = new Float32Array(cfg.count * 4);
+      for (var i = 0; i < cfg.count; i++) {
+        seeds[i * 4]     = Math.random() * Math.PI * 2;   // start angle
+        seeds[i * 4 + 1] = 0.35 + Math.random() * 1.05;   // orbit radius
+        seeds[i * 4 + 2] = Math.random();                 // phase + speed
+        seeds[i * 4 + 3] = Math.random();                 // tone + size
+      }
+      var buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, seeds, gl.STATIC_DRAW);
+
+      var p = { cfg: cfg, buf: buf, hasTex: 0, imgW: 1, imgH: 1,
+                cx: 0, cy: 0, radius: 0, tex: gl.createTexture() };
+
+      gl.bindTexture(gl.TEXTURE_2D, p.tex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+                    new Uint8Array([0, 0, 0, 255]));
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+      if (cfg.src) {
+        var img = new Image();
+        img.decoding = 'async';
+        img.onload = function () {
+          // An image the context may not read (cross-origin, or any image at
+          // all over file://) makes this throw. Survivable - the portal just
+          // runs procedural.
+          try {
+            gl.bindTexture(gl.TEXTURE_2D, p.tex);
+            // Not a power of two, so: no mipmaps, clamped wrap.
+            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+            p.imgW = img.naturalWidth;
+            p.imgH = img.naturalHeight;
+            p.hasTex = 1;
+          } catch (e) { p.hasTex = 0; }
+          // Held on one frame, nothing would redraw once the photograph
+          // arrives, so the lens would stay procedural. Redraw it.
+          if (staticMode) frame(0);
+        };
+        img.src = cfg.src;
+      }
+      return p;
+    });
 
     function resize() {
       var rect = stage.getBoundingClientRect();
@@ -348,72 +387,80 @@
       H = Math.max(1, Math.round(rect.height * dpr));
       canvas.width = W;
       canvas.height = H;
+      // On a narrow screen a portal placed at 0.74 hangs half off the edge.
+      // Rather than recentring everything on top of itself, compress the
+      // whole arrangement toward the middle, which keeps the composition.
       var small = rect.width < SMALL;
-      var fx = small ? 0.5 : cfg.x;
-      var fy = small ? 0.32 : cfg.y;
-      cx = W * fx;
-      cy = H * (1 - fy);               // GL counts y from the bottom
-      radius = Math.min(W, H) * cfg.radius * (small ? 0.82 : 1);
+      portals.forEach(function (p) {
+        var c = p.cfg;
+        p.cx = W * (small ? 0.5 + (c.x - 0.5) * 0.55 : c.x);
+        p.cy = H * (1 - (small ? 0.5 + (c.y - 0.5) * 0.7 : c.y));  // GL y is bottom-up
+        p.radius = Math.min(W, H) * c.radius * (small ? 0.82 : 1);
+      });
       gl.viewport(0, 0, W, H);
     }
 
-    function texScale() {
-      // cover-fit: show the largest centred rect of the image that fills the
-      // canvas, the same framing CSS `background-size: cover` would pick.
-      var ca = W / H, ia = imgW / imgH;
-      return ca > ia ? [1, ia / ca] : [ca / ia, 1];
-    }
-
     function frame(now) {
-      var t = (now || 0) * 0.001 * cfg.speed;
+      var t = (now || 0) * 0.001;
 
       px += (tx - px) * 0.06;
       py += (ty - py) * 0.06;
-      var ccx = cx + px * radius * cfg.cursor;
-      var ccy = cy + py * radius * cfg.cursor;
 
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.enable(gl.BLEND);
 
-      // Pass 1 - the disc, over the photograph
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.useProgram(pPortal);
-      gl.bindBuffer(gl.ARRAY_BUFFER, quad);
-      gl.enableVertexAttribArray(aPos);
-      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.uniform1i(uP.uTex, 0);
-      gl.uniform1f(uP.uHasTex, hasTex);
-      var s = texScale();
-      gl.uniform2f(uP.uTexScale, s[0], s[1]);
-      gl.uniform2f(uP.uRes, W, H);
-      gl.uniform2f(uP.uCenter, ccx, ccy);
-      gl.uniform1f(uP.uRadius, radius);
-      gl.uniform1f(uP.uTime, t);
-      gl.uniform1f(uP.uSwirl, cfg.swirl);
-      gl.uniform1f(uP.uGlow, cfg.glow);
-      gl.uniform3fv(uP.uColA, cfg.colA);
-      gl.uniform3fv(uP.uColB, cfg.colB);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      for (var i = 0; i < portals.length; i++) {
+        var p = portals[i], c = p.cfg;
+        var tt = t * c.speed;
+        var ccx = p.cx + px * p.radius * c.cursor;
+        var ccy = p.cy + py * p.radius * c.cursor;
 
-      // Pass 2 - particles, additive so overlaps build light
-      if (cfg.count > 0) {
-        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-        gl.useProgram(pPart);
-        gl.bindBuffer(gl.ARRAY_BUFFER, pbuf);
-        gl.enableVertexAttribArray(aSeed);
-        gl.vertexAttribPointer(aSeed, 4, gl.FLOAT, false, 0, 0);
-        gl.uniform2f(uQ.uRes, W, H);
-        gl.uniform2f(uQ.uCenter, ccx, ccy);
-        gl.uniform1f(uQ.uRadius, radius);
-        gl.uniform1f(uQ.uTime, t);
-        gl.uniform1f(uQ.uFlow, flow);
-        gl.uniform1f(uQ.uDpr, dpr);
-        gl.uniform3fv(uQ.uColA, cfg.colA);
-        gl.uniform3fv(uQ.uColB, cfg.colB);
-        gl.drawArrays(gl.POINTS, 0, cfg.count);
+        // Pass 1 - the disc, over the photograph
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.useProgram(pPortal);
+        gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, p.tex);
+        gl.uniform1i(uP.uTex, 0);
+        gl.uniform1f(uP.uHasTex, p.hasTex);
+        // cover-fit: the largest centred rect of the image that fills the
+        // canvas - the framing CSS `background-size: cover` would pick.
+        var ca = W / H, ia = p.imgW / p.imgH;
+        if (ca > ia) gl.uniform2f(uP.uTexScale, 1, ia / ca);
+        else gl.uniform2f(uP.uTexScale, ca / ia, 1);
+        gl.uniform2f(uP.uRes, W, H);
+        gl.uniform2f(uP.uCenter, ccx, ccy);
+        gl.uniform1f(uP.uRadius, p.radius);
+        gl.uniform1f(uP.uTime, tt);
+        gl.uniform1f(uP.uSwirl, c.swirl);
+        gl.uniform1f(uP.uTurb, c.turb);
+        gl.uniform1f(uP.uRimW, c.rimW);
+        gl.uniform1f(uP.uGlow, c.glow);
+        gl.uniform1f(uP.uFill, c.fill);
+        gl.uniform3fv(uP.uColA, c.colA);
+        gl.uniform3fv(uP.uColB, c.colB);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+        // Pass 2 - particles, additive so overlaps build light
+        if (c.count > 0) {
+          gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+          gl.useProgram(pPart);
+          gl.bindBuffer(gl.ARRAY_BUFFER, p.buf);
+          gl.enableVertexAttribArray(aSeed);
+          gl.vertexAttribPointer(aSeed, 4, gl.FLOAT, false, 0, 0);
+          gl.uniform2f(uQ.uRes, W, H);
+          gl.uniform2f(uQ.uCenter, ccx, ccy);
+          gl.uniform1f(uQ.uRadius, p.radius);
+          gl.uniform1f(uQ.uTime, tt);
+          gl.uniform1f(uQ.uFlow, c.flow);
+          gl.uniform1f(uQ.uDpr, dpr);
+          gl.uniform3fv(uQ.uColA, c.colA);
+          gl.uniform3fv(uQ.uColB, c.colB);
+          gl.drawArrays(gl.POINTS, 0, c.count);
+        }
       }
 
       if (!drawn) {
@@ -447,8 +494,8 @@
       stage.classList.remove('has-portal');
     });
 
-    // Reduced motion: one frame, held. The portal is still a portal; it just
-    // does not move.
+    // Reduced motion: one frame, held. The portals are still portals; they
+    // just do not move.
     if (reduced.matches) {
       staticMode = true;
       var once = function () { resize(); frame(0); };
@@ -457,7 +504,6 @@
       return;
     }
 
-    // Only run while it is actually on screen.
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         entries[0].isIntersecting ? start() : stop();
@@ -476,15 +522,17 @@
       rt = setTimeout(resize, 120);
     });
 
-    // The pointer nudges the centre. Listening on the stage, not the canvas,
-    // keeps the canvas pointer-events: none so the CTAs stay clickable.
-    if (cfg.cursor > 0 && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      stage.addEventListener('pointermove', function (e) {
+    // Tracked on window rather than on the stage: the canvas is
+    // pointer-events: none so the CTAs under it stay clickable, and an
+    // element that ignores the pointer never sees pointermove either.
+    var wantsCursor = portals.some(function (p) { return p.cfg.cursor > 0; });
+    if (wantsCursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      window.addEventListener('pointermove', function (e) {
         var rect = stage.getBoundingClientRect();
-        tx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-        ty = -((e.clientY - rect.top) / rect.height - 0.5) * 2;
-      });
-      stage.addEventListener('pointerleave', function () { tx = 0; ty = 0; });
+        if (!rect.width || !rect.height) return;
+        tx = Math.max(-1.5, Math.min(1.5, ((e.clientX - rect.left) / rect.width - 0.5) * 2));
+        ty = Math.max(-1.5, Math.min(1.5, -((e.clientY - rect.top) / rect.height - 0.5) * 2));
+      }, { passive: true });
     }
   }
 

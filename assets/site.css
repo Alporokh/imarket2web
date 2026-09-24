@@ -1504,7 +1504,9 @@ h1, h2, h3, p { margin: 0; }
 /* Only once the portal is really running: pull the flat photograph back so
    the lens is the bright thing, not a second copy of the same image. */
 .svc-hero.has-portal .svc-hero-bg { filter: brightness(.66) saturate(.85); }
-.svc-hero.has-portal .svc-hero-sun { filter: opacity(.55); }
+/* The CSS bloom becomes a soft halo behind the portal sun rather than a
+   second, blurrier sun competing with it. */
+.svc-hero.has-portal .svc-hero-sun { filter: opacity(.34); }
 
 .svc-hero-copy { position: relative; z-index: 3; }
 .svc-hero-copy .h2-xl { margin-top: 18px; }

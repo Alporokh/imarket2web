@@ -75,26 +75,50 @@
         <a href="../">Home</a><span>/</span><span aria-current="page">Services</span>
       </nav>
     </div>
-    <div class="svc-hero"
-         data-portal
-         data-portal-image="../images/services-hero-v2.webp"
-         data-portal-count="1600"
-         data-portal-radius="0.34"
-         data-portal-x="0.74"
-         data-portal-y="0.46"
-         data-portal-swirl="0.35"
-         data-portal-glow="1"
-         data-portal-flow="in"
-         data-portal-color-a="#1668D8"
-         data-portal-color-b="#9FD2FF"
-         data-portal-cursor="0.07">
-      <!-- Four layers, because they move at different rates: the planet
-           turns, the sun blooms on the spot where it actually is in the
-           photograph, the portal opens a vortex onto that same photograph
-           over on the right, and the scrim keeps the copy readable over all
-           of them. The portal is added by portal.js and only if WebGL is
-           there to draw it - without it this is the scene it always was. -->
+    <div class="svc-hero" data-portal>
+      <!-- Layers, because they move at different rates: the planet turns, the
+           sun blooms where it actually is in the photograph, two portals open
+           over the top of both, and the scrim keeps the copy readable over
+           all of it. The portals are drawn by portal.js on a single canvas
+           and only if WebGL is there - without it this is the scene it always
+           was. Each [data-portal-item] below is one portal; they are hidden
+           because they are configuration, not content. -->
       <div class="svc-hero-bg" aria-hidden="true"></div>
+
+      <!-- The lens: looks through the photograph, winding it inward. -->
+      <div data-portal-item hidden
+           data-portal-image="../images/services-hero-v2.webp"
+           data-portal-count="1600"
+           data-portal-radius="0.34"
+           data-portal-x="0.74"
+           data-portal-y="0.46"
+           data-portal-swirl="0.35"
+           data-portal-glow="1"
+           data-portal-flow="in"
+           data-portal-color-a="#1668D8"
+           data-portal-color-b="#9FD2FF"
+           data-portal-cursor="0.07"></div>
+
+      <!-- The sun, sat on the warm core of the photograph at (0.90, 0.26).
+           No image: sampling the photograph there would only drag the Earth
+           into it. Procedural plasma instead - wide rim so the edge reads as
+           a corona rather than a ring, high turbulence, and the wind blowing
+           outward instead of in. -->
+      <div data-portal-item hidden
+           data-portal-count="900"
+           data-portal-radius="0.17"
+           data-portal-x="0.90"
+           data-portal-y="0.26"
+           data-portal-swirl="0.9"
+           data-portal-turb="1.5"
+           data-portal-rim="0.16"
+           data-portal-glow="1.15"
+           data-portal-fill="1"
+           data-portal-speed="0.7"
+           data-portal-flow="out"
+           data-portal-color-a="#FF9A3C"
+           data-portal-color-b="#FFF2CC"
+           data-portal-cursor="0.02"></div>
       <div class="svc-hero-sun" aria-hidden="true"></div>
       <div class="svc-hero-scrim" aria-hidden="true"></div>
 
