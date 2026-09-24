@@ -1342,3 +1342,30 @@ h1, h2, h3, p { margin: 0; }
   .about-hero { grid-template-columns: 1fr; gap: 36px; }
   .about-photo { max-width: 420px; }
 }
+
+/* =======================================================================
+   SERVICES PAGE
+   ======================================================================= */
+
+.svc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+.svc-lead h2 { margin-bottom: 16px; }
+.svc-intro { font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: var(--ink-2); margin-bottom: 14px; }
+.svc-lead p { font-size: 16px; line-height: 1.6; color: var(--text); }
+.svc-box { padding: 30px 32px; }
+.svc-box .mono { display: block; margin-bottom: 16px; color: var(--blue); }
+.layer.svc-box .mono { color: var(--blue-light); }
+.svc-box--peach { background: var(--peach); border-color: var(--peach-line); }
+.svc-box--peach .mono { color: var(--peach-ink); }
+
+.svc-list { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.svc-list li { display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: var(--text); }
+.svc-list li::before { content: "+"; color: var(--blue); flex: none; font-weight: 600; }
+.svc-list--dark li { color: var(--on-dark-2); }
+.svc-list--dark li::before { color: var(--blue-light); }
+
+/* The jump strip reuses the clients strip, but its items are single links */
+.services-jump li { flex-direction: row; }
+
+@media (max-width: 980px) {
+  .svc-row { grid-template-columns: 1fr; gap: 28px; }
+}
