@@ -61,6 +61,10 @@
         var v = parseFloat(grid.getAttribute("data-shuffle-" + name));
         return isNaN(v) ? fallback : v;
       }
+      // "pile" gathers the cards to the centre and deals them out again.
+      // "push" is for a grid that should simply arrive: each card slides up
+      // into place, one after the next, with no stacking.
+      var mode = grid.getAttribute("data-shuffle-mode") || "pile";
       var spread = opt("spread", SPREAD);
       var tilt = opt("tilt", TILT);
       var stagger = opt("stagger", STAGGER);
@@ -84,12 +88,17 @@
         var cy = gb.top + gb.height / 2;
 
         var starts = cards.map(function (c, i) {
+          if (mode === "push") {
+            // Straight up from below, no tilt: the card is being pushed into
+            // the grid, not shuffled into it.
+            return { dx: 0, dy: opt("push", 54), tilt: 0, scale: 0.97 };
+          }
           var b = c.getBoundingClientRect();
           var dx = (cx - (b.left + b.width / 2)) * spread;
           var dy = (cy - (b.top + b.height / 2)) * spread;
           // Deterministic tilt, so it looks shuffled but never lands oddly
           var tiltDeg = (i % 2 ? 1 : -1) * (tilt - (i % 3) * (tilt / 3.7));
-          return { dx: dx, dy: dy, tilt: tiltDeg };
+          return { dx: dx, dy: dy, tilt: tiltDeg, scale: 0.9 };
         });
 
         // 2. Stack them, with no transition so the jump is not seen
@@ -98,11 +107,11 @@
           c.style.transition = 'none';
           c.style.transform =
             'translate3d(' + s.dx.toFixed(1) + 'px,' + s.dy.toFixed(1) + 'px,0) ' +
-            'rotate(' + s.tilt.toFixed(2) + 'deg) scale(0.9)';
+            'rotate(' + s.tilt.toFixed(2) + 'deg) scale(' + s.scale + ')';
           c.style.opacity = '0';
           c.style.willChange = 'transform, opacity';
           // Later cards sit under earlier ones, so the pile reads as a deck
-          c.style.zIndex = String(cards.length - i);
+          if (mode !== "push") c.style.zIndex = String(cards.length - i);
         });
 
         // Force the browser to apply the stacked state before animating out

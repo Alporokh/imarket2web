@@ -562,3 +562,23 @@ adds `.is-live` once particles are drawing, which drops it to 20% and fades the
 canvas in. No JS, reduced motion, a slow load or a tainted canvas all leave the
 hero as the image. The loop stops when the section is off screen or the tab is
 hidden.
+
+### Shuffle modes
+
+`shuffle.js` has two, set with `data-shuffle-mode`:
+
+- **`pile`** (default) gathers the cards to the centre of their container,
+  tilted, then deals them out in order. Used by the eight process steps and the
+  two lists in section 04.
+- **`push`** is for a grid that should simply arrive: each card slides up into
+  place, one after the next, no stacking and no tilt. Used by the project grids
+  on the homepage and `/work/`.
+
+Push mode writes no `z-index`, because the cards arrive in sequence rather than
+as a deck, and CSS gives it `overflow: visible` - the clip that keeps a pile
+tidy would cut cards off as they enter from below. Nothing moves sideways in
+push mode, so that cannot produce a horizontal scrollbar.
+
+Per-element: `data-shuffle-stagger` (95ms on the project grids, so "one by one"
+reads clearly on large cards), `data-shuffle-push` (how far below it starts),
+plus `data-shuffle-spread` and `-tilt` for pile mode.

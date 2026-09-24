@@ -1251,3 +1251,8 @@ h1, h2, h3, p { margin: 0; }
   .orbit-canvas { display: none; }
   .orbit-track.is-live .orbit-stage::before { opacity: 1; }
 }
+
+/* Push mode enters from below, so the clip that keeps the pile tidy would
+   cut the cards off on the way in. Nothing moves sideways here, so letting
+   it overflow cannot produce a horizontal scrollbar. */
+.shuffle[data-shuffle-mode="push"] { overflow: visible; perspective: none; }
