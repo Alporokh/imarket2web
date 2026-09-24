@@ -53,10 +53,23 @@ var FROM_NAME   = 'Olena · imarket2web';     // the name on the auto-reply
 var REPLY_TO    = 'imarket2web@gmail.com';
 var SHEET_NAME  = 'Leads';
 
+/**
+ * Both forms land in this one table. Type says which form it was and Stage
+ * says how warm that makes it: someone who ran the numbers and asked for
+ * them is further along than someone still describing the problem.
+ *
+ * Package and Current site are separate columns on purpose. Both forms post
+ * a field called "website", but they mean different things by it - the
+ * estimator means the package that was chosen, the brief means the site the
+ * business already has. Putting them in one column would quietly mix two
+ * kinds of value.
+ */
 var HEADERS = [
-  'Received', 'Name', 'Email', 'Estimate low', 'Estimate high', 'Monthly',
-  'Currency', 'Timeline', 'Goal', 'Website', 'Languages', 'Fast-track',
-  'Add-ons', 'Message', 'Consent', 'Full estimate', 'Source'
+  'Received', 'Type', 'Stage', 'Name', 'Email', 'Business',
+  'Estimate low', 'Estimate high', 'Monthly', 'Currency',
+  'Package', 'Current site', 'Timeline', 'Timing', 'Budget',
+  'Goal', 'Languages', 'Fast-track', 'Add-ons',
+  'Message', 'Consent', 'Details'
 ];
 
 /**
@@ -110,14 +123,7 @@ function setup() {
     }
   }
 
-  syncHeaders(sh, HEADERS, 'Full estimate');
-
-  // Lay the Briefs tab out too. It is created on first use anyway, but that
-  // means the first person to send a brief is the one who finds out whether
-  // it works.
-  var bs = ss.getSheetByName(BRIEF_SHEET) || ss.insertSheet(BRIEF_SHEET);
-  syncHeaders(bs, BRIEF_HEADERS, 'Full brief');
-
+  syncHeaders(sh, HEADERS, 'Details');
   SpreadsheetApp.flush();
   Logger.log('Ready. Now deploy as a web app (see the notes at the top).');
 }
@@ -135,17 +141,12 @@ function doPost(e) {
       return json({ success: false, message: 'A valid email address is required.' });
     }
 
-    // A project brief is a different shape from an estimate, so it goes to its
-    // own tab rather than being squeezed into the Leads columns.
-    if (data.form === "brief") {
-      writeBrief(data);
-      sendBriefReply(data);
-      sendNotification(data);
-      return json({ success: true, message: "Sent" });
-    }
-
+    // Both forms land in the same table - writeRow tags the row by type. Only
+    // the reply differs, because a brief promises a person and an estimate
+    // promises a number.
     writeRow(data);
-    sendAutoReply(data);
+    if (data.form === "brief") sendBriefReply(data);
+    else sendAutoReply(data);
     sendNotification(data);
 
     return json({ success: true, message: 'Sent' });
@@ -171,24 +172,33 @@ function writeRow(d) {
   var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sh.getLastRow() === 0) sh.appendRow(HEADERS);
 
+  var isBrief = d.form === 'brief';
+
   sh.appendRow([
     new Date(),
+    isBrief ? 'Brief' : 'Estimate',
+    isBrief ? 'MQL' : 'SQL',
     d.name || '',
     d.email || '',
+    d.company || '',
+    // Everything from here down is filled by one form or the other, never
+    // both, so the blanks in a row are information rather than gaps.
     d.estimate_low || '',
     d.estimate_high || '',
     d.monthly || '',
-    d.currency || 'EUR',
+    isBrief ? '' : (d.currency || 'EUR'),
+    isBrief ? '' : (d.website || ''),     // the package chosen
+    isBrief ? (d.website || '') : '',     // the site they already have
     d.timeline || '',
+    d.timing || '',
+    d.budget || '',
     d.goal || '',
-    d.website || '',
     d.languages || '',
-    d.rush ? 'yes' : 'no',
+    isBrief ? '' : (d.rush ? 'yes' : 'no'),
     d.addons || '',
     d.message || '',
     d.consent ? 'yes' : 'no',
-    d.estimate || '',
-    d.source || 'estimator'
+    d.estimate || ''
   ]);
 }
 
@@ -232,45 +242,36 @@ function sendAutoReply(d) {
 
 /** Your own copy, so you can act on it without opening the Sheet. */
 function sendNotification(d) {
-  var body =
-    'New estimate request.\n\n' +
-    'Name:      ' + (d.name || '-') + '\n' +
-    'Email:     ' + (d.email || '-') + '\n' +
-    'Estimate:  €' + (d.estimate_low || '?') + ' – €' + (d.estimate_high || '?') + '\n' +
-    'Timeline:  ' + (d.timeline || '-') + '\n' +
-    'Goal:      ' + (d.goal || '-') + '\n' +
-    'Website:   ' + (d.website || '-') + '\n' +
-    'Languages: ' + (d.languages || '-') + '\n' +
-    'Add-ons:   ' + (d.addons || '-') + '\n' +
-    'Fast-track:' + (d.rush ? ' yes' : ' no') + '\n\n' +
-    'Message:\n' + (d.message || '(none)') + '\n\n' +
-    '--------------------------------------------------------\n' +
-    (d.estimate || '');
+  var isBrief = d.form === 'brief';
+
+  var head = isBrief
+    ? 'New project brief (MQL).\n\n' +
+      'Name:      ' + (d.name || '-') + '\n' +
+      'Email:     ' + (d.email || '-') + '\n' +
+      'Business:  ' + (d.company || '-') + '\n' +
+      'Site now:  ' + (d.website || '-') + '\n' +
+      'Timing:    ' + (d.timing || '-') + '\n' +
+      'Budget:    ' + (d.budget || '-') + '\n'
+    : 'New estimate request (SQL).\n\n' +
+      'Name:      ' + (d.name || '-') + '\n' +
+      'Email:     ' + (d.email || '-') + '\n' +
+      'Estimate:  €' + (d.estimate_low || '?') + ' – €' + (d.estimate_high || '?') + '\n' +
+      (d.monthly ? 'Then:      €' + d.monthly + ' / month\n' : '') +
+      'Timeline:  ' + (d.timeline || '-') + '\n' +
+      'Goal:      ' + (d.goal || '-') + '\n' +
+      'Package:   ' + (d.website || '-') + '\n' +
+      'Languages: ' + (d.languages || '-') + '\n' +
+      'Add-ons:   ' + (d.addons || '-') + '\n' +
+      'Fast-track:' + (d.rush ? ' yes' : ' no') + '\n';
 
   MailApp.sendEmail({
     to: NOTIFY_TO,
-    subject: 'Estimate request - ' + (d.name || d.email),
-    body: body,
+    subject: (isBrief ? 'Project brief - ' : 'Estimate request - ') + (d.name || d.email),
+    body: head + '\nMessage:\n' + (d.message || '(none)') + '\n\n' +
+          '--------------------------------------------------------\n' +
+          (d.estimate || ''),
     replyTo: d.email || REPLY_TO
   });
-}
-
-var BRIEF_SHEET = "Briefs";
-var BRIEF_HEADERS = ["Received", "Name", "Email", "Business", "Current site",
-                     "Timing", "Budget", "Notes", "Consent", "Full brief"];
-
-/** The brief lands in its own tab, created on first use. */
-function writeBrief(d) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sh = ss.getSheetByName(BRIEF_SHEET);
-  if (!sh) sh = ss.insertSheet(BRIEF_SHEET);
-  syncHeaders(sh, BRIEF_HEADERS, "Full brief");
-
-  sh.appendRow([
-    new Date(), d.name || "", d.email || "", d.company || "",
-    d.website || "", d.timing || "", d.budget || "", d.message || "",
-    d.consent ? "yes" : "no", d.estimate || ""
-  ]);
 }
 
 /** A brief deserves a different reply from an estimate: it promises a person. */
