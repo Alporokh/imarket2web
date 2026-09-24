@@ -182,9 +182,105 @@ function doPost(e) {
   }
 }
 
-/** Lets you open the /exec URL in a browser and see that it is alive. */
+/**
+ * Open the /exec URL in a browser to see whether this is wired up. Booleans
+ * only - no token, no addresses, nothing that should not be public, because
+ * this URL is public by definition.
+ */
 function doGet() {
-  return json({ ok: true, service: 'imarket2web estimator' });
+  var out = { ok: true, service: 'imarket2web forms' };
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    out.tabs = ss.getSheets().map(function (sh) { return sh.getName(); });
+    var leads = ss.getSheetByName(SHEET_NAME);
+    out.leadsReady = !!leads && leads.getLastRow() > 0 &&
+      leads.getRange(1, 1, 1, HEADERS.length).getValues()[0].join('|') === HEADERS.join('|');
+    var mql = ss.getSheetByName(MQL_SHEET);
+    out.mqlReady = !!mql && mql.getLastRow() > 0 &&
+      mql.getRange(1, 1, 1, MQL_HEADERS.length).getValues()[0].join('|') === MQL_HEADERS.join('|');
+  } catch (e) {
+    out.sheetError = String(e);
+  }
+  out.telegramConfigured = !!(tgProp('TELEGRAM_TOKEN') && tgProp('TELEGRAM_CHAT_ID'));
+  return json(out);
+}
+
+/**
+ * Run this by hand to check the whole chain in one go: the tabs and their
+ * headers, an actual write (added then removed again), Telegram, and mail.
+ * Read the result in the execution log.
+ *
+ * It is deliberately a separate function from setup() - setup prepares, this
+ * one proves, and you want to be able to prove it again later without
+ * wondering whether you just changed something.
+ */
+function selfTest() {
+  var L = [];
+  function ok(label, pass, detail) {
+    L.push((pass ? 'PASS  ' : 'FAIL  ') + label + (detail ? '   - ' + detail : ''));
+  }
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  L.push('Spreadsheet: ' + ss.getName());
+  L.push('Tabs: ' + ss.getSheets().map(function (sh) { return sh.getName(); }).join(', '));
+  L.push('');
+
+  // 1. the two tabs, with the headers this code actually writes
+  [[SHEET_NAME, HEADERS], [MQL_SHEET, MQL_HEADERS]].forEach(function (pair) {
+    var sh = ss.getSheetByName(pair[0]);
+    if (!sh) { ok('tab "' + pair[0] + '"', false, 'missing - run setup()'); return; }
+    var head = sh.getLastRow() ? sh.getRange(1, 1, 1, pair[1].length).getValues()[0] : [];
+    ok('tab "' + pair[0] + '" headers', head.join('|') === pair[1].join('|'),
+       head.length ? head.length + ' columns' : 'no header row - run setup()');
+  });
+
+  // 2. a real write, removed again, so the whole path is exercised
+  try {
+    var sh = ss.getSheetByName(SHEET_NAME);
+    // Without the tab there is nothing to write into, and the reason is
+    // already on the line above. Do not repeat it as a stack trace.
+    if (!sh) throw new Error('no "' + SHEET_NAME + '" tab yet');
+    var before = sh.getLastRow();
+    writeRow({ name: 'selfTest', email: 'selftest@example.com', estimate_low: 1,
+               estimate_high: 2, consent: true, estimate: 'self test' });
+    var after = sh.getLastRow();
+    ok('write a row', after === before + 1, 'row ' + after);
+    if (after === before + 1) sh.deleteRow(after);
+    ok('remove the test row', sh.getLastRow() === before);
+  } catch (e) {
+    ok('write a row', false, String(e));
+  }
+
+  // 3. Telegram
+  var hasToken = !!tgProp('TELEGRAM_TOKEN'), hasChat = !!tgProp('TELEGRAM_CHAT_ID');
+  ok('TELEGRAM_TOKEN set', hasToken, hasToken ? '' : 'Project Settings -> Script properties');
+  ok('TELEGRAM_CHAT_ID set', hasChat, hasChat ? '' : 'run telegramWhoAmI()');
+  if (hasToken && hasChat) {
+    var sent = sendTelegram('\u2705 <b>imarket2web self-test</b>\n\n' +
+      'If you are reading this in Telegram, the bot is wired up correctly.');
+    ok('Telegram message delivered', sent, sent ? 'check your chat' : 'see telegramWhoAmI()');
+  } else {
+    L.push('SKIP  Telegram message - not configured yet (email still works)');
+  }
+
+  // 4. mail
+  try {
+    var quota = MailApp.getRemainingDailyQuota();
+    ok('mail quota', quota > 0, quota + ' left today');
+    MailApp.sendEmail({
+      to: NOTIFY_TO,
+      subject: 'imarket2web self-test',
+      body: 'This is the self-test from Apps Script.\n\n' + L.join('\n')
+    });
+    ok('notification email sent', true, NOTIFY_TO);
+  } catch (e) {
+    ok('notification email', false, String(e));
+  }
+
+  var failed = L.filter(function (l) { return l.indexOf('FAIL') === 0; }).length;
+  L.push('');
+  L.push(failed ? failed + ' check(s) failed - see above.' : 'Everything passed.');
+  Logger.log(L.join('\n'));
 }
 
 // ---- Pieces -----------------------------------------------------------------
