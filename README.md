@@ -238,7 +238,7 @@ three things: writes the lead into a Google Sheet, emails the estimate to the
 person who asked for it, and emails you a copy. No third-party form service,
 and the mail goes out from your own Gmail.
 
-**Sheet:** [imarket2web - Estimator leads](https://docs.google.com/spreadsheets/d/1hbBzRPIziBbClbMiWWLShFCCvewQb6drl6oHIAwo4XM/edit)
+**Sheet:** [imarket2web - Estimator leads](https://docs.google.com/spreadsheets/d/1rQQSdr7Lj_7mefZ7xW31CBGxCdlrwrV9mr-VtntRUMg/edit)
 
 ### Setup (once, ~5 minutes)
 

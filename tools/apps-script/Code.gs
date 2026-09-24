@@ -14,10 +14,15 @@
  * SETUP - about five minutes, once
  * -----------------------------------------------------------------------------
  * 1. Open the Sheet:
- *      https://docs.google.com/spreadsheets/d/1hbBzRPIziBbClbMiWWLShFCCvewQb6drl6oHIAwo4XM/edit
+ *      https://docs.google.com/spreadsheets/d/1rQQSdr7Lj_7mefZ7xW31CBGxCdlrwrV9mr-VtntRUMg/edit
  *
- * 2. Extensions -> Apps Script. Delete whatever is in Code.gs and paste this
- *    whole file in. Save.
+ * 2. Extensions -> Apps Script. Delete whatever is in Code.gs, then paste in
+ *    the CONTENTS of this file - every line below, starting with the comment
+ *    block. Do NOT paste the file's path. If line 1 of the script editor
+ *    reads "tools/apps-script/Code.gs" you have pasted the path, and the web
+ *    app will answer every request with
+ *        ReferenceError: tools is not defined (line 1, file "Code")
+ *    Save when the code is in.
  *
  * 3. Run the function `setup` once (pick it in the dropdown, press Run).
  *    Google will ask you to authorise it - that is it asking permission to
@@ -60,9 +65,33 @@ var HEADERS = [
  */
 function setup() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-  if (sh.getLastRow() === 0) {
-    sh.appendRow(HEADERS);
+  var sh = ss.getSheetByName(SHEET_NAME);
+
+  // If there is no Leads tab yet but the spreadsheet has a single sheet, adopt
+  // it rather than adding a second one. A new spreadsheet arrives with one
+  // empty "Sheet1", and a CSV import names its tab after the file; either way
+  // the result should be one tab called Leads, not two.
+  if (!sh) {
+    var all = ss.getSheets();
+    if (all.length === 1) {
+      sh = all[0];
+      sh.setName(SHEET_NAME);
+    } else {
+      sh = ss.insertSheet(SHEET_NAME);
+    }
+  }
+
+  // Write the header row if the sheet is empty, or replace it if the columns
+  // do not match what doPost will be writing.
+  var current = sh.getLastRow() === 0
+    ? []
+    : sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  if (current.join('|') !== HEADERS.join('|')) {
+    if (sh.getLastRow() === 0) {
+      sh.appendRow(HEADERS);
+    } else {
+      sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    }
   }
   sh.getRange(1, 1, 1, HEADERS.length)
     .setFontWeight('bold')
