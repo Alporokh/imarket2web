@@ -182,10 +182,18 @@
       }, { passive: true });
       stage.addEventListener('pointerleave', function () { pxr = pyr = -9999; }, { passive: true });
 
+      // A panel hero has no scroll track of its own. Rather than force one,
+      // the camera simply holds at a fixed point in the scene and the
+      // particles keep flowing. data-orbit-focus picks that point: 0 is the
+      // sun, 1 the Earth.
+      var FOCUS = parseFloat(track.getAttribute("data-orbit-focus"));
+      if (isNaN(FOCUS)) FOCUS = 0.5;
+
       function progress() {
-        var r = track.getBoundingClientRect();
         var range = track.offsetHeight - window.innerHeight;
-        return Math.max(0, Math.min(1, -r.top / Math.max(1, range)));
+        if (range <= 8) return FOCUS;
+        var r = track.getBoundingClientRect();
+        return Math.max(0, Math.min(1, -r.top / range));
       }
 
       var t = 0;

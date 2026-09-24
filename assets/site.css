@@ -1256,3 +1256,28 @@ h1, h2, h3, p { margin: 0; }
    cut the cards off on the way in. Nothing moves sideways here, so letting
    it overflow cannot produce a horizontal scrollbar. */
 .shuffle[data-shuffle-mode="push"] { overflow: visible; perspective: none; }
+
+/* ---- Orbit as a panel, not a journey --------------------------------------
+   The estimate page wants the scene as a hero, not a four-screen scroll: its
+   job is to get people into the calculator. The stage is a fixed height and
+   does not stick, and orbit.js holds the camera at data-orbit-focus rather
+   than panning, so the particles flow and respond to the pointer without
+   costing anyone a single extra scroll.
+   -------------------------------------------------------------------------- */
+.orbit-track--panel { height: auto; }
+.orbit-track--panel .orbit-stage {
+  position: relative;
+  height: clamp(420px, 62vh, 620px);
+}
+.orbit-track--panel .orbit-copy { justify-content: center; padding-top: 28px; padding-bottom: 28px; }
+.orbit-track--panel .orbit-stage::after {
+  background:
+    linear-gradient(to right, rgba(4,7,14,.88) 0%, rgba(4,7,14,.7) 42%, rgba(4,7,14,.22) 70%, transparent 90%),
+    linear-gradient(to bottom, rgba(4,7,14,.5), transparent 24%, transparent 70%, #04070E 100%);
+}
+@media (max-width: 900px) {
+  .orbit-track--panel .orbit-stage { height: clamp(380px, 56vh, 520px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-track--panel .orbit-stage { min-height: 0; }
+}

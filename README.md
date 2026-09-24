@@ -582,3 +582,17 @@ push mode, so that cannot produce a horizontal scrollbar.
 Per-element: `data-shuffle-stagger` (95ms on the project grids, so "one by one"
 reads clearly on large cards), `data-shuffle-push` (how far below it starts),
 plus `data-shuffle-spread` and `-tilt` for pile mode.
+
+### Orbit as a panel
+
+`/estimate/` uses the same scene and particle engine, but as a hero rather than
+a journey: `.orbit-track--panel` gives the stage a fixed height and drops the
+sticky positioning, and `orbit.js` sees no scroll range so it holds the camera
+at `data-orbit-focus` instead of panning.
+
+That page is set to `0.78`, near the Earth - the destination, which suits a page
+about what it costs to get there, and stays clear of the gust at 0.9 that
+disperses the field at the end of the work page journey.
+
+The reason it is a panel at all: the estimator's job is to get people into the
+calculator, and a four-screen scroll in front of it would work against that.

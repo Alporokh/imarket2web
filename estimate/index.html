@@ -75,17 +75,20 @@
 
 <main id="main">
 
-  <!-- ================= HERO ================= -->
-  <section class="dark">
-    <div class="wrap" style="padding-top:26px;">
-      <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="../">Home</a><span>/</span><span aria-current="page">Estimate</span>
-      </nav>
-    </div>
-    <div class="wrap page-hero">
-      <span class="tag tag--dark">Free · No account · Takes about a minute</span>
-      <h1 class="d h2-xl" style="color:#fff;">What will your project <span class="accent">actually cost</span>?</h1>
-      <p class="lead">Answer five questions and get a real price range with a line-by-line breakdown and a timeline - on this page, immediately. Email it to yourself only if you want to keep it.</p>
+  <!-- ================= HERO - orbit panel ================= -->
+  <section class="orbit-track orbit-track--panel" data-orbit data-orbit-focus="0.78" aria-label="Estimate">
+    <div class="orbit-stage">
+      <canvas class="orbit-canvas" data-src="../images/orbit-scene.webp" aria-hidden="true"></canvas>
+      <div class="wrap orbit-copy">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="../">Home</a><span>/</span><span aria-current="page">Estimate</span>
+        </nav>
+        <div style="margin-top:20px;">
+          <span class="tag tag--dark">Free · No account · Takes about a minute</span>
+          <h1 class="d h2-xl" style="color:#fff;margin-top:16px;max-width:900px;">What will your project <span class="accent">actually cost</span>?</h1>
+          <p class="lead" style="margin-top:22px;max-width:620px;">Answer five questions and get a real price range with a line-by-line breakdown and a timeline - on this page, immediately. Email it to yourself only if you want to keep it.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -411,6 +414,7 @@
 
 <script src="../assets/site.js" defer></script>
 <script src="../assets/consent.js" defer></script>
+<script src="../assets/orbit.js" defer></script>
 <script src="../assets/estimator.js" defer></script>
 </body>
 </html>
