@@ -15,6 +15,11 @@
       });
     });
   }
+  // iOS applies :active to a plain div only when something is listening for
+  // touch. The cards' press state depends on it, so this empty listener is
+  // load-bearing despite doing nothing.
+  document.addEventListener('touchstart', function () {}, { passive: true });
+
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 })();

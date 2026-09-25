@@ -351,11 +351,7 @@ h1, h2, h3, p { margin: 0; }
 /* ============ Work ============ */
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; }
 .project { display: block; padding: 20px 20px 26px; border-radius: 22px; transition: transform .2s ease, box-shadow .2s ease; }
-/* Same gate as .svc-box: without it a tap leaves a phone stuck in the
-   hovered state until something else is tapped. */
-@media (hover: hover) and (pointer: fine) {
-  .project:hover { color: inherit; transform: translateY(-3px); box-shadow: 0 18px 40px rgba(23,23,26,.08); }
-}
+.project:hover { color: inherit; }
 .project .shot { height: 320px; }
 .project-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-top: 20px; padding: 0 8px; }
 .project-meta .d { font-size: 26px; }
@@ -1570,37 +1566,67 @@ h1, h2, h3, p { margin: 0; }
 .svc-lead h2 { margin-bottom: 16px; }
 .svc-intro { font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: var(--ink-2); margin-bottom: 14px; }
 .svc-lead p { font-size: 16px; line-height: 1.6; color: var(--text); }
-/* Cards lift under the pointer. This is the most-repeated motion on the page,
-   so it is deliberately small and quick - 4px and 170ms, enough to say "this
-   is a thing" and not enough to notice on the fiftieth pass.
+/* =======================================================================
+   CARDS LIFT
+   -----------------------------------------------------------------------
+   One rule for every card family instead of four narrow ones: .card covers
+   svc, svc-box, project, step, tier, split-card and perk, and .layer,
+   .stat and .panel are the three that do not carry it.
 
-   Gated on a real pointer: a touch tap fires :hover too, and on a phone the
-   lift then sticks until you tap something else. */
+   4px and 170ms. Deliberately small - this is the most repeated motion on
+   the site, and it only has to say "this is a thing", not perform.
+
+   Hover is gated on a real pointer because a tap fires :hover too and the
+   lift then sticks. Touch gets the same movement on :active instead, while
+   the finger is down, which is the honest equivalent of hovering.
+   ======================================================================= */
+.card, .layer, .stat, .panel {
+  transition: transform .17s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow .17s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color .17s ease;
+}
+
 @media (hover: hover) and (pointer: fine) {
-  .svc-box,
-  .card.svc {
-    transition: transform .17s cubic-bezier(0.23, 1, 0.32, 1),
-                box-shadow .17s cubic-bezier(0.23, 1, 0.32, 1),
-                border-color .17s ease;
-  }
-  .card.svc-box:hover,
-  .card.svc:hover {
+  .card:hover, .stat:hover, .panel:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 34px rgba(23, 23, 26, .09);
-    border-color: var(--blue-tint-line);
   }
-  .layer.svc-box:hover {
+  .card.svc-box:hover, .card.svc:hover { border-color: var(--blue-tint-line); }
+  /* dark surfaces need a shadow that reads against them */
+  .layer:hover, .case .stat:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 34px rgba(0, 0, 0, .34);
-    border-color: var(--dark-border);
   }
-  /* Not inside the home page's scrolling gallery: those cards are one moving
-     band, and a card stepping out of it breaks the band. */
-  .gal-track > .card.svc:hover { transform: none; box-shadow: none; }
+  .layer:hover { border-color: var(--dark-border); }
 }
+
+/* No hover on a touch screen, so the same lift happens under the finger.
+   site.js registers an empty touch listener because iOS will not apply
+   :active to a plain div unless something is listening. */
+@media (hover: none), (pointer: coarse) {
+  .card:active, .stat:active, .panel:active {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px rgba(23, 23, 26, .12);
+  }
+  .layer:active, .case .stat:active {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .34);
+  }
+}
+
+/* Two places where a card must stay put: the scrolling gallery is one moving
+   band and a card stepping out of it breaks the band, and a page of the book
+   is already being moved in 3D. */
+.gal-track > .card:hover, .gal-track > .card:active,
+.book-page .card:hover, .book-page .card:active {
+  transform: none;
+  box-shadow: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .svc-box, .card.svc { transition: box-shadow .17s ease, border-color .17s ease; }
-  .card.svc-box:hover, .layer.svc-box:hover, .card.svc:hover { transform: none; }
+  .card, .layer, .stat, .panel { transition: box-shadow .17s ease, border-color .17s ease; }
+  .card:hover, .layer:hover, .stat:hover, .panel:hover,
+  .card:active, .layer:active, .stat:active, .panel:active { transform: none; }
 }
 
 .svc-box { padding: 30px 32px; }
