@@ -229,7 +229,7 @@ function price(addonKeys) {
     lines.push({
       label: extraLangs + ' additional language' + (extraLangs > 1 ? 's' : ''),
       price: langCost,
-      note: 'Separate keyword research and copy per language, not machine translation'
+      note: 'Any language you sell in. Separate keyword research and copy per language, never machine translation over the first'
     });
     floor += langCost;
     weeksMin += extraLangs;
