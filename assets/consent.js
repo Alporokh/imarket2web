@@ -83,17 +83,48 @@
     el.className = 'consent';
     el.id = 'consent';
     el.setAttribute('role', 'region');
-    el.setAttribute('aria-label', 'Privacy choices');
+    /* The banner is built by script, so it does not get translated with the
+       page around it. A consent notice a visitor cannot read is not consent,
+       so it follows <html lang> instead. */
+    var T = {
+      en: {
+        region: 'Privacy choices',
+        head: 'This site does not track you.',
+        body: 'No cookies, no third-party scripts, and the fonts are served from here rather than Google - so nothing about your visit reaches anyone else. May I turn on privacy-friendly analytics to see which pages are useful? ',
+        link: 'What I collect',
+        no: 'No thanks',
+        yes: 'Allow analytics'
+      },
+      pl: {
+        region: 'Wybory dotyczące prywatności',
+        head: 'Ta strona Cię nie śledzi.',
+        body: 'Bez ciasteczek, bez skryptów firm trzecich, a fonty są serwowane stąd, nie z Google - więc nic o Twojej wizycie nie trafia do nikogo innego. Czy mogę włączyć analitykę przyjazną prywatności, żeby wiedzieć, które strony są przydatne? ',
+        link: 'Co zbieram',
+        no: 'Nie, dziękuję',
+        yes: 'Zgoda na analitykę'
+      },
+      uk: {
+        region: 'Налаштування приватності',
+        head: 'Цей сайт вас не відстежує.',
+        body: 'Без файлів cookie, без сторонніх скриптів, шрифти віддаються звідси, а не з Google - тож про ваш візит ніхто більше не дізнається. Дозволите увімкнути аналітику, дружню до приватності, щоб бачити, які сторінки корисні? ',
+        link: 'Що я збираю',
+        no: 'Ні, дякую',
+        yes: 'Дозволити аналітику'
+      }
+    };
+    var t = T[(document.documentElement.lang || 'en').slice(0, 2)] || T.en;
+
+    el.setAttribute('aria-label', t.region);
     el.innerHTML =
       '<div class="consent-inner">' +
         '<div class="consent-copy">' +
-          '<p class="d">This site does not track you.</p>' +
-          '<p>No cookies, no third-party scripts, and the fonts are served from here rather than Google - so nothing about your visit reaches anyone else. May I turn on privacy-friendly analytics to see which pages are useful? ' +
-          '<a href="' + p + 'privacy/">What I collect</a>.</p>' +
+          '<p class="d">' + t.head + '</p>' +
+          '<p>' + t.body +
+          '<a href="' + p + 'privacy/">' + t.link + '</a>.</p>' +
         '</div>' +
         '<div class="consent-btns">' +
-          '<button type="button" class="consent-btn" data-consent="denied">No thanks</button>' +
-          '<button type="button" class="consent-btn consent-btn--yes" data-consent="granted">Allow analytics</button>' +
+          '<button type="button" class="consent-btn" data-consent="denied">' + t.no + '</button>' +
+          '<button type="button" class="consent-btn consent-btn--yes" data-consent="granted">' + t.yes + '</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(el);

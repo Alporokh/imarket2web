@@ -75,13 +75,17 @@
     });
 
     /* ---- controls: a drag nobody can see is a drag nobody uses ---- */
+    var L = document.documentElement.lang === 'pl'
+      ? { prev: 'Poprzednia realizacja', next: 'Następna realizacja' }
+      : { prev: 'Previous project', next: 'Next project' };
+
     var nav = document.createElement('div');
     nav.className = 'book-nav';
     nav.innerHTML =
-      '<button type="button" class="book-btn" data-prev aria-label="Previous project">' +
+      '<button type="button" class="book-btn" data-prev aria-label="' + L.prev + '">' +
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></button>' +
       '<span class="book-count mono" aria-live="polite"></span>' +
-      '<button type="button" class="book-btn" data-next aria-label="Next project">' +
+      '<button type="button" class="book-btn" data-next aria-label="' + L.next + '">' +
       '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>';
     book.appendChild(nav);
 
