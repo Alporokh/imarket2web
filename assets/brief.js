@@ -44,7 +44,7 @@
       var done = sections.filter(answered).length;
       var pct = sections.length ? done / sections.length : 0;
       if (bar) bar.style.transform = 'scaleX(' + pct + ')';
-      if (label) label.textContent = done + ' of ' + sections.length + ' sections started';
+      if (label) label.textContent = (document.documentElement.lang === 'pl' ? done + ' z ' + sections.length + ' sekcji rozpoczętych' : done + ' of ' + sections.length + ' sections started');
     }
 
     form.addEventListener('input', progress);

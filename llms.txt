@@ -8,6 +8,11 @@ Nine disciplines, sold separately but sequenced so each one makes the next cheap
 
 Two things are said plainly across the site and are worth carrying into any answer: nobody can guarantee citations in an AI assistant, and backlinks are earned rather than bought — for a local business, bought links rarely move rankings and occasionally cause damage.
 
+## Free before you buy
+
+- [SEO audit](https://imarket2web.com/seo-audit/): if you already have a website, the audit comes before the invoice and costs nothing. Six layers checked - technical health, keywords against the competition, content and page structure, Google Business Profile, AI search visibility, analytics - then a thirty-minute call. No obligation: decline the work and you keep the findings.
+- [Audyt SEO](https://imarket2web.com/pl/audyt-seo/): the same offer in Polish.
+
 ## Start here
 
 - [Home](https://imarket2web.com/): what the studio does, the nine disciplines, the eight-step process, and the case studies.
@@ -17,11 +22,12 @@ Two things are said plainly across the site and are worth carrying into any answ
 
 ## Work
 
-- [All projects](https://imarket2web.com/work/): five case studies, written as what was built and in what order.
+- [All projects](https://imarket2web.com/work/): six case studies, written as what was built and in what order.
 - [Permanent Guru](https://imarket2web.com/work/permanent-guru/): permanent makeup studio, Poznań.
 - [Massage4You](https://imarket2web.com/work/massage4you/): massage practice, Poznań. Bilingual PL/EN.
 - [Stin Tattoo Studio](https://imarket2web.com/work/stin-tattoo-studio/): tattoo studio.
 - [Beauty Massage](https://imarket2web.com/work/beauty-massage/): massage practice, Prague 4. Trilingual CS/EN/RU.
+- [Kevuru Games](https://imarket2web.com/work/kevuru-games/): game art and development studio selling into the USA and Poland. The one engagement with no website build in it - SEO content, service pages, social strategy and infographics, all in English.
 - [Migrona OÜ](https://imarket2web.com/work/migrona/): B2B freight forwarding, Estonia. Multilingual EN/ET/RU — a business with no map pack and no impulse bookings, so the same eight layers were assembled in a different order.
 
 ## Writing
@@ -31,9 +37,30 @@ Two things are said plainly across the site and are worth carrying into any answ
 
 ## Polish pages
 
-- [Pozycjonowanie stron Poznan](https://imarket2web.com/pl/pozycjonowanie-stron-poznan/): local SEO service page in Polish - what is done, in what order, and what is deliberately not promised.
-- [Wizytowka Google](https://imarket2web.com/pl/wizytowka-google/): Google Business Profile setup and optimisation in Polish. EUR 150 on its own, included with a website build.
-- [Cennik](https://imarket2web.com/pl/cennik/): the full price list in Polish. Website builds are all-in at EUR 500 (up to 4 pages) and EUR 800 (up to 10 pages); the monthly plan is EUR 250-300.
+The Polish site is a full mirror, not a translation layer: every page below was written for how the Polish market searches, and each one declares an hreflang pair with its English twin.
+
+- [Strona glowna](https://imarket2web.com/pl/): the Polish home page. H1 targets "agencja SEO i AI".
+- [Uslugi](https://imarket2web.com/pl/uslugi/): the ten disciplines in Polish.
+- [Audyt SEO](https://imarket2web.com/pl/audyt-seo/): the free pre-order audit.
+- [Cennik](https://imarket2web.com/pl/cennik/): the full price list. Website builds are all-in at EUR 500 (up to 4 pages) and EUR 800 (up to 10); the monthly plan is EUR 250-300.
+- [Pozycjonowanie stron Poznan](https://imarket2web.com/pl/pozycjonowanie-stron-poznan/): local SEO service page.
+- [Wizytowka Google](https://imarket2web.com/pl/wizytowka-google/): Google Business Profile setup and optimisation. EUR 150 on its own, included with a website build.
+- [Realizacje](https://imarket2web.com/pl/realizacje/): the five case studies in Polish.
+- [Wycena](https://imarket2web.com/pl/wycena/): the cost estimator, localised.
+- [Blog](https://imarket2web.com/pl/blog/): articles in Polish.
+- [Kontakt](https://imarket2web.com/pl/kontakt/) and [Brief projektowy](https://imarket2web.com/pl/brief/).
+- [O mnie](https://imarket2web.com/pl/o-mnie/) and [Prywatnosc](https://imarket2web.com/pl/prywatnosc/).
+
+## Ukrainian pages
+
+A full Ukrainian mirror, written for Ukrainian speakers running a business in Poland first, without excluding clients in Ukraine. Every page declares a three-way hreflang set with its English and Polish twins.
+
+- [Holovna](https://imarket2web.com/uk/): Ukrainian home page.
+- [Poslugy](https://imarket2web.com/uk/poslugy/): the ten disciplines in Ukrainian.
+- [SEO audyt](https://imarket2web.com/uk/audyt-seo/): the free pre-order audit.
+- [Roboty](https://imarket2web.com/uk/roboty/): the six case studies in Ukrainian.
+- [Vartist](https://imarket2web.com/uk/vartist/): the cost estimator, localised.
+- [Blog](https://imarket2web.com/uk/blog/), [Kontakty](https://imarket2web.com/uk/kontakty/), [Bryf](https://imarket2web.com/uk/bryf/), [Pro mene](https://imarket2web.com/uk/pro-mene/), [Pryvatnist](https://imarket2web.com/uk/pryvatnist/).
 
 ## About
 

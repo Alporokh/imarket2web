@@ -11,6 +11,180 @@
    actually charge before sending anyone here.
    ========================================================================= */
 
+/* =========================================================================
+   Polish
+   =========================================================================
+
+   The rate card below stays in one language, because prices and logic must
+   have a single source of truth - editing a number should never mean editing
+   it twice. Instead every string that reaches the screen goes through T(),
+   which looks the English up in this table when <html lang> is Polish.
+
+   A string with no entry here falls back to the English, so adding a new
+   line to RATES never breaks the Polish page - it just shows untranslated
+   until a line is added below.
+   ========================================================================= */
+const PL = {
+  // website packages
+  'Website, up to 4 pages': 'Strona, do 4 podstron',
+  'Website, up to 10 pages': 'Strona, do 10 podstron',
+  'Larger SEO-focused website, 10+ pages': 'Większy serwis pod SEO, 10+ podstron',
+  'No new website': 'Bez nowej strony',
+  // what a build includes
+  'Design system': 'System projektowy',
+  'Logo': 'Logo',
+  'Form with automated orders': 'Formularz z automatycznym obiegiem zgłoszeń',
+  'SEO-ready page structure': 'Struktura podstron gotowa pod SEO',
+  'Unique images, not stock': 'Autorskie zdjęcia, nie stock',
+  'Home + service pages (up to 10)': 'Strona główna + podstrony usług (do 10)',
+  'Google Business Profile setup & optimisation': 'Założenie i optymalizacja wizytówki Google',
+  'Google Business Profile set up and optimised': 'Wizytówka Google założona i zoptymalizowana',
+  '10+ pages, SEO-focused architecture': '10+ podstron, architektura pod SEO',
+  'SEO strategy, keywords & competitor research': 'Strategia SEO, słowa kluczowe i analiza konkurencji',
+  'Backlink strategy': 'Strategia linkowania',
+  'Blog + 5 articles & 3-month content plan': 'Blog + 5 artykułów i plan treści na 3 miesiące',
+  'Blog plus 5 keyword-led articles and a 3-month plan': 'Blog plus 5 artykułów pod frazy i plan na 3 miesiące',
+  '5 articles researched against real keywords': '5 artykułów napisanych pod realne frazy',
+  'Content plan for 3 months': 'Plan treści na 3 miesiące',
+  'GA4 + Search Console': 'GA4 + Search Console',
+  'GA4, Search Console and conversion tracking': 'GA4, Search Console i śledzenie konwersji',
+  'Keyword research and the page structure it implies':
+    'Badanie słów kluczowych i wynikająca z niego struktura podstron',
+  // add-on layers
+  'SEO strategy + keywords + GBP registration + content + 2 posts + GSC + GA4':
+    'Strategia SEO + słowa kluczowe + rejestracja wizytówki + treści + 2 posty + GSC + GA4',
+  'SEO strategy & keywords': 'Strategia SEO i słowa kluczowe',
+  'Google Business Profile': 'Wizytówka Google',
+  'Blog + 5 keyword-led articles + 3-month content plan':
+    'Blog + 5 artykułów pod frazy + plan treści na 3 miesiące',
+  'Blog + 5 articles': 'Blog + 5 artykułów',
+  'GA4 + Search Console + conversions setup': 'GA4 + Search Console + konfiguracja konwersji',
+  'Analytics & conversions': 'Analityka i konwersje',
+  'Simple n8n automation': 'Prosta automatyzacja w n8n',
+  'Marketing automation': 'Automatyzacja marketingu',
+  'Social: profile setup, 16-post calendar & posting automation':
+    'Social: założenie profilu, kalendarz 16 postów i automatyzacja publikacji',
+  'Social & content calendar': 'Social i kalendarz treści',
+  'Social content & posting automation, per month':
+    'Treści social i automatyzacja publikacji, miesięcznie',
+  '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
+    '16 postów miesięcznie, założenie lub optymalizacja profilu, kalendarz i automatyzacja publikacji — zatwierdzane przez Ciebie z góry',
+  'Backlink strategy: link gap audit, target list, digital PR angles':
+    'Strategia linkowania: audyt luki linkowej, lista celów, tematy do digital PR',
+  'Search package: SEO strategy, Google Business Profile, blog and analytics':
+    'Pakiet wyszukiwarkowy: strategia SEO, wizytówka Google, blog i analityka',
+  'All-in-one search package': 'Pakiet wyszukiwarkowy w jednym',
+  'Monthly growth plan': 'Miesięczny plan wzrostu',
+  'Monthly growth plan, per month': 'Miesięczny plan wzrostu, za miesiąc',
+  'Content plans and their automation, Google Ads each month, blog posts, backlink registration':
+    'Plany treści i ich automatyzacja, Google Ads co miesiąc, wpisy blogowe, rejestracja linków',
+  'Any language you sell in. Separate keyword research and copy per language, never machine translation over the first':
+    'Dowolny język, w którym sprzedajesz. Osobne badanie fraz i osobne teksty na każdy język, nigdy tłumaczenie maszynowe na pierwszym',
+  'Fast-track delivery': 'Realizacja w trybie przyspieszonym',
+  'Compressed schedule, priority scheduling': 'Skrócony harmonogram, priorytet w kolejce',
+  // rendering
+  ' weeks': ' tyg.',
+  'from ': 'od ',
+  'included': 'w cenie',
+  ' /mo': ' /mies.',
+  ' line items': ' pozycji',
+  'The build, with the search work it already covers':
+    'Sama strona, wraz z pracą SEO, która już jest w jej cenie',
+  'Exactly what you selected': 'Dokładnie to, co wybrałaś',
+  'Every layer of the growth system': 'Wszystkie warstwy systemu wzrostu',
+  'Fast-track': 'Przyspieszony',
+  'Standard': 'Standardowy',
+  'Google Sheets integration': 'Integracja z arkuszem Google',
+  'FAQ sections written for AI answers': 'Sekcje FAQ pisane pod odpowiedzi AI',
+  'Step ': 'Krok ',
+  ' of ': ' z ',
+};
+
+const UK = {
+  // website packages
+  'Website, up to 4 pages': 'Сайт, до 4 сторінок',
+  'Website, up to 10 pages': 'Сайт, до 10 сторінок',
+  'Larger SEO-focused website, 10+ pages': 'Більший сайт під SEO, 10+ сторінок',
+  'No new website': 'Без нового сайту',
+  // what a build includes
+  'Design system': 'Дизайн-система',
+  'Logo': 'Логотип',
+  'Form with automated orders': 'Форма з автоматичною обробкою звернень',
+  'SEO-ready page structure': 'Структура сторінок, готова під SEO',
+  'Unique images, not stock': 'Авторські зображення, не стокові',
+  'Home + service pages (up to 10)': 'Головна + сторінки послуг (до 10)',
+  'Google Business Profile setup & optimisation': 'Створення та оптимізація Google Бізнес-профілю',
+  'Google Business Profile set up and optimised': 'Google Бізнес-профіль створений і оптимізований',
+  '10+ pages, SEO-focused architecture': '10+ сторінок, структура під SEO',
+  'SEO strategy, keywords & competitor research': 'SEO-стратегія, запити й аналіз конкурентів',
+  'Backlink strategy': 'Стратегія посилань',
+  'Blog + 5 articles & 3-month content plan': 'Блог + 5 статей і контент-план на 3 місяці',
+  'Blog plus 5 keyword-led articles and a 3-month plan': 'Блог плюс 5 статей під запити й план на 3 місяці',
+  '5 articles researched against real keywords': '5 статей, написаних під реальні запити',
+  'Content plan for 3 months': 'Контент-план на 3 місяці',
+  'GA4 + Search Console': 'GA4 + Search Console',
+  'GA4, Search Console and conversion tracking': 'GA4, Search Console і відстеження конверсій',
+  'Google Sheets integration': 'Інтеграція з Google Таблицями',
+  'FAQ sections written for AI answers': 'Розділи FAQ, написані під відповіді AI',
+  'Keyword research and the page structure it implies':
+    'Дослідження запитів і структура сторінок, що з нього випливає',
+  // add-on layers
+  'SEO strategy + keywords + GBP registration + content + 2 posts + GSC + GA4':
+    'SEO-стратегія + запити + реєстрація Google Бізнесу + контент + 2 пости + GSC + GA4',
+  'SEO strategy & keywords': 'SEO-стратегія і запити',
+  'Google Business Profile': 'Google Бізнес-профіль',
+  'Blog + 5 keyword-led articles + 3-month content plan':
+    'Блог + 5 статей під запити + контент-план на 3 місяці',
+  'Blog + 5 articles': 'Блог + 5 статей',
+  'GA4 + Search Console + conversions setup': 'GA4 + Search Console + налаштування конверсій',
+  'Analytics & conversions': 'Аналітика і конверсії',
+  'Simple n8n automation': 'Проста автоматизація в n8n',
+  'Marketing automation': 'Автоматизація маркетингу',
+  'Social: profile setup, 16-post calendar & posting automation':
+    'Соцмережі: створення профілю, календар на 16 постів і автоматизація публікацій',
+  'Social & content calendar': 'Соцмережі й контент-календар',
+  'Social content & posting automation, per month':
+    'Контент для соцмереж і автоматизація публікацій, за місяць',
+  '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
+    '16 постів на місяць, створення або оптимізація профілю, календар і автоматизація публікацій — погоджені вами заздалегідь',
+  'Backlink strategy: link gap audit, target list, digital PR angles':
+    'Стратегія посилань: аудит розриву, список цілей, теми для digital PR',
+  'Search package: SEO strategy, Google Business Profile, blog and analytics':
+    'Пошуковий пакет: SEO-стратегія, Google Бізнес-профіль, блог і аналітика',
+  'All-in-one search package': 'Пошуковий пакет усе в одному',
+  'Monthly growth plan': 'Місячний план зростання',
+  'Monthly growth plan, per month': 'Місячний план зростання, за місяць',
+  'Content plans and their automation, Google Ads each month, blog posts, backlink registration':
+    'Контент-плани та їхня автоматизація, Google Ads щомісяця, статті в блог, реєстрація посилань',
+  'Any language you sell in. Separate keyword research and copy per language, never machine translation over the first':
+    'Будь-яка мова, якою ви продаєте. Окреме дослідження запитів і окремі тексти на кожну мову, ніколи не машинний переклад поверх першої',
+  'Fast-track delivery': 'Прискорене виконання',
+  'Compressed schedule, priority scheduling': 'Стислий графік, пріоритет у черзі',
+  // rendering
+  ' weeks': ' тиж.',
+  'from ': 'від ',
+  'included': 'у вартості',
+  ' /mo': ' /міс.',
+  ' line items': ' позицій',
+  'The build, with the search work it already covers':
+    'Сам сайт, разом із SEO-роботою, яка вже в його вартості',
+  'Exactly what you selected': 'Саме те, що ви обрали',
+  'Every layer of the growth system': 'Усі шари системи зростання',
+  'Fast-track': 'Прискорений',
+  'Standard': 'Стандартний',
+  'Step ': 'Крок ',
+  ' of ': ' з ',
+};
+
+/* One table per language, picked from <html lang>. A string with no entry
+   falls back to the English, so the calculator never breaks on a new line in
+   the rate card - it just shows that one line untranslated. */
+const I18N = { pl: PL, uk: UK };
+const DICT = I18N[(document.documentElement.lang || 'en').slice(0, 2)] || null;
+function T(s) {
+  return (DICT && Object.prototype.hasOwnProperty.call(DICT, s)) ? DICT[s] : s;
+}
+
 const RATES = {
   currency: 'EUR',
   symbol: '€',
@@ -289,7 +463,7 @@ function price(addonKeys) {
 
   if (state.rush && floor > 0) {
     const rush = floor * RATES.rushPct;
-    lines.push({ label: 'Fast-track delivery', price: rush, note: 'Compressed schedule, priority scheduling' });
+    lines.push({ label: T('Fast-track delivery'), price: rush, note: T('Compressed schedule, priority scheduling') });
     floor += rush;
     weeksMin = Math.max(1, Math.round(weeksMin * 0.7));
     weeksMax = Math.max(weeksMin + 1, Math.round(weeksMax * 0.7));
@@ -319,15 +493,15 @@ function renderResult() {
   // than the same figure twice.
   rangeEl.textContent = r.floor === 0
     ? '-'
-    : (r.hasFrom ? 'from ' : '')
+    : (r.hasFrom ? T('from ') : '')
       + fmt(r.floor)
       + (Math.round(r.ceiling) > Math.round(r.floor) ? ' – ' + fmt(r.ceiling) : '');
 
   document.getElementById('res-weeks').textContent =
-    r.weeksMin === 0 ? '-' : r.weeksMin + '–' + r.weeksMax + ' weeks';
+    r.weeksMin === 0 ? '-' : r.weeksMin + '–' + r.weeksMax + T(' weeks');
 
   document.getElementById('res-items').textContent =
-    r.lines.filter(l => !l.included).length + ' line items';
+    r.lines.filter(l => !l.included).length + T(' line items');
 
   // Breakdown
   const tbody = document.getElementById('res-breakdown');
@@ -336,11 +510,11 @@ function renderResult() {
     const row = document.createElement('div');
     row.className = 'bd-row' + (l.included ? ' bd-row--inc' : '');
     const left = document.createElement('div');
-    left.innerHTML = '<span class="bd-label">' + escapeHtml(l.label) + '</span>' +
-      (l.note ? '<span class="bd-note">' + escapeHtml(l.note) + '</span>' : '');
+    left.innerHTML = '<span class="bd-label">' + escapeHtml(T(l.label)) + '</span>' +
+      (l.note ? '<span class="bd-note">' + escapeHtml(T(l.note)) + '</span>' : '');
     const right = document.createElement('span');
     right.className = 'bd-price';
-    right.textContent = l.included ? 'included' : (l.from ? 'from ' : '') + fmt(l.price);
+    right.textContent = l.included ? T('included') : (l.from ? T('from ') : '') + fmt(l.price);
     row.append(left, right);
     tbody.append(row);
   });
@@ -355,13 +529,13 @@ function renderResult() {
       const row = document.createElement('div');
       row.className = 'bd-row';
       const left = document.createElement('div');
-      left.innerHTML = '<span class="bd-label">' + escapeHtml(l.label) + '</span>' +
-        (l.note ? '<span class="bd-note">' + escapeHtml(l.note) + '</span>' : '');
+      left.innerHTML = '<span class="bd-label">' + escapeHtml(T(l.label)) + '</span>' +
+        (l.note ? '<span class="bd-note">' + escapeHtml(T(l.note)) + '</span>' : '');
       const right = document.createElement('span');
       right.className = 'bd-price';
       right.textContent = (l.priceMax
         ? fmt(l.price) + ' – ' + fmt(l.priceMax)
-        : fmt(l.price)) + ' /mo';
+        : fmt(l.price)) + T(' /mo');
       row.append(left, right);
       mBody.append(row);
     });
@@ -374,14 +548,14 @@ function renderResult() {
   const site = RATES.site[state.site];
   (site && site.includes ? site.includes : []).forEach(i => {
     const li = document.createElement('li');
-    li.textContent = i;
+    li.textContent = T(i);
     inc.append(li);
   });
 
   // Tier comparison
-  setTier('essential', t.essential, 'The build, with the search work it already covers');
-  setTier('recommended', t.recommended, 'Exactly what you selected');
-  setTier('complete', t.complete, 'Every layer of the growth system');
+  setTier('essential', t.essential, T('The build, with the search work it already covers'));
+  setTier('recommended', t.recommended, T('Exactly what you selected'));
+  setTier('complete', t.complete, T('Every layer of the growth system'));
 
   document.getElementById('estimate-payload').value = plainText(r, t);
   lastResult = r;
@@ -404,7 +578,7 @@ function payloadFields() {
     // need their own column or they vanish from the Sheet entirely.
     monthly: r && r.monthlyTotal ? Math.round(r.monthlyTotal) : '',
     currency: RATES.currency,
-    timeline: r ? r.weeksMin + '–' + r.weeksMax + ' weeks' : '',
+    timeline: r ? r.weeksMin + '–' + r.weeksMax + T(' weeks') : '',
     goal: state.goal || '',
     website: site.label || '',
     languages: state.languages,
@@ -418,7 +592,7 @@ function setTier(id, data, note) {
   document.getElementById('tier-' + id + '-price').textContent =
     data.floor === 0 ? '-' : (data.hasFrom ? 'from ' : '') + fmt(data.floor);
   document.getElementById('tier-' + id + '-weeks').textContent =
-    data.weeksMin === 0 ? '-' : data.weeksMin + '–' + data.weeksMax + ' weeks';
+    data.weeksMin === 0 ? '-' : data.weeksMin + '–' + data.weeksMax + T(' weeks');
   document.getElementById('tier-' + id + '-note').textContent = note;
 }
 
@@ -432,17 +606,17 @@ function plainText(r, t) {
   L.push('  Goal:      ' + (state.goal || '-'));
   L.push('  Website:   ' + ((RATES.site[state.site] || {}).label || '-'));
   L.push('  Languages: ' + state.languages);
-  L.push('  Timeline:  ' + (state.rush ? 'Fast-track' : 'Standard'));
+  L.push('  Timeline:  ' + (state.rush ? T('Fast-track') : T('Standard')));
   L.push('');
   L.push('BREAKDOWN');
   r.lines.forEach(l => {
-    const p = l.included ? 'included' : (l.from ? 'from ' : '') + fmt(l.price);
+    const p = l.included ? T('included') : (l.from ? T('from ') : '') + fmt(l.price);
     L.push('  ' + l.label);
     L.push('      ' + p);
   });
   L.push('');
-  L.push('ESTIMATE:  ' + (r.hasFrom ? 'from ' : '') + fmt(r.floor) + ' – ' + fmt(r.ceiling));
-  L.push('TIMELINE:  ' + r.weeksMin + '–' + r.weeksMax + ' weeks');
+  L.push('ESTIMATE:  ' + (r.hasFrom ? T('from ') : '') + fmt(r.floor) + ' – ' + fmt(r.ceiling));
+  L.push('TIMELINE:  ' + r.weeksMin + '–' + r.weeksMax + T(' weeks'));
   if (r.monthlyLines.length) {
     L.push('');
     L.push('THEN, MONTHLY');
@@ -482,7 +656,7 @@ function showStep(n) {
   const pct = (state.step / (all.length - 1)) * 100;
   document.getElementById('prog-bar').style.transform = 'scaleX(' + (pct / 100) + ')';
   document.getElementById('prog-label').textContent =
-    'Step ' + (state.step + 1) + ' of ' + all.length;
+    T('Step ') + (state.step + 1) + T(' of ') + all.length;
 
   if (all[state.step].dataset.step === 'result') renderResult();
 

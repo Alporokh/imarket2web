@@ -6,19 +6,59 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/estimate/</loc>
+    <loc>https://imarket2web.com/pl/</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/insights/</loc>
-    <lastmod>2026-09-23</lastmod>
+    <loc>https://imarket2web.com/uk/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/services/</loc>
+    <lastmod>2026-09-25</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/uslugi/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/poslugy/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/seo-audit/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/audyt-seo/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/audyt-seo/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/work/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/realizacje/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/roboty/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/work/permanent-guru/</loc>
@@ -26,49 +66,119 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://imarket2web.com/pl/realizacje/permanent-guru/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/roboty/permanent-guru/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://imarket2web.com/work/massage4you/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://imarket2web.com/work/stin-tattoo-studio/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://imarket2web.com/work/beauty-massage/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://imarket2web.com/work/migrona/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://imarket2web.com/privacy/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://imarket2web.com/about/</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/pl/o-mnie/</loc>
+    <loc>https://imarket2web.com/pl/realizacje/massage4you/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.6</priority>
+    <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/uk/pro-mene/</loc>
-    <lastmod>2026-09-24</lastmod>
-    <priority>0.6</priority>
+    <loc>https://imarket2web.com/uk/roboty/massage4you/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/services/</loc>
+    <loc>https://imarket2web.com/work/stin-tattoo-studio/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/realizacje/stin-tattoo-studio/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/roboty/stin-tattoo-studio/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/work/beauty-massage/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/realizacje/beauty-massage/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/roboty/beauty-massage/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/work/migrona/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/realizacje/migrona/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/roboty/migrona/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/work/kevuru-games/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/realizacje/kevuru-games/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/roboty/kevuru-games/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/estimate/</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/wycena/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/vartist/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/insights/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/blog/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/blog/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/insights/local-seo-one-person-studio/</loc>
@@ -76,34 +186,84 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/brief/</loc>
+    <loc>https://imarket2web.com/pl/blog/seo-lokalne-jednoosobowe-studio/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.8</priority>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/blog/lokalne-seo-dlya-odniyeyi-osoby/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/contact/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.9</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/pl/</loc>
+    <loc>https://imarket2web.com/pl/kontakt/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/kontakty/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/privacy/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/prywatnosc/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/pryvatnist/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/brief/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/brief/</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://imarket2web.com/uk/</loc>
+    <loc>https://imarket2web.com/uk/bryf/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.5</priority>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/about/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/pl/o-mnie/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://imarket2web.com/uk/pro-mene/</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/pl/pozycjonowanie-stron-poznan/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/pl/wizytowka-google/</loc>
     <lastmod>2026-09-25</lastmod>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://imarket2web.com/pl/cennik/</loc>

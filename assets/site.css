@@ -2046,3 +2046,130 @@ h1, h2, h3, p { margin: 0; }
 .opt-inc-tag{display:inline-block;margin-top:10px;padding:3px 9px;border-radius:999px;
   font-size:11px;letter-spacing:.04em;text-transform:uppercase;
   background:rgba(120,200,150,.16);color:#3f9c6d;font-weight:600}
+
+/* =========================================================================
+   SEO AUDIT HERO - ethereal drifting cloud
+   =========================================================================
+
+   The cloud layers are the photograph itself, scaled up, blurred and drifted
+   past each other. That is the whole trick: procedural fog looks procedural,
+   but a blurred copy of a real storm system is made of real cloud, so it
+   drifts like one. Three layers at different blurs and speeds read as depth
+   the way a single moving image never does.
+
+   Cheap, despite the blur: the filter is static per layer and only transform
+   animates, so each layer is rasterised once and then moved on the GPU. Had
+   the blur radius itself animated, every frame would need a fresh raster.
+   ========================================================================= */
+
+.audit-hero {
+  position: relative;
+  isolation: isolate;              /* keeps the blend modes off the page behind */
+  overflow: hidden;
+  background: #04070E;
+  padding-block: clamp(76px, 9vw, 122px);
+}
+
+.audit-hero-bg,
+.audit-hero-cloud,
+.audit-hero-veil,
+.audit-hero-scrim { position: absolute; inset: 0; pointer-events: none; }
+
+/* --- the plate: the photograph, barely moving -------------------------- */
+.audit-hero-bg {
+  /* Inset past the frame so no drift or blur ever exposes an edge */
+  inset: -6% -8%;
+  background: url(../images/seo-audit-imarket2web.jpg) center 42% / cover no-repeat;
+  animation: auditPlate 96s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes auditPlate {
+  from { transform: translate3d(-1.2%, 0, 0) scale(1.04); }
+  to   { transform: translate3d(1.2%, -1%, 0) scale(1.09); }
+}
+
+/* --- the cloud layers -------------------------------------------------- */
+.audit-hero-cloud {
+  inset: -22% -26%;
+  background: url(../images/seo-audit-imarket2web.jpg) center / cover no-repeat;
+  will-change: transform;
+  /* Faded out at every edge, so a drifting layer never announces its frame */
+  -webkit-mask-image: radial-gradient(130% 115% at 50% 40%, #000 34%, transparent 82%);
+          mask-image: radial-gradient(130% 115% at 50% 40%, #000 34%, transparent 82%);
+}
+
+/* High haze: the furthest, the softest, the slowest. Screen blend keeps only
+   the bright cloud tops and throws the dark ocean away. */
+.audit-hero-cloud--far {
+  filter: blur(34px) saturate(.8) brightness(1.15);
+  opacity: .5;
+  mix-blend-mode: screen;
+  transform: scale(1.3) rotate(180deg);   /* flipped, so it does not read as a copy */
+  /* alternate, not a plain loop: these keyframes do not meet end-to-end,
+     so `infinite` alone snapped the layer back every cycle. Easing the
+     reversal is also how wind actually behaves. */
+  animation: auditDriftFar 132s ease-in-out infinite alternate;
+}
+@keyframes auditDriftFar {
+  from { transform: translate3d(-7%, 2%, 0) scale(1.3) rotate(180deg); }
+  to   { transform: translate3d(7%, -2%, 0) scale(1.34) rotate(180deg); }
+}
+
+/* Mid cloud: closer, sharper, faster, and drifting the other way. The
+   opposing direction is what sells the parallax. */
+.audit-hero-cloud--near {
+  filter: blur(17px) contrast(1.1);
+  opacity: .42;
+  mix-blend-mode: soft-light;
+  animation: auditDriftNear 78s ease-in-out infinite alternate;
+}
+@keyframes auditDriftNear {
+  from { transform: translate3d(6%, -1.5%, 0) scale(1.16); }
+  to   { transform: translate3d(-6%, 1.5%, 0) scale(1.22); }
+}
+
+/* --- the breath: light moving through the cloud, no image at all ------- */
+.audit-hero-veil {
+  background:
+    radial-gradient(60% 50% at 72% 22%, rgba(150, 200, 255, .20), transparent 68%),
+    radial-gradient(45% 40% at 22% 62%, rgba(90, 140, 210, .14), transparent 72%);
+  mix-blend-mode: screen;
+  animation: auditBreath 34s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+@keyframes auditBreath {
+  0%, 100% { opacity: .55; transform: translate3d(0, 0, 0) scale(1); }
+  50%      { opacity: .95; transform: translate3d(-2%, 1%, 0) scale(1.08); }
+}
+
+/* --- readability. The photograph is brightest exactly where the eye
+       starts, so the copy needs its own floor. -------------------------- */
+.audit-hero-scrim {
+  background:
+    linear-gradient(100deg, rgba(4,7,14,.94) 0%, rgba(4,7,14,.80) 38%, rgba(4,7,14,.34) 68%, rgba(4,7,14,.55) 100%),
+    linear-gradient(to top, rgba(4,7,14,.72) 0%, transparent 46%);
+}
+
+.audit-hero-copy { position: relative; z-index: 2; }
+.audit-hero-copy .h1 { margin-top: 24px; }
+.audit-hero-copy .lead { margin-top: 26px; max-width: 620px; }
+
+/* Phones: fewer pixels to blur, and a shorter throw so the drift still
+   reads inside a narrow frame. */
+@media (max-width: 720px) {
+  .audit-hero-cloud--far  { filter: blur(22px) saturate(.8) brightness(1.15); opacity: .42; }
+  .audit-hero-cloud--near { filter: blur(12px) contrast(1.1); opacity: .34; }
+  .audit-hero-scrim {
+    background:
+      linear-gradient(180deg, rgba(4,7,14,.62) 0%, rgba(4,7,14,.86) 58%, rgba(4,7,14,.94) 100%);
+  }
+}
+
+/* The drift IS the effect, so reduced motion keeps the composition and stops
+   the movement - the layers stay exactly where they are, still blurred. */
+@media (prefers-reduced-motion: reduce) {
+  .audit-hero-bg,
+  .audit-hero-cloud,
+  .audit-hero-veil { animation: none; }
+  .audit-hero-veil { opacity: .7; }
+}
