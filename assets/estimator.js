@@ -104,32 +104,26 @@ const RATES = {
       ]
     },
     analytics: {
-      price: 250,
+      price: 150,
       label: 'GA4 + Search Console + conversions setup',
       short: 'Analytics & conversions',
       weeks: [0, 1]
     },
     automation: {
-      price: 300,
+      price: 200,
       from: true,
       label: 'Simple n8n automation',
       short: 'Marketing automation',
       weeks: [1, 2]
     },
     social: {
-      price: 200,
-      label: 'Social profile optimisation or creation + 16-post calendar + reel automation',
-      short: 'Social & content calendar',
-      weeks: [1, 2]
-    },
-    contentAuto: {
       price: 0,
-      label: 'Content automation for social posts',
-      short: 'Content automation',
+      label: 'Social: profile setup, 16-post calendar & posting automation',
+      short: 'Social & content calendar',
       weeks: [1, 2],
       monthly: 150,
-      monthlyLabel: 'Content automation for social, per month',
-      monthlyNote: 'Social posts produced and scheduled on a monthly cycle'
+      monthlyLabel: 'Social content & posting automation, per month',
+      monthlyNote: '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance'
     },
     backlinks: {
       price: 0,
@@ -152,7 +146,7 @@ const RATES = {
       monthlyLabel: 'Monthly growth plan, per month',
       monthlyNote: 'Content plans and their automation, Google Ads each month, blog posts, backlink registration',
       // Taking the plan covers these, so they stop being separate charges.
-      covers: ['contentAuto', 'backlinks']
+      covers: ['social', 'backlinks']
     }
   },
 
