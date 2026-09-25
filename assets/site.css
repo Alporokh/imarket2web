@@ -2085,12 +2085,12 @@ h1, h2, h3, p { margin: 0; }
   inset: -6% -8%;
   background: url(../images/seo-audit-storm.webp) 46% 44% / cover no-repeat;
   filter: brightness(.66) contrast(1.12) saturate(.92);
-  animation: auditPlate 104s ease-in-out infinite alternate;
+  animation: auditPlate 62s ease-in-out infinite alternate;
   will-change: transform;
 }
 @keyframes auditPlate {
-  from { transform: translate3d(-1.1%, 0, 0) scale(1.05); }
-  to   { transform: translate3d(1.1%, -1%, 0) scale(1.10); }
+  from { transform: translate3d(-2.6%, .6%, 0) scale(1.05); }
+  to   { transform: translate3d(2.6%, -1.6%, 0) scale(1.11); }
 }
 
 /* --- the cloud layers: the storm, turning --------------------------- */
@@ -2104,10 +2104,10 @@ h1, h2, h3, p { margin: 0; }
 
 /* High haze: furthest, softest, turning slowest and the other way. */
 .audit-hero-cloud--far {
-  filter: blur(38px) brightness(.85) saturate(.7);
-  opacity: .42;
+  filter: blur(32px) brightness(.88) saturate(.7);
+  opacity: .52;
   mix-blend-mode: screen;
-  animation: auditTurnFar 240s linear infinite;
+  animation: auditTurnFar 94s linear infinite;
 }
 @keyframes auditTurnFar {
   from { transform: rotate(0deg) scale(1.32); }
@@ -2117,10 +2117,10 @@ h1, h2, h3, p { margin: 0; }
 /* Mid cloud: closer, sharper, turning the way the storm does. A full
    rotation loops seamlessly, so these two can run linear and never snap. */
 .audit-hero-cloud--near {
-  filter: blur(20px) brightness(.7) contrast(1.1);
-  opacity: .36;
+  filter: blur(15px) brightness(.72) contrast(1.12);
+  opacity: .46;
   mix-blend-mode: soft-light;
-  animation: auditTurnNear 155s linear infinite;
+  animation: auditTurnNear 58s linear infinite;
 }
 @keyframes auditTurnNear {
   from { transform: rotate(0deg) scale(1.2); }
@@ -2133,7 +2133,7 @@ h1, h2, h3, p { margin: 0; }
     radial-gradient(58% 48% at 68% 26%, rgba(160, 205, 255, .22), transparent 68%),
     radial-gradient(44% 40% at 26% 66%, rgba(95, 145, 215, .15), transparent 72%);
   mix-blend-mode: screen;
-  animation: auditBreath 38s ease-in-out infinite;
+  animation: auditBreath 26s ease-in-out infinite;
   will-change: opacity, transform;
 }
 @keyframes auditBreath {
