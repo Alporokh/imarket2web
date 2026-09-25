@@ -21,9 +21,13 @@ const RATES = {
       price: 500,
       label: 'Website, up to 4 pages',
       weeks: [2, 3],
-      // A build already contains the search work - see BUNDLED note below.
-      bundles: ['seoStrategy', 'analytics', 'backlinks'],
+      // The EUR 500 build is all-in: it carries the search work, the Google
+      // Business Profile and the blog. The separate EUR 150 prices apply only
+      // when a client already has a website and wants marketing on its own.
+      bundles: ['seoStrategy', 'analytics', 'backlinks', 'gbp', 'blog'],
       includes: [
+        'Google Business Profile setup & optimisation',
+        'Blog + 5 articles & 3-month content plan',
         'SEO strategy, keywords & competitor research',
         'Backlink strategy',
         'GA4 + Search Console',
@@ -39,8 +43,9 @@ const RATES = {
       label: 'Website, up to 10 pages',
       weeks: [3, 5],
       // This package already contains GBP, plus the search work every build covers.
-      bundles: ['gbp', 'seoStrategy', 'analytics', 'backlinks'],
+      bundles: ['gbp', 'blog', 'seoStrategy', 'analytics', 'backlinks'],
       includes: [
+        'Blog + 5 articles & 3-month content plan',
         'SEO strategy, keywords & competitor research',
         'Backlink strategy',
         'GA4 + Search Console',
@@ -57,8 +62,10 @@ const RATES = {
       from: true,
       label: 'Larger SEO-focused website, 10+ pages',
       weeks: [5, 8],
-      bundles: ['seoStrategy', 'analytics', 'backlinks'],
+      bundles: ['seoStrategy', 'analytics', 'backlinks', 'gbp', 'blog'],
       includes: [
+        'Google Business Profile setup & optimisation',
+        'Blog + 5 articles & 3-month content plan',
         'SEO strategy, keywords & competitor research',
         'Backlink strategy',
         'GA4 + Search Console',
@@ -133,14 +140,6 @@ const RATES = {
       // the monthly plan. It is never sold as a standalone one-off.
       inPlanOnly: true
     },
-    ads: {
-      price: 200,
-      label: 'Google Ads: campaign build, conversion tracking, landing page brief',
-      short: 'Google Ads setup',
-      weeks: [1, 2],
-      note: 'Your ad budget is paid to Google directly and is not included here'
-    },
-
     // The recurring product. Ongoing work is quoted per month, on its own
     // line, so it is never mistaken for part of a one-off project total.
     plan: {
@@ -160,7 +159,7 @@ const RATES = {
   // ---- Modifiers --------------------------------------------------------
   extraLanguagePct: 0.35, // % of website base per extra language - confirmed
   rushPct: 0.25,          // fast-track surcharge - confirmed
-  rangeUpliftPct: 0.30    // top of the quoted range above the floor price
+  rangeUpliftPct: 0       // flat card prices - a quote equals the rate card
 };
 
 /* ---- Where submissions go -------------------------------------------------
@@ -304,9 +303,13 @@ function renderResult() {
   const r = t.recommended;
 
   const rangeEl = document.getElementById('res-range');
+  // With no range uplift the floor is the price, so show one number rather
+  // than the same figure twice.
   rangeEl.textContent = r.floor === 0
     ? '-'
-    : (r.hasFrom ? 'from ' : '') + fmt(r.floor) + ' – ' + fmt(r.ceiling);
+    : (r.hasFrom ? 'from ' : '')
+      + fmt(r.floor)
+      + (Math.round(r.ceiling) > Math.round(r.floor) ? ' – ' + fmt(r.ceiling) : '');
 
   document.getElementById('res-weeks').textContent =
     r.weeksMin === 0 ? '-' : r.weeksMin + '–' + r.weeksMax + ' weeks';
