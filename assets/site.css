@@ -814,6 +814,19 @@ h1, h2, h3, p { margin: 0; }
 .opt-t { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
 .opt-p { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--blue); white-space: nowrap; }
 .opt-d { font-size: 14px; line-height: 1.55; color: var(--text); }
+/* The all-in-one option. It spans both columns and carries a heavier border,
+   because it is an alternative to the four under it rather than a fifth
+   thing to add to them - reading it as one of the list is the mistake it
+   needs to prevent. */
+.opt--feature {
+  grid-column: 1 / -1;
+  border-width: 2px;
+  border-color: var(--blue-tint-line);
+  background: var(--blue-tint);
+}
+.opt--feature .opt-p { color: var(--blue-hover); }
+.opt--feature.is-on { border-color: var(--blue); }
+
 .opt.is-on { border-color: var(--blue); background: var(--blue-tint); }
 .opt.is-on .opt-p { color: var(--blue-hover); }
 @media (hover: hover) and (pointer: fine) {

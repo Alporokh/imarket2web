@@ -134,6 +134,22 @@ const RATES = {
       // the monthly plan. It is never sold as a standalone one-off.
       inPlanOnly: true
     },
+    // Everything a site that already exists needs, in one price. The four it
+    // covers are EUR 750 bought one at a time.
+    bundle: {
+      price: 450,
+      label: 'Search package: SEO strategy, Google Business Profile, blog and analytics',
+      short: 'All-in-one search package',
+      weeks: [2, 4],
+      covers: ['seoStrategy', 'gbp', 'blog', 'analytics'],
+      includes: [
+        'Keyword research and the page structure it implies',
+        'Google Business Profile set up and optimised',
+        'Blog plus 5 keyword-led articles and a 3-month plan',
+        'GA4, Search Console and conversion tracking'
+      ]
+    },
+
     // The recurring product. Ongoing work is quoted per month, on its own
     // line, so it is never mistaken for part of a one-off project total.
     plan: {
@@ -220,13 +236,15 @@ function price(addonKeys) {
     weeksMax += extraLangs * 2;
   }
 
-  // Two things can cover an add-on: the website build, and the monthly plan.
+  // Three things can cover an add-on: the website build, the monthly plan and
+  // the all-in-one package. Any selected add-on that declares "covers" folds
+  // those keys in, rather than the plan being hard-coded as the only one.
   const bundled = (site.bundles || []).slice();
-  if (addonKeys.includes('plan')) {
-    (RATES.addons.plan.covers || []).forEach(k => {
-      if (!bundled.includes(k)) bundled.push(k);
-    });
-  }
+  addonKeys.forEach(key => {
+    const a = RATES.addons[key];
+    if (!a || !a.covers) return;
+    a.covers.forEach(k => { if (!bundled.includes(k)) bundled.push(k); });
+  });
   // Layers overlap in practice - they are not worked one after another - so
   // add-on weeks accumulate at a reduced rate rather than stacking in full.
   const OVERLAP = 0.6;
