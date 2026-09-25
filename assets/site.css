@@ -2047,24 +2047,29 @@ h1, h2, h3, p { margin: 0; }
   font-size:11px;letter-spacing:.04em;text-transform:uppercase;
   background:rgba(120,200,150,.16);color:#3f9c6d;font-weight:600}
 
+
 /* =========================================================================
    SEO AUDIT HERO - ethereal drifting cloud
    =========================================================================
 
-   The cloud layers are the photograph itself, scaled up, blurred and drifted
-   past each other. That is the whole trick: procedural fog looks procedural,
-   but a blurred copy of a real storm system is made of real cloud, so it
-   drifts like one. Three layers at different blurs and speeds read as depth
-   the way a single moving image never does.
+   The photograph is a cyclone shot from the ISS, so the cloud layers turn
+   rather than slide: a spiral drifting sideways looks wrong, a spiral slowly
+   rotating looks like weather. Only the blurred layers rotate - at 30px of
+   blur the station's solar panels are smudges, but on the sharp plate they
+   would read as a tumbling satellite, which is not the effect.
 
-   Cheap, despite the blur: the filter is static per layer and only transform
-   animates, so each layer is rasterised once and then moved on the GPU. Had
-   the blur radius itself animated, every frame would need a fresh raster.
+   The picture is bright (mean luminance 146/255, against 60-odd for the one
+   it replaced), so white copy needs a real floor under it rather than a
+   light wash. Hence the brightness knock-down on the plate and a scrim
+   weighted to the left, where the copy sits.
+
+   Cheap despite the blur: the filter is static per layer and only transform
+   animates, so each layer rasterises once and then moves on the GPU.
    ========================================================================= */
 
 .audit-hero {
   position: relative;
-  isolation: isolate;              /* keeps the blend modes off the page behind */
+  isolation: isolate;
   overflow: hidden;
   background: #04070E;
   padding-block: clamp(76px, 9vw, 122px);
@@ -2075,101 +2080,93 @@ h1, h2, h3, p { margin: 0; }
 .audit-hero-veil,
 .audit-hero-scrim { position: absolute; inset: 0; pointer-events: none; }
 
-/* --- the plate: the photograph, barely moving -------------------------- */
+/* --- the plate: darkened so white type has somewhere to stand ---------- */
 .audit-hero-bg {
-  /* Inset past the frame so no drift or blur ever exposes an edge */
   inset: -6% -8%;
-  background: url(../images/seo-audit-imarket2web.jpg) center 42% / cover no-repeat;
-  animation: auditPlate 96s ease-in-out infinite alternate;
+  background: url(../images/seo-audit-storm.webp) 46% 44% / cover no-repeat;
+  filter: brightness(.66) contrast(1.12) saturate(.92);
+  animation: auditPlate 104s ease-in-out infinite alternate;
   will-change: transform;
 }
 @keyframes auditPlate {
-  from { transform: translate3d(-1.2%, 0, 0) scale(1.04); }
-  to   { transform: translate3d(1.2%, -1%, 0) scale(1.09); }
+  from { transform: translate3d(-1.1%, 0, 0) scale(1.05); }
+  to   { transform: translate3d(1.1%, -1%, 0) scale(1.10); }
 }
 
-/* --- the cloud layers -------------------------------------------------- */
+/* --- the cloud layers: the storm, turning --------------------------- */
 .audit-hero-cloud {
-  inset: -22% -26%;
-  background: url(../images/seo-audit-imarket2web.jpg) center / cover no-repeat;
+  inset: -30% -30%;
+  background: url(../images/seo-audit-storm.webp) center / cover no-repeat;
   will-change: transform;
-  /* Faded out at every edge, so a drifting layer never announces its frame */
-  -webkit-mask-image: radial-gradient(130% 115% at 50% 40%, #000 34%, transparent 82%);
-          mask-image: radial-gradient(130% 115% at 50% 40%, #000 34%, transparent 82%);
+  -webkit-mask-image: radial-gradient(120% 110% at 48% 44%, #000 26%, transparent 76%);
+          mask-image: radial-gradient(120% 110% at 48% 44%, #000 26%, transparent 76%);
 }
 
-/* High haze: the furthest, the softest, the slowest. Screen blend keeps only
-   the bright cloud tops and throws the dark ocean away. */
+/* High haze: furthest, softest, turning slowest and the other way. */
 .audit-hero-cloud--far {
-  filter: blur(34px) saturate(.8) brightness(1.15);
-  opacity: .5;
+  filter: blur(38px) brightness(.85) saturate(.7);
+  opacity: .42;
   mix-blend-mode: screen;
-  transform: scale(1.3) rotate(180deg);   /* flipped, so it does not read as a copy */
-  /* alternate, not a plain loop: these keyframes do not meet end-to-end,
-     so `infinite` alone snapped the layer back every cycle. Easing the
-     reversal is also how wind actually behaves. */
-  animation: auditDriftFar 132s ease-in-out infinite alternate;
+  animation: auditTurnFar 240s linear infinite;
 }
-@keyframes auditDriftFar {
-  from { transform: translate3d(-7%, 2%, 0) scale(1.3) rotate(180deg); }
-  to   { transform: translate3d(7%, -2%, 0) scale(1.34) rotate(180deg); }
+@keyframes auditTurnFar {
+  from { transform: rotate(0deg) scale(1.32); }
+  to   { transform: rotate(-360deg) scale(1.32); }
 }
 
-/* Mid cloud: closer, sharper, faster, and drifting the other way. The
-   opposing direction is what sells the parallax. */
+/* Mid cloud: closer, sharper, turning the way the storm does. A full
+   rotation loops seamlessly, so these two can run linear and never snap. */
 .audit-hero-cloud--near {
-  filter: blur(17px) contrast(1.1);
-  opacity: .42;
+  filter: blur(20px) brightness(.7) contrast(1.1);
+  opacity: .36;
   mix-blend-mode: soft-light;
-  animation: auditDriftNear 78s ease-in-out infinite alternate;
+  animation: auditTurnNear 155s linear infinite;
 }
-@keyframes auditDriftNear {
-  from { transform: translate3d(6%, -1.5%, 0) scale(1.16); }
-  to   { transform: translate3d(-6%, 1.5%, 0) scale(1.22); }
+@keyframes auditTurnNear {
+  from { transform: rotate(0deg) scale(1.2); }
+  to   { transform: rotate(360deg) scale(1.2); }
 }
 
 /* --- the breath: light moving through the cloud, no image at all ------- */
 .audit-hero-veil {
   background:
-    radial-gradient(60% 50% at 72% 22%, rgba(150, 200, 255, .20), transparent 68%),
-    radial-gradient(45% 40% at 22% 62%, rgba(90, 140, 210, .14), transparent 72%);
+    radial-gradient(58% 48% at 68% 26%, rgba(160, 205, 255, .22), transparent 68%),
+    radial-gradient(44% 40% at 26% 66%, rgba(95, 145, 215, .15), transparent 72%);
   mix-blend-mode: screen;
-  animation: auditBreath 34s ease-in-out infinite;
+  animation: auditBreath 38s ease-in-out infinite;
   will-change: opacity, transform;
 }
 @keyframes auditBreath {
-  0%, 100% { opacity: .55; transform: translate3d(0, 0, 0) scale(1); }
-  50%      { opacity: .95; transform: translate3d(-2%, 1%, 0) scale(1.08); }
+  0%, 100% { opacity: .5;  transform: translate3d(0, 0, 0) scale(1); }
+  50%      { opacity: .92; transform: translate3d(-2%, 1%, 0) scale(1.08); }
 }
 
-/* --- readability. The photograph is brightest exactly where the eye
-       starts, so the copy needs its own floor. -------------------------- */
+/* --- readability ------------------------------------------------------- */
 .audit-hero-scrim {
   background:
-    linear-gradient(100deg, rgba(4,7,14,.94) 0%, rgba(4,7,14,.80) 38%, rgba(4,7,14,.34) 68%, rgba(4,7,14,.55) 100%),
-    linear-gradient(to top, rgba(4,7,14,.72) 0%, transparent 46%);
+    linear-gradient(100deg, rgba(4,7,14,.95) 0%, rgba(4,7,14,.84) 34%, rgba(4,7,14,.40) 58%, rgba(4,7,14,.18) 100%),
+    linear-gradient(to top, rgba(4,7,14,.62) 0%, transparent 46%);
 }
 
 .audit-hero-copy { position: relative; z-index: 2; }
 .audit-hero-copy .h1 { margin-top: 24px; }
 .audit-hero-copy .lead { margin-top: 26px; max-width: 620px; }
 
-/* Phones: fewer pixels to blur, and a shorter throw so the drift still
-   reads inside a narrow frame. */
+/* Phones: fewer pixels to blur, and the copy runs the full width, so the
+   scrim goes top-to-bottom rather than left-to-right. */
 @media (max-width: 720px) {
-  .audit-hero-cloud--far  { filter: blur(22px) saturate(.8) brightness(1.15); opacity: .42; }
-  .audit-hero-cloud--near { filter: blur(12px) contrast(1.1); opacity: .34; }
+  .audit-hero-cloud--far  { filter: blur(24px) brightness(.62) saturate(.7); opacity: .34; }
+  .audit-hero-cloud--near { filter: blur(14px) brightness(.5) contrast(1.1); opacity: .28; }
   .audit-hero-scrim {
-    background:
-      linear-gradient(180deg, rgba(4,7,14,.62) 0%, rgba(4,7,14,.86) 58%, rgba(4,7,14,.94) 100%);
+    background: linear-gradient(180deg, rgba(4,7,14,.72) 0%, rgba(4,7,14,.88) 55%, rgba(4,7,14,.95) 100%);
   }
 }
 
 /* The drift IS the effect, so reduced motion keeps the composition and stops
-   the movement - the layers stay exactly where they are, still blurred. */
+   the movement - the layers stay where they are, still blurred. */
 @media (prefers-reduced-motion: reduce) {
   .audit-hero-bg,
   .audit-hero-cloud,
   .audit-hero-veil { animation: none; }
-  .audit-hero-veil { opacity: .7; }
+  .audit-hero-veil { opacity: .66; }
 }
