@@ -21,7 +21,12 @@ const RATES = {
       price: 500,
       label: 'Website, up to 4 pages',
       weeks: [2, 3],
+      // A build already contains the search work - see BUNDLED note below.
+      bundles: ['seoStrategy', 'analytics', 'backlinks'],
       includes: [
+        'SEO strategy, keywords & competitor research',
+        'Backlink strategy',
+        'GA4 + Search Console',
         'SEO-ready page structure',
         'Design system',
         'Logo',
@@ -33,9 +38,12 @@ const RATES = {
       price: 800,
       label: 'Website, up to 10 pages',
       weeks: [3, 5],
-      // This package already contains GBP - the engine will not charge for it twice.
-      bundles: ['gbp'],
+      // This package already contains GBP, plus the search work every build covers.
+      bundles: ['gbp', 'seoStrategy', 'analytics', 'backlinks'],
       includes: [
+        'SEO strategy, keywords & competitor research',
+        'Backlink strategy',
+        'GA4 + Search Console',
         'Home + service pages (up to 10)',
         'Google Business Profile setup & optimisation',
         'Design system',
@@ -49,7 +57,11 @@ const RATES = {
       from: true,
       label: 'Larger SEO-focused website, 10+ pages',
       weeks: [5, 8],
+      bundles: ['seoStrategy', 'analytics', 'backlinks'],
       includes: [
+        'SEO strategy, keywords & competitor research',
+        'Backlink strategy',
+        'GA4 + Search Console',
         '10+ pages, SEO-focused architecture',
         'Form with automated orders',
         'Google Sheets integration'
@@ -74,9 +86,15 @@ const RATES = {
     },
     blog: {
       price: 150,
-      label: 'Blog + 5 articles',
+      label: 'Blog + 5 keyword-led articles + 3-month content plan',
       short: 'Blog + 5 articles',
-      weeks: [1, 2]
+      weeks: [1, 2],
+      includes: [
+        '5 articles researched against real keywords',
+        'Content plan for 3 months',
+        'Unique images, not stock',
+        'FAQ sections written for AI answers'
+      ]
     },
     analytics: {
       price: 250,
@@ -87,45 +105,61 @@ const RATES = {
     automation: {
       price: 300,
       from: true,
-      label: 'n8n automation',
+      label: 'Simple n8n automation',
       short: 'Marketing automation',
       weeks: [1, 2]
     },
     social: {
       price: 200,
-      label: 'Social profile optimisation + 16-post calendar + reel automation',
+      label: 'Social profile optimisation or creation + 16-post calendar + reel automation',
       short: 'Social & content calendar',
       weeks: [1, 2]
     },
     contentAuto: {
-      price: 250,            // ASSUMPTION
-      label: 'Content automation: repurposing pipeline, scheduling, approval gate',
+      price: 0,
+      label: 'Content automation for social posts',
       short: 'Content automation',
-      weeks: [1, 2]
+      weeks: [1, 2],
+      monthly: 150,
+      monthlyLabel: 'Content automation for social, per month',
+      monthlyNote: 'Social posts produced and scheduled on a monthly cycle'
     },
     backlinks: {
-      price: 300,            // ASSUMPTION
+      price: 0,
       label: 'Backlink strategy: link gap audit, target list, digital PR angles',
       short: 'Backlink strategy',
-      weeks: [2, 3]
+      weeks: [2, 3],
+      // Ships with any website build, and backlink registration is part of
+      // the monthly plan. It is never sold as a standalone one-off.
+      inPlanOnly: true
     },
     ads: {
-      price: 350,            // ASSUMPTION - one-off build
+      price: 200,
       label: 'Google Ads: campaign build, conversion tracking, landing page brief',
       short: 'Google Ads setup',
       weeks: [1, 2],
-      // Ads are the one layer that keeps costing after launch. The monthly
-      // fee is quoted on its own line so it never hides inside a project
-      // total, and the ad budget itself is paid to Google, not to us.
-      monthly: 200,          // ASSUMPTION - management per month
-      monthlyLabel: 'Google Ads management, per month',
-      monthlyNote: 'Your ad budget is paid to Google directly and is not included here'
+      note: 'Your ad budget is paid to Google directly and is not included here'
+    },
+
+    // The recurring product. Ongoing work is quoted per month, on its own
+    // line, so it is never mistaken for part of a one-off project total.
+    plan: {
+      price: 0,
+      label: 'Monthly growth plan',
+      short: 'Monthly growth plan',
+      weeks: [0, 0],
+      monthly: 250,
+      monthlyMax: 300,
+      monthlyLabel: 'Monthly growth plan, per month',
+      monthlyNote: 'Content plans and their automation, Google Ads each month, blog posts, backlink registration',
+      // Taking the plan covers these, so they stop being separate charges.
+      covers: ['contentAuto', 'backlinks']
     }
   },
 
   // ---- Modifiers --------------------------------------------------------
-  extraLanguagePct: 0.35, // ASSUMPTION - % of website base per extra language
-  rushPct: 0.25,          // ASSUMPTION - fast-track surcharge
+  extraLanguagePct: 0.35, // % of website base per extra language - confirmed
+  rushPct: 0.25,          // fast-track surcharge - confirmed
   rangeUpliftPct: 0.30    // top of the quoted range above the floor price
 };
 
@@ -193,7 +227,13 @@ function price(addonKeys) {
     weeksMax += extraLangs * 2;
   }
 
-  const bundled = site.bundles || [];
+  // Two things can cover an add-on: the website build, and the monthly plan.
+  const bundled = (site.bundles || []).slice();
+  if (addonKeys.includes('plan')) {
+    (RATES.addons.plan.covers || []).forEach(k => {
+      if (!bundled.includes(k)) bundled.push(k);
+    });
+  }
   // Layers overlap in practice - they are not worked one after another - so
   // add-on weeks accumulate at a reduced rate rather than stacking in full.
   const OVERLAP = 0.6;
@@ -205,10 +245,20 @@ function price(addonKeys) {
       lines.push({ label: a.label, price: 0, included: true });
       return;
     }
-    lines.push({ label: a.label, price: a.price, from: a.from });
-    floor += a.price;
+    // A purely recurring service (the monthly plan, content automation) has no
+    // project price: it belongs on the monthly lines only, never as a EUR 0 row.
+    // A zero-price service that is not recurring is one that ships with a build
+    // or the plan, so it reads as "included" rather than as free.
+    if (a.price > 0) {
+      lines.push({ label: a.label, price: a.price, from: a.from, note: a.note });
+      floor += a.price;
+    } else if (!a.monthly) {
+      lines.push({ label: a.label, price: 0, included: true });
+    }
     if (a.monthly) {
-      monthlyLines.push({ label: a.monthlyLabel, price: a.monthly, note: a.monthlyNote });
+      monthlyLines.push({
+        label: a.monthlyLabel, price: a.monthly, priceMax: a.monthlyMax, note: a.monthlyNote
+      });
       monthlyTotal += a.monthly;
     }
     if (a.from) hasFrom = true;
@@ -216,6 +266,15 @@ function price(addonKeys) {
     addonWeeks += a.weeks[1];
   });
   weeksMax += Math.ceil(addonWeeks * OVERLAP);
+
+  // Everything a build covers is listed as "included" whether or not it was
+  // ticked, so the customer can see what they are already getting for the
+  // price rather than having to discover it by selecting it.
+  bundled.forEach(key => {
+    if (addonKeys.includes(key)) return;   // already rendered above
+    const a = RATES.addons[key];
+    if (a) lines.push({ label: a.label, price: 0, included: true });
+  });
 
   if (state.rush && floor > 0) {
     const rush = floor * RATES.rushPct;
@@ -285,7 +344,9 @@ function renderResult() {
         (l.note ? '<span class="bd-note">' + escapeHtml(l.note) + '</span>' : '');
       const right = document.createElement('span');
       right.className = 'bd-price';
-      right.textContent = fmt(l.price) + ' /mo';
+      right.textContent = (l.priceMax
+        ? fmt(l.price) + ' – ' + fmt(l.priceMax)
+        : fmt(l.price)) + ' /mo';
       row.append(left, right);
       mBody.append(row);
     });
@@ -303,7 +364,7 @@ function renderResult() {
   });
 
   // Tier comparison
-  setTier('essential', t.essential, 'Website only, no growth layers');
+  setTier('essential', t.essential, 'The build, with the search work it already covers');
   setTier('recommended', t.recommended, 'Exactly what you selected');
   setTier('complete', t.complete, 'Every layer of the growth system');
 
@@ -439,6 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const field = btn.dataset.choice;
       const value = btn.dataset.value;
       state[field] = value;
+      if (field === 'site') syncBundledOptions();
       btn.parentElement.querySelectorAll('[data-choice]').forEach(b => {
         b.classList.toggle('is-on', b === btn);
         b.setAttribute('aria-pressed', String(b === btn));
@@ -450,6 +512,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-addon]').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.addon;
+      // Already covered by the chosen build: nothing to buy, so ignore.
+      if (btn.getAttribute('aria-disabled') === 'true') return;
       state.addons.has(key) ? state.addons.delete(key) : state.addons.add(key);
       const on = state.addons.has(key);
       btn.classList.toggle('is-on', on);
@@ -553,6 +617,37 @@ function wireForm() {
       status.textContent = "Could not send: " + err.message + ". Email imarket2web@gmail.com instead.";
     } finally {
       btn.disabled = false;
+    }
+  });
+}
+
+/* ---- Bundled add-ons -----------------------------------------------------
+   When a website build is chosen, the services that build already covers are
+   marked as included and taken out of the selection, so nobody is invited to
+   pay twice for work that is in the price. Choosing "no new website" puts
+   them all back: that is the path for a business that already has a site and
+   only wants promotion. */
+function syncBundledOptions() {
+  const site = RATES.site[state.site];
+  const bundled = (site && site.bundles) || [];
+  document.querySelectorAll('[data-addon]').forEach(btn => {
+    const key = btn.getAttribute('data-addon');
+    const isBundled = bundled.includes(key);
+    btn.classList.toggle('opt--inc', isBundled);
+    btn.setAttribute('aria-disabled', isBundled ? 'true' : 'false');
+    let tag = btn.querySelector('.opt-inc-tag');
+    if (isBundled) {
+      state.addons.delete(key);
+      btn.setAttribute('aria-pressed', 'false');
+      btn.classList.remove('is-on');
+      if (!tag) {
+        tag = document.createElement('span');
+        tag.className = 'opt-inc-tag';
+        tag.textContent = 'Included in your website price';
+        btn.append(tag);
+      }
+    } else if (tag) {
+      tag.remove();
     }
   });
 }
