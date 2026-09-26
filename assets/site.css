@@ -244,7 +244,80 @@
   --hang-dot:  16px;   /* the 6px square */
   --hang-tick: 18px;   /* the tick reads wider than it measures */
   --hang-num:  26px;   /* "01" in mono */
+
+  /* ---- The spacing scale -------------------------------------------------
+     One ladder for every gap on every page, desktop and phone. Before this
+     the pages carried twenty different inline numbers - 8, 14, 16, 18, 20,
+     22, 24, 26, 28, 30, 34, 40, 44, 48, 56, 64 - chosen a page at a time, so
+     the same kind of gap was a different size depending on when it was
+     written. Six steps, each roughly 1.5x the last, which is far enough
+     apart that two adjacent steps never look like a mistake:
+
+        1   8px    inside a thing: a label above its value
+        2  16px    between paragraphs
+        3  24px    between a heading and its text
+        4  32px    between blocks in one section
+        5  48px    between one idea and the next
+        6  64px    between sections inside a section
+
+     Use them through the .mt-* / .mb-* / .pt-* utilities rather than writing
+     a number into a style attribute, so the next change is one line here. */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+
+  /* ---- Heading measure ---------------------------------------------------
+     Every hero heading wraps at the same width. Three different inline
+     max-widths were in use (900, 920, 940) and twenty-nine headings had
+     none at all, so the same heading size wrapped at a different place on
+     nearly every page. */
+  --measure-hero: 900px;
+  --measure-text: 820px;   /* body copy that is not in a column already */
 }
+
+/* The two largest steps are gaps between whole ideas, and on a phone that
+   much air just pushes the next thing off the screen. The four small steps
+   do not move: they hold single components together, and those look the
+   same size whatever the viewport. */
+@media (max-width: 640px) {
+  :root {
+    --space-5: 36px;
+    --space-6: 44px;
+  }
+}
+
+/* ---- Spacing utilities ---------------------------------------------------
+   The only way a page should set a margin. Anything that needs a number not
+   on the ladder is either a component (give it a class in this file) or a
+   mistake. */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+
+.pt-1 { padding-top: var(--space-1); }
+.pt-2 { padding-top: var(--space-2); }
+.pt-3 { padding-top: var(--space-3); }
+.pt-4 { padding-top: var(--space-4); }
+.pt-5 { padding-top: var(--space-5); }
+.pt-6 { padding-top: var(--space-6); }
+
+.measure      { max-width: var(--measure-text); }
+.measure-hero { max-width: var(--measure-hero); }
 
 /* The hang eats into the page gutter, and --pad-x bottoms out at 18px. At
    phone widths a full-size hang would put a marker against the screen edge,
@@ -298,6 +371,24 @@ h1, h2, h3, p { margin: 0; }
 .h1 { font-size: var(--fs-hero); line-height: 1.02; color: #fff; }
 .h2 { font-size: clamp(34px, 3.6vw, 52px); line-height: 1.0; }
 .h2-xl { font-size: var(--fs-hero-2); line-height: 1.04; }
+
+/* Headings break evenly instead of dropping a word onto a line by itself.
+   "What will your project actually cost?" was breaking after "actually" and
+   leaving "cost?" alone under a full-width line; so was "for free." under
+   "Before you order anything, I look at your site". text-wrap: balance lets
+   the browser even out the lines, which is what a person does by hand with
+   a <br>, except it keeps working when the words or the width change.
+
+   And every hero heading now wraps at one width. Three inline max-widths
+   were in use (900, 920, 940) and twenty-nine headings had none at all, so
+   the same size of heading broke at a different place on nearly every page. */
+.h1, .h2, .h2-xl { text-wrap: balance; }
+.h1, .h2-xl { max-width: var(--measure-hero); }
+
+/* Fifty h1 elements carried style="color:#fff". Every h1 that uses the
+   section-heading size is a page hero on a dark band, so the colour is a
+   rule, not something each page repeats. (.h1 already sets it.) */
+h1.h2-xl { color: #fff; }
 .eyebrow { margin-bottom: 16px; }
 .lead { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; color: var(--on-dark-2); text-wrap: pretty; }
 
@@ -349,7 +440,18 @@ h1, h2, h3, p { margin: 0; }
 .site-header.is-open .mobile-menu { display: block; }
 
 /* ============ Hero ============ */
-.hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; padding-top: 88px; padding-bottom: 96px; }
+.hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; padding-block: var(--section-y); }
+
+/* Three pages put a single column inside this two-column grid. The copy then
+   took the first track, 51% of the page, and .wrap applied the full page
+   gutter again INSIDE it - so the heading had 492px to wrap in where every
+   other page gave it 900, and ran to four lines while the right half of the
+   screen sat empty. A hero with one child is not a two-column hero.
+
+   Written as :has rather than a class so it cannot be got wrong on the next
+   page: the layout follows what is actually in the section. A browser without
+   :has keeps today's behaviour, which is the same as before this rule. */
+.hero:has(> :only-child) { display: block; }
 .hero .h1 { margin-top: 24px; }
 .hero .lead { margin-top: 26px; max-width: 560px; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
