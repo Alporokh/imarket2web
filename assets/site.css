@@ -2048,125 +2048,144 @@ h1, h2, h3, p { margin: 0; }
   background:rgba(120,200,150,.16);color:#3f9c6d;font-weight:600}
 
 
+
 /* =========================================================================
-   SEO AUDIT HERO - ethereal drifting cloud
+   SEO AUDIT HERO - ethereal drift, drawn rather than photographed
    =========================================================================
 
-   The photograph is a cyclone shot from the ISS, so the cloud layers turn
-   rather than slide: a spiral drifting sideways looks wrong, a spiral slowly
-   rotating looks like weather. Only the blurred layers rotate - at 30px of
-   blur the station's solar panels are smudges, but on the sharp plate they
-   would read as a tumbling satellite, which is not the effect.
+   No image. Five soft radial gradients on a near-black ground, blended with
+   screen so their overlaps bloom toward white, each drifting on its own long
+   loop. That buys three things over the photograph it replaces: nothing to
+   download, colours that are the brand's rather than the weather's, and a
+   composition that can be steered - the bright mass is kept to the right,
+   away from the copy.
 
-   The picture is bright (mean luminance 146/255, against 60-odd for the one
-   it replaced), so white copy needs a real floor under it rather than a
-   light wash. Hence the brightness knock-down on the plate and a scrim
-   weighted to the left, where the copy sits.
+   The blur sits on each blob, never on the field that contains them. A
+   filter on the parent would have to be recomputed every frame its children
+   move; a filter on a layer that only translates is rasterised once and then
+   shifted. Same look, and the difference is the whole frame budget. The blur
+   itself is only there to break the banding that large smooth gradients
+   produce on 8-bit displays.
 
-   Cheap despite the blur: the filter is static per layer and only transform
-   animates, so each layer rasterises once and then moves on the GPU.
+   Only transform animates. Each layer rasterises once and then moves on the
+   GPU, which is what keeps five overlapping layers cheap.
    ========================================================================= */
 
 .audit-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #04070E;
-  padding-block: clamp(76px, 9vw, 122px);
+  background: #05070D;
+  padding-block: clamp(84px, 10vw, 136px);
 }
 
-.audit-hero-bg,
-.audit-hero-cloud,
-.audit-hero-veil,
+.audit-hero-field,
 .audit-hero-scrim { position: absolute; inset: 0; pointer-events: none; }
 
-/* --- the plate: darkened so white type has somewhere to stand ---------- */
-.audit-hero-bg {
-  inset: -6% -8%;
-  background: url(../images/seo-audit-storm.webp) 46% 44% / cover no-repeat;
-  filter: brightness(.66) contrast(1.12) saturate(.92);
-  animation: auditPlate 62s ease-in-out infinite alternate;
+/* The field holds the blobs. Blurring here once is cheaper than blurring
+   each layer, and it is only there to kill gradient banding. */
+.audit-hero-field {
+  -webkit-mask-image: radial-gradient(135% 120% at 50% 45%, #000 55%, transparent 100%);
+          mask-image: radial-gradient(135% 120% at 50% 45%, #000 55%, transparent 100%);
+}
+
+.audit-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(26px);
+  mix-blend-mode: screen;
   will-change: transform;
 }
-@keyframes auditPlate {
-  from { transform: translate3d(-2.6%, .6%, 0) scale(1.05); }
-  to   { transform: translate3d(2.6%, -1.6%, 0) scale(1.11); }
+
+/* teal, the largest and slowest - the body of the thing */
+.audit-blob--teal {
+  width: 44vw; height: 44vw; min-width: 400px; min-height: 400px;
+  left: 30%; top: 30%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(58, 214, 190, .46) 0%, rgba(42, 170, 165, .24) 38%, transparent 68%);
+  animation: blobTeal 15s ease-in-out infinite alternate;
+}
+@keyframes blobTeal {
+  from { transform: translate3d(-14%, -7%, 0) scale(.94); }
+  to   { transform: translate3d(13%, 11%, 0) scale(1.2); }
 }
 
-/* --- the cloud layers: the storm, turning --------------------------- */
-.audit-hero-cloud {
-  inset: -30% -30%;
-  background: url(../images/seo-audit-storm.webp) center / cover no-repeat;
-  will-change: transform;
-  -webkit-mask-image: radial-gradient(120% 110% at 48% 44%, #000 26%, transparent 76%);
-          mask-image: radial-gradient(120% 110% at 48% 44%, #000 26%, transparent 76%);
+/* brand blue, low and wide */
+.audit-blob--blue {
+  width: 42vw; height: 42vw; min-width: 380px; min-height: 380px;
+  left: 60%; top: 60%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(79, 163, 245, .44) 0%, rgba(22, 104, 216, .20) 40%, transparent 70%);
+  animation: blobBlue 19s ease-in-out infinite alternate;
+}
+@keyframes blobBlue {
+  from { transform: translate3d(12%, 10%, 0) scale(1.14); }
+  to   { transform: translate3d(-13%, -10%, 0) scale(.9); }
 }
 
-/* High haze: furthest, softest, turning slowest and the other way. */
-.audit-hero-cloud--far {
-  filter: blur(32px) brightness(.88) saturate(.7);
-  opacity: .52;
-  mix-blend-mode: screen;
-  animation: auditTurnFar 94s linear infinite;
+/* green, the counterweight, drifting the other way */
+.audit-blob--green {
+  width: 40vw; height: 40vw; min-width: 360px; min-height: 360px;
+  left: 54%; top: 2%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(128, 236, 142, .60) 0%, rgba(74, 186, 116, .30) 42%, transparent 70%);
+  animation: blobGreen 16s ease-in-out infinite alternate;
 }
-@keyframes auditTurnFar {
-  from { transform: rotate(0deg) scale(1.32); }
-  to   { transform: rotate(-360deg) scale(1.32); }
-}
-
-/* Mid cloud: closer, sharper, turning the way the storm does. A full
-   rotation loops seamlessly, so these two can run linear and never snap. */
-.audit-hero-cloud--near {
-  filter: blur(15px) brightness(.72) contrast(1.12);
-  opacity: .46;
-  mix-blend-mode: soft-light;
-  animation: auditTurnNear 58s linear infinite;
-}
-@keyframes auditTurnNear {
-  from { transform: rotate(0deg) scale(1.2); }
-  to   { transform: rotate(360deg) scale(1.2); }
+@keyframes blobGreen {
+  from { transform: translate3d(10%, 13%, 0) scale(.92); }
+  to   { transform: translate3d(-12%, -14%, 0) scale(1.18); }
 }
 
-/* --- the breath: light moving through the cloud, no image at all ------- */
-.audit-hero-veil {
-  background:
-    radial-gradient(58% 48% at 68% 26%, rgba(160, 205, 255, .22), transparent 68%),
-    radial-gradient(44% 40% at 26% 66%, rgba(95, 145, 215, .15), transparent 72%);
-  mix-blend-mode: screen;
-  animation: auditBreath 26s ease-in-out infinite;
-  will-change: opacity, transform;
+/* a cool periwinkle low on the right, the coldest note */
+.audit-blob--violet {
+  width: 36vw; height: 36vw; min-width: 320px; min-height: 320px;
+  left: 84%; top: 28%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(158, 172, 255, .48) 0%, rgba(104, 124, 228, .22) 44%, transparent 72%);
+  animation: blobViolet 21s ease-in-out infinite alternate;
 }
-@keyframes auditBreath {
-  0%, 100% { opacity: .5;  transform: translate3d(0, 0, 0) scale(1); }
-  50%      { opacity: .92; transform: translate3d(-2%, 1%, 0) scale(1.08); }
+@keyframes blobViolet {
+  from { transform: translate3d(-11%, 9%, 0) scale(1.1); }
+  to   { transform: translate3d(14%, -12%, 0) scale(.88); }
 }
 
-/* --- readability ------------------------------------------------------- */
+/* the white core - small, bright, fastest, and the thing that makes the
+   whole field read as lit from within rather than coloured in */
+.audit-blob--core {
+  width: 22vw; height: 22vw; min-width: 200px; min-height: 200px;
+  left: 47%; top: 18%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(228, 252, 255, .50) 0%, rgba(168, 226, 240, .20) 36%, transparent 66%);
+  animation: blobCore 12s ease-in-out infinite alternate;
+}
+@keyframes blobCore {
+  from { transform: translate3d(-18%, -13%, 0) scale(.84); opacity: .7; }
+  to   { transform: translate3d(19%, 15%, 0) scale(1.26); opacity: 1; }
+}
+
+/* Keeps the copy on a dark floor while the colour stays on the right. */
 .audit-hero-scrim {
   background:
-    linear-gradient(100deg, rgba(4,7,14,.95) 0%, rgba(4,7,14,.84) 34%, rgba(4,7,14,.40) 58%, rgba(4,7,14,.18) 100%),
-    linear-gradient(to top, rgba(4,7,14,.62) 0%, transparent 46%);
+    linear-gradient(100deg, rgba(5,7,13,.93) 0%, rgba(5,7,13,.78) 32%, rgba(5,7,13,.30) 62%, transparent 100%),
+    linear-gradient(to top, rgba(5,7,13,.55) 0%, transparent 42%);
 }
 
 .audit-hero-copy { position: relative; z-index: 2; }
 .audit-hero-copy .h1 { margin-top: 24px; }
 .audit-hero-copy .lead { margin-top: 26px; max-width: 620px; }
 
-/* Phones: fewer pixels to blur, and the copy runs the full width, so the
-   scrim goes top-to-bottom rather than left-to-right. */
+/* Phones: the copy runs full width, so the scrim turns vertical and the
+   blur eases off - fewer pixels to composite on a weaker GPU. */
 @media (max-width: 720px) {
-  .audit-hero-cloud--far  { filter: blur(24px) brightness(.62) saturate(.7); opacity: .34; }
-  .audit-hero-cloud--near { filter: blur(14px) brightness(.5) contrast(1.1); opacity: .28; }
+  .audit-blob { filter: blur(16px); }
   .audit-hero-scrim {
-    background: linear-gradient(180deg, rgba(4,7,14,.72) 0%, rgba(4,7,14,.88) 55%, rgba(4,7,14,.95) 100%);
+    background: linear-gradient(180deg, rgba(5,7,13,.76) 0%, rgba(5,7,13,.88) 56%, rgba(5,7,13,.95) 100%);
   }
 }
 
-/* The drift IS the effect, so reduced motion keeps the composition and stops
-   the movement - the layers stay where they are, still blurred. */
+/* The drift IS the effect. Reduced motion keeps the colour field exactly as
+   composed and simply stops it moving. */
 @media (prefers-reduced-motion: reduce) {
-  .audit-hero-bg,
-  .audit-hero-cloud,
-  .audit-hero-veil { animation: none; }
-  .audit-hero-veil { opacity: .66; }
+  .audit-blob { animation: none; }
+  .audit-blob--core { opacity: .88; }
 }
