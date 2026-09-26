@@ -356,7 +356,13 @@ h1, h2, h3, p { margin: 0; }
 .skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--blue); color: #fff; padding: 10px 16px; border-radius: 999px; }
 .skip:focus { left: 8px; }
 
-.wrap { max-width: var(--max); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
+/* width:100% matters inside a grid or flex parent. A grid item whose width
+   is auto and whose margins are auto is sized shrink-to-fit, not stretched -
+   so .wrap stopped being the page grid the moment it sat in one, and took
+   its width from whatever was inside it. Stating the width means max-width
+   does the capping and the auto margins only centre. In normal block flow
+   this changes nothing, because box-sizing is border-box. */
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
 .section { padding-top: var(--section-y); padding-bottom: var(--section-y); }
 .dark { background: var(--dark); color: var(--on-dark); }
 
@@ -1948,6 +1954,13 @@ h1.h2-xl { color: #fff; }
   position: relative;
   min-height: clamp(520px, 76vh, 760px);
   display: grid; align-items: center;
+  /* The column has to be told to fill. An auto-sized grid column takes its
+     width from the content, and once the heading inside gained a 900px cap
+     the whole copy block shrank to 1100px and the auto margins centred it,
+     which put the hero copy 170px right of the logo and the breadcrumb
+     directly above it. minmax(0,1fr) keeps the column the width of the hero,
+     so .wrap centres against the page the way it does everywhere else. */
+  grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
   background: #04070E;
 }
