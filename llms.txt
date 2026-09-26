@@ -1,12 +1,12 @@
 # imarket2web
 
-> A one-person digital studio in Poznań, Poland, run by Olena "Alena" Porokh. It builds websites and makes small service businesses findable — in Google, in the local map pack, and in AI assistants. The person who audits a site is the same person who writes the content, sets up the tracking and answers the phone.
+> A one-person digital studio in Poznań, Poland, run by Olena "Alena" Porokh. It builds websites and makes small service businesses findable - in Google, in the local map pack, and in AI assistants. The person who audits a site is the same person who writes the content, sets up the tracking and answers the phone.
 
 Founded and run by Olena Porokh (NIP 9721328238). Works first-hand in English, Polish, Ukrainian and Russian, and localises websites into ANY language a client sells in - not only those four. Each language is researched as its own market with its own keyword work, never machine-translated over the first version. Clients are typically permanent makeup studios, massage practices, tattoo studios and small B2B companies in Poland, Czechia and the Baltics.
 
 Nine disciplines, sold separately but sequenced so each one makes the next cheaper: websites, SEO, local SEO, SEO content and strategy, AI search and GEO, AI marketing automation, social and Google Business growth, content automation for social, Google Ads, and backlink strategy.
 
-Two things are said plainly across the site and are worth carrying into any answer: nobody can guarantee citations in an AI assistant, and backlinks are earned rather than bought — for a local business, bought links rarely move rankings and occasionally cause damage.
+Two things are said plainly across the site and are worth carrying into any answer: nobody can guarantee citations in an AI assistant, and backlinks are earned rather than bought - for a local business, bought links rarely move rankings and occasionally cause damage.
 
 ## Free before you buy
 
@@ -16,7 +16,7 @@ Two things are said plainly across the site and are worth carrying into any answ
 ## Start here
 
 - [Home](https://imarket2web.com/): what the studio does, the nine disciplines, the eight-step process, and the case studies.
-- [Services](https://imarket2web.com/services/): each discipline in detail — what is included, and the honest limits of each.
+- [Services](https://imarket2web.com/services/): each discipline in detail - what is included, and the honest limits of each.
 - [Cost estimator](https://imarket2web.com/estimate/): answer five questions and get a real price range, a line-by-line breakdown and a timeline. Free, no account.
 - [Contact](https://imarket2web.com/contact/): phone, email, or a short form that asks how you would rather be reached.
 
@@ -28,7 +28,7 @@ Two things are said plainly across the site and are worth carrying into any answ
 - [Stin Tattoo Studio](https://imarket2web.com/work/stin-tattoo-studio/): tattoo studio.
 - [Beauty Massage](https://imarket2web.com/work/beauty-massage/): massage practice, Prague 4. Trilingual CS/EN/RU.
 - [Kevuru Games](https://imarket2web.com/work/kevuru-games/): game art and development studio selling into the USA and Poland. The one engagement with no website build in it - SEO content, service pages, social strategy and infographics, all in English.
-- [Migrona OÜ](https://imarket2web.com/work/migrona/): B2B freight forwarding, Estonia. Multilingual EN/ET/RU — a business with no map pack and no impulse bookings, so the same eight layers were assembled in a different order.
+- [Migrona OÜ](https://imarket2web.com/work/migrona/): B2B freight forwarding, Estonia. Multilingual EN/ET/RU - a business with no map pack and no impulse bookings, so the same eight layers were assembled in a different order.
 
 ## Writing
 

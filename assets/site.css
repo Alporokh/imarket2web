@@ -318,7 +318,7 @@ h1, h2, h3, p { margin: 0; }
 
 /* ============ Services ============ */
 .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
-.svc { padding: 30px 28px; display: flex; flex-direction: column; gap: 13px; min-height: 278px; }
+.svc { padding: 30px 32px; display: flex; flex-direction: column; gap: 13px; min-height: 278px; }
 .svc h3 { font-size: 23px; line-height: 1.12; }
 .svc p { font-size: 15px; line-height: 1.6; color: var(--text); flex-grow: 1; }
 .svc .mono { color: var(--blue); }
@@ -1975,6 +1975,7 @@ h1, h2, h3, p { margin: 0; }
   display: flex; flex-direction: column; gap: 11px;
 }
 .prose ul { margin-bottom: 0; }
+.prose > * + ul { margin-top: 20px; }
 .svc-list { margin-bottom: 18px; }
 
 /* Hanging indent, not a flex row. A flex container blockifies every inline
@@ -2245,3 +2246,23 @@ h1, h2, h3, p { margin: 0; }
   .audit-wisp { animation: none; }
 }
 .steam-defs { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+
+/* =========================================================================
+   Flow spacing in plain content sections
+   =========================================================================
+   h1/h2/h3 and p are all margin:0 globally, and most components add their
+   own spacing. The plain pattern - eyebrow, heading, body copy as direct
+   children of a section.wrap - had none, so every heading sat flush on its
+   first line of text and consecutive paragraphs ran together. Measured 0px
+   under 10 of 13 headings on the audit pages.
+
+   Scoped to section.wrap so it cannot reach the hero, whose .wrap is a div
+   and which manages its own rhythm.
+   ========================================================================= */
+section.wrap > h2 + p,  section.wrap > h2 + ul,
+section.wrap > h3 + p,  section.wrap > h3 + ul,
+section.wrap > .h2 + p, section.wrap > .h2 + ul,
+section.wrap > .h3 + p, section.wrap > .h3 + ul { margin-top: 18px; }
+
+section.wrap > p + p { margin-top: 16px; }
+section.wrap > p + ul, section.wrap > ul + p { margin-top: 18px; }

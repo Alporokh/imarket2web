@@ -68,7 +68,7 @@ const PL = {
   'Social content & posting automation, per month':
     'Treści social i automatyzacja publikacji, miesięcznie',
   '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
-    '16 postów miesięcznie, założenie lub optymalizacja profilu, kalendarz i automatyzacja publikacji — zatwierdzane przez Ciebie z góry',
+    '16 postów miesięcznie, założenie lub optymalizacja profilu, kalendarz i automatyzacja publikacji - zatwierdzane przez Ciebie z góry',
   'Backlink strategy: link gap audit, target list, digital PR angles':
     'Strategia linkowania: audyt luki linkowej, lista celów, tematy do digital PR',
   'Search package: SEO strategy, Google Business Profile, blog and analytics':
@@ -146,7 +146,7 @@ const UK = {
   'Social content & posting automation, per month':
     'Контент для соцмереж і автоматизація публікацій, за місяць',
   '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
-    '16 постів на місяць, створення або оптимізація профілю, календар і автоматизація публікацій — погоджені вами заздалегідь',
+    '16 постів на місяць, створення або оптимізація профілю, календар і автоматизація публікацій - погоджені вами заздалегідь',
   'Backlink strategy: link gap audit, target list, digital PR angles':
     'Стратегія посилань: аудит розриву, список цілей, теми для digital PR',
   'Search package: SEO strategy, Google Business Profile, blog and analytics':
@@ -378,7 +378,19 @@ const state = {
   rush: false
 };
 
-const fmt = n => RATES.symbol + Math.round(n).toLocaleString('en-US');
+/* The Polish pages quote in złoty. The rate card stays in one currency and
+   converts on the way out, exactly as the copy stays in English and
+   translates on the way out - so a price is still edited in one place.
+   4 zł to the euro, which is the rate these prices were set against. */
+const FX = { pl: { rate: 4, symbol: 'zł', locale: 'pl-PL' } };
+const MONEY = FX[(document.documentElement.lang || 'en').slice(0, 2)] || null;
+
+const fmt = n => {
+  const v = Math.round(n * (MONEY ? MONEY.rate : 1));
+  return MONEY
+    ? v.toLocaleString(MONEY.locale).replace(/\s/g, ' ') + ' ' + MONEY.symbol
+    : RATES.symbol + v.toLocaleString('en-US');
+};
 
 /** Core pricing. Returns the full estimate for a given set of add-ons. */
 function price(addonKeys) {
@@ -577,7 +589,8 @@ function payloadFields() {
     // Recurring fees are deliberately outside the project total, so they
     // need their own column or they vanish from the Sheet entirely.
     monthly: r && r.monthlyTotal ? Math.round(r.monthlyTotal) : '',
-    currency: RATES.currency,
+    // the Sheet should record the currency the visitor was actually quoted
+    currency: MONEY ? 'PLN' : RATES.currency,
     timeline: r ? r.weeksMin + '–' + r.weeksMax + T(' weeks') : '',
     goal: state.goal || '',
     website: site.label || '',
