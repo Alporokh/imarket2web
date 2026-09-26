@@ -2109,7 +2109,7 @@ h1, h2, h3, p { margin: 0; }
   width: 54vw; height: 54vw; min-width: 480px; min-height: 480px;
   left: 26%; top: 34%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(62, 216, 158, .50) 0%, rgba(44, 172, 132, .26) 38%, transparent 68%);
+    rgba(240, 248, 255, .56) 0%, rgba(158, 196, 244, .28) 38%, transparent 68%);
   animation: steamA 17s ease-in-out -5s infinite alternate;
 }
 @keyframes steamA {
@@ -2121,7 +2121,7 @@ h1, h2, h3, p { margin: 0; }
   width: 50vw; height: 50vw; min-width: 450px; min-height: 450px;
   left: 56%; top: 46%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(79, 163, 245, .42) 0%, rgba(22, 104, 216, .18) 36%, transparent 64%);
+    rgba(96, 172, 248, .44) 0%, rgba(22, 104, 216, .22) 38%, transparent 64%);
   animation: steamB 21s ease-in-out -13s infinite alternate;
 }
 @keyframes steamB {
@@ -2133,7 +2133,7 @@ h1, h2, h3, p { margin: 0; }
   width: 54vw; height: 54vw; min-width: 480px; min-height: 480px;
   left: 48%; top: 22%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(132, 240, 146, .60) 0%, rgba(78, 192, 120, .30) 42%, transparent 70%);
+    rgba(186, 216, 250, .48) 0%, rgba(96, 148, 220, .26) 42%, transparent 70%);
   animation: steamC 15s ease-in-out -7s infinite alternate;
 }
 @keyframes steamC {
@@ -2145,7 +2145,7 @@ h1, h2, h3, p { margin: 0; }
   width: 40vw; height: 40vw; min-width: 340px; min-height: 340px;
   left: 76%; top: 40%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(158, 172, 255, .44) 0%, rgba(104, 124, 228, .20) 44%, transparent 72%);
+    rgba(170, 196, 240, .38) 0%, rgba(84, 124, 200, .18) 44%, transparent 72%);
   animation: steamD 24s ease-in-out -16s infinite alternate;
 }
 @keyframes steamD {
@@ -2158,7 +2158,7 @@ h1, h2, h3, p { margin: 0; }
   width: 24vw; height: 24vw; min-width: 220px; min-height: 220px;
   left: 44%; top: 30%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(228, 252, 255, .52) 0%, rgba(168, 226, 240, .20) 36%, transparent 66%);
+    rgba(255, 255, 255, .72) 0%, rgba(206, 230, 255, .28) 38%, transparent 66%);
   animation: steamE 12s ease-in-out -4s infinite alternate;
 }
 @keyframes steamE {
@@ -2168,7 +2168,7 @@ h1, h2, h3, p { margin: 0; }
 
 .audit-hero-scrim {
   background:
-    linear-gradient(100deg, rgba(5,7,13,.98) 0%, rgba(5,7,13,.95) 36%, rgba(5,7,13,.62) 62%, rgba(5,7,13,.22) 100%),
+    linear-gradient(100deg, rgba(5,7,13,.98) 0%, rgba(5,7,13,.965) 46%, rgba(5,7,13,.60) 70%, rgba(5,7,13,.06) 100%),
     linear-gradient(to top, rgba(5,7,13,.70) 0%, transparent 44%);
 }
 
@@ -2215,7 +2215,7 @@ h1, h2, h3, p { margin: 0; }
 
 .audit-wisp--a {
   background: radial-gradient(circle at 24% 42%,
-    rgba(100, 228, 172, .46) 0%, rgba(60, 170, 190, .20) 34%, transparent 58%);
+    rgba(248, 252, 255, .64) 0%, rgba(150, 190, 240, .26) 36%, transparent 58%);
   -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.020 0.032' numOctaves='4' seed='11' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3.2 3.2 1.5 0 -3.60'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
           mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.020 0.032' numOctaves='4' seed='11' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3.2 3.2 1.5 0 -3.60'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: wispA 23s ease-in-out -6s infinite alternate;
@@ -2227,7 +2227,7 @@ h1, h2, h3, p { margin: 0; }
 
 .audit-wisp--b {
   background: radial-gradient(circle at 74% 46%,
-    rgba(146, 252, 150, .70) 0%, rgba(96, 210, 128, .34) 34%, transparent 62%);
+    rgba(232, 244, 255, .66) 0%, rgba(112, 164, 232, .34) 36%, transparent 62%);
   -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.038 0.055' numOctaves='3' seed='29' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.6 2.6 1.2 0 -2.90'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
           mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.038 0.055' numOctaves='3' seed='29' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.6 2.6 1.2 0 -2.90'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: wispB 31s ease-in-out -14s infinite alternate;
