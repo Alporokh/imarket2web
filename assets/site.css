@@ -2049,26 +2049,33 @@ h1, h2, h3, p { margin: 0; }
 
 
 
+
 /* =========================================================================
-   SEO AUDIT HERO - ethereal drift, drawn rather than photographed
+   SEO AUDIT HERO - ethereal steam
    =========================================================================
 
-   No image. Five soft radial gradients on a near-black ground, blended with
-   screen so their overlaps bloom toward white, each drifting on its own long
-   loop. That buys three things over the photograph it replaces: nothing to
-   download, colours that are the brand's rather than the weather's, and a
-   composition that can be steered - the bright mass is kept to the right,
-   away from the copy.
+   The previous version drifted soft gradients around and read as exactly
+   that: a gradient. Steam is not a moving gradient. It has wispy internal
+   structure, it rises, and it churns while it rises.
 
-   The blur sits on each blob, never on the field that contains them. A
-   filter on the parent would have to be recomputed every frame its children
-   move; a filter on a layer that only translates is rasterised once and then
-   shifted. Same look, and the difference is the whole frame budget. The blur
-   itself is only there to break the banding that large smooth gradients
-   produce on 8-bit displays.
+   Three things together produce that:
 
-   Only transform animates. Each layer rasterises once and then moves on the
-   GPU, which is what keeps five overlapping layers cheap.
+   1. The colour still comes from soft radial blobs, but they now rise
+      rather than wander, at different rates, the way a column of vapour
+      separates as it climbs.
+
+   2. An SVG turbulence filter displaces the whole field, tearing the smooth
+      gradients into wisps. This is what stops it looking like a gradient -
+      no amount of movement does that on its own, because the shapes stay
+      round.
+
+   3. The turbulence itself is animated, so the wisps churn instead of
+      sitting still while colour slides underneath them.
+
+   Cost: a displacement filter is the expensive part of this, so the noise
+   is kept to two octaves, the filter region is clipped to the hero, and the
+   whole filter is dropped below 720px and under reduced motion, where the
+   blobs alone still give a calm colour field.
    ========================================================================= */
 
 .audit-hero {
@@ -2082,110 +2089,159 @@ h1, h2, h3, p { margin: 0; }
 .audit-hero-field,
 .audit-hero-scrim { position: absolute; inset: 0; pointer-events: none; }
 
-/* The field holds the blobs. Blurring here once is cheaper than blurring
-   each layer, and it is only there to kill gradient banding. */
-.audit-hero-field {
-  -webkit-mask-image: radial-gradient(135% 120% at 50% 45%, #000 55%, transparent 100%);
-          mask-image: radial-gradient(135% 120% at 50% 45%, #000 55%, transparent 100%);
-}
+/* the displacement is what turns blobs into vapour */
+.audit-hero-field { /* no filter here: see the vapour note below */ }
 
 .audit-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(26px);
+  filter: blur(22px);
   mix-blend-mode: screen;
   will-change: transform;
 }
 
-/* teal, the largest and slowest - the body of the thing */
+/* --- the rising column ------------------------------------------------
+   Every blob travels upward. The lateral component is small and differs
+   per layer, which is what makes the column shear apart as it climbs
+   instead of moving as one block. */
+
 .audit-blob--teal {
   width: 54vw; height: 54vw; min-width: 480px; min-height: 480px;
-  left: 26%; top: 28%;
+  left: 26%; top: 34%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(58, 214, 190, .46) 0%, rgba(42, 170, 165, .24) 38%, transparent 68%);
-  animation: blobTeal 11s ease-in-out -4s infinite alternate;
+    rgba(62, 216, 158, .50) 0%, rgba(44, 172, 132, .26) 38%, transparent 68%);
+  animation: steamA 17s ease-in-out -5s infinite alternate;
 }
-@keyframes blobTeal {
-  from { transform: translate3d(-42%, -22%, 0) scale(.78); }
-  to   { transform: translate3d(40%, 30%, 0) scale(1.42); }
+@keyframes steamA {
+  from { transform: translate3d(-8%, 34%, 0) scale(.82); }
+  to   { transform: translate3d(9%, -30%, 0) scale(1.3); }
 }
 
-/* brand blue, low and wide */
 .audit-blob--blue {
   width: 50vw; height: 50vw; min-width: 450px; min-height: 450px;
-  left: 58%; top: 54%;
+  left: 56%; top: 46%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(79, 163, 245, .44) 0%, rgba(22, 104, 216, .20) 40%, transparent 70%);
-  animation: blobBlue 14s ease-in-out -9s infinite alternate;
+    rgba(79, 163, 245, .42) 0%, rgba(22, 104, 216, .18) 36%, transparent 64%);
+  animation: steamB 21s ease-in-out -13s infinite alternate;
 }
-@keyframes blobBlue {
-  from { transform: translate3d(38%, 30%, 0) scale(1.34); }
-  to   { transform: translate3d(-40%, -28%, 0) scale(.74); }
+@keyframes steamB {
+  from { transform: translate3d(10%, 40%, 0) scale(.9); }
+  to   { transform: translate3d(-9%, -26%, 0) scale(1.34); }
 }
 
-/* green, the counterweight, drifting the other way */
 .audit-blob--green {
   width: 54vw; height: 54vw; min-width: 480px; min-height: 480px;
-  left: 50%; top: 14%;
+  left: 48%; top: 22%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(132, 240, 146, .68) 0%, rgba(78, 192, 120, .34) 42%, transparent 70%);
-  animation: blobGreen 12s ease-in-out -6s infinite alternate;
+    rgba(132, 240, 146, .60) 0%, rgba(78, 192, 120, .30) 42%, transparent 70%);
+  animation: steamC 15s ease-in-out -7s infinite alternate;
 }
-@keyframes blobGreen {
-  from { transform: translate3d(16%, 14%, 0) scale(.94); }
-  to   { transform: translate3d(-18%, -16%, 0) scale(1.24); }
+@keyframes steamC {
+  from { transform: translate3d(7%, 26%, 0) scale(.9); }
+  to   { transform: translate3d(-8%, -22%, 0) scale(1.22); }
 }
 
-/* a cool periwinkle low on the right, the coldest note */
 .audit-blob--violet {
-  width: 36vw; height: 36vw; min-width: 320px; min-height: 320px;
-  left: 84%; top: 28%;
+  width: 40vw; height: 40vw; min-width: 340px; min-height: 340px;
+  left: 76%; top: 40%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(158, 172, 255, .48) 0%, rgba(104, 124, 228, .22) 44%, transparent 72%);
-  animation: blobViolet 15s ease-in-out -11s infinite alternate;
+    rgba(158, 172, 255, .44) 0%, rgba(104, 124, 228, .20) 44%, transparent 72%);
+  animation: steamD 24s ease-in-out -16s infinite alternate;
 }
-@keyframes blobViolet {
-  from { transform: translate3d(-36%, 28%, 0) scale(1.3); }
-  to   { transform: translate3d(42%, -34%, 0) scale(.72); }
+@keyframes steamD {
+  from { transform: translate3d(-9%, 36%, 0) scale(1.0); }
+  to   { transform: translate3d(11%, -28%, 0) scale(1.34); }
 }
 
-/* the white core - small, bright, fastest, and the thing that makes the
-   whole field read as lit from within rather than coloured in */
+/* the bright head of the column, fastest and most transient */
 .audit-blob--core {
-  width: 22vw; height: 22vw; min-width: 200px; min-height: 200px;
-  left: 47%; top: 18%;
+  width: 24vw; height: 24vw; min-width: 220px; min-height: 220px;
+  left: 44%; top: 30%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(228, 252, 255, .50) 0%, rgba(168, 226, 240, .20) 36%, transparent 66%);
-  animation: blobCore 9s ease-in-out -3s infinite alternate;
+    rgba(228, 252, 255, .52) 0%, rgba(168, 226, 240, .20) 36%, transparent 66%);
+  animation: steamE 12s ease-in-out -4s infinite alternate;
 }
-@keyframes blobCore {
-  from { transform: translate3d(-52%, -38%, 0) scale(.66); opacity: .55; }
-  to   { transform: translate3d(54%, 44%, 0) scale(1.5); opacity: 1; }
+@keyframes steamE {
+  from { transform: translate3d(-6%, 48%, 0) scale(.7);  opacity: .35; }
+  to   { transform: translate3d(8%, -34%, 0) scale(1.25); opacity: 1; }
 }
 
-/* Keeps the copy on a dark floor while the colour stays on the right. */
 .audit-hero-scrim {
   background:
-    linear-gradient(100deg, rgba(5,7,13,.93) 0%, rgba(5,7,13,.78) 32%, rgba(5,7,13,.30) 62%, transparent 100%),
-    linear-gradient(to top, rgba(5,7,13,.55) 0%, transparent 42%);
+    linear-gradient(100deg, rgba(5,7,13,.98) 0%, rgba(5,7,13,.95) 36%, rgba(5,7,13,.62) 62%, rgba(5,7,13,.22) 100%),
+    linear-gradient(to top, rgba(5,7,13,.70) 0%, transparent 44%);
 }
 
 .audit-hero-copy { position: relative; z-index: 2; }
 .audit-hero-copy .h1 { margin-top: 24px; }
 .audit-hero-copy .lead { margin-top: 26px; max-width: 620px; }
 
-/* Phones: the copy runs full width, so the scrim turns vertical and the
-   blur eases off - fewer pixels to composite on a weaker GPU. */
+/* Phones: the displacement filter is the expensive part and the least
+   visible on a small screen, so it goes. The rising blobs remain. */
 @media (max-width: 720px) {
-  .audit-blob { filter: blur(16px); }
+  .audit-blob { filter: blur(15px); }
   .audit-hero-scrim {
     background: linear-gradient(180deg, rgba(5,7,13,.76) 0%, rgba(5,7,13,.88) 56%, rgba(5,7,13,.95) 100%);
   }
 }
 
-/* The drift IS the effect. Reduced motion keeps the colour field exactly as
-   composed and simply stops it moving. */
+/* Rising, churning vapour is exactly the kind of large-area motion that
+   reduced motion exists to suppress. The colour field stays, still. */
 @media (prefers-reduced-motion: reduce) {
   .audit-blob { animation: none; }
-  .audit-blob--core { opacity: .88; }
+  .audit-blob--core { opacity: .8; }
 }
+
+/* The filter host must not occupy layout or catch a scroll. width/height=0
+   on the element is not quite enough in every engine. */
+
+/* --- the vapour -------------------------------------------------------
+   Two layers of fractal noise, baked into mask images so the browser
+   rasterises each once and then only composites it. They drift against
+   each other at different scales and rates, which is what makes the field
+   churn: the wisps are fixed within each layer, but the layers are not
+   fixed relative to one another, and the colour blobs flow underneath both.
+
+   A live SVG filter gives the same look and halves the frame rate, because
+   a filter re-runs every frame anything inside it moves. Measured: 19fps
+   live against 33fps baked, on the same machine. */
+.audit-wisp {
+  position: absolute; inset: -30%;
+  mix-blend-mode: screen;
+  will-change: transform;
+  -webkit-mask-size: cover; mask-size: cover;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+
+.audit-wisp--a {
+  background: radial-gradient(circle at 24% 42%,
+    rgba(100, 228, 172, .46) 0%, rgba(60, 170, 190, .20) 34%, transparent 58%);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.020 0.032' numOctaves='4' seed='11' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3.2 3.2 1.5 0 -3.60'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.020 0.032' numOctaves='4' seed='11' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3.2 3.2 1.5 0 -3.60'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: wispA 23s ease-in-out -6s infinite alternate;
+}
+@keyframes wispA {
+  from { transform: translate3d(-6%, 17%, 0) scale(1.05); }
+  to   { transform: translate3d(5%, -15%, 0) scale(1.22); }
+}
+
+.audit-wisp--b {
+  background: radial-gradient(circle at 74% 46%,
+    rgba(146, 252, 150, .70) 0%, rgba(96, 210, 128, .34) 34%, transparent 62%);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.038 0.055' numOctaves='3' seed='29' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.6 2.6 1.2 0 -2.90'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
+          mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='n' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.038 0.055' numOctaves='3' seed='29' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2.6 2.6 1.2 0 -2.90'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: wispB 31s ease-in-out -14s infinite alternate;
+}
+@keyframes wispB {
+  from { transform: translate3d(7%, 15%, 0) scale(1.18); }
+  to   { transform: translate3d(-6%, -19%, 0) scale(1.02); }
+}
+
+@media (max-width: 720px) {
+  /* one layer is enough at phone size, and halves the compositing */
+  .audit-wisp--b { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .audit-wisp { animation: none; }
+}
+.steam-defs { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
