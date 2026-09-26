@@ -2099,41 +2099,41 @@ h1, h2, h3, p { margin: 0; }
 
 /* teal, the largest and slowest - the body of the thing */
 .audit-blob--teal {
-  width: 44vw; height: 44vw; min-width: 400px; min-height: 400px;
-  left: 30%; top: 30%;
+  width: 54vw; height: 54vw; min-width: 480px; min-height: 480px;
+  left: 26%; top: 28%;
   background: radial-gradient(circle at 50% 50%,
     rgba(58, 214, 190, .46) 0%, rgba(42, 170, 165, .24) 38%, transparent 68%);
-  animation: blobTeal 15s ease-in-out infinite alternate;
+  animation: blobTeal 11s ease-in-out -4s infinite alternate;
 }
 @keyframes blobTeal {
-  from { transform: translate3d(-14%, -7%, 0) scale(.94); }
-  to   { transform: translate3d(13%, 11%, 0) scale(1.2); }
+  from { transform: translate3d(-42%, -22%, 0) scale(.78); }
+  to   { transform: translate3d(40%, 30%, 0) scale(1.42); }
 }
 
 /* brand blue, low and wide */
 .audit-blob--blue {
-  width: 42vw; height: 42vw; min-width: 380px; min-height: 380px;
-  left: 60%; top: 60%;
+  width: 50vw; height: 50vw; min-width: 450px; min-height: 450px;
+  left: 58%; top: 54%;
   background: radial-gradient(circle at 50% 50%,
     rgba(79, 163, 245, .44) 0%, rgba(22, 104, 216, .20) 40%, transparent 70%);
-  animation: blobBlue 19s ease-in-out infinite alternate;
+  animation: blobBlue 14s ease-in-out -9s infinite alternate;
 }
 @keyframes blobBlue {
-  from { transform: translate3d(12%, 10%, 0) scale(1.14); }
-  to   { transform: translate3d(-13%, -10%, 0) scale(.9); }
+  from { transform: translate3d(38%, 30%, 0) scale(1.34); }
+  to   { transform: translate3d(-40%, -28%, 0) scale(.74); }
 }
 
 /* green, the counterweight, drifting the other way */
 .audit-blob--green {
-  width: 40vw; height: 40vw; min-width: 360px; min-height: 360px;
-  left: 54%; top: 2%;
+  width: 54vw; height: 54vw; min-width: 480px; min-height: 480px;
+  left: 50%; top: 14%;
   background: radial-gradient(circle at 50% 50%,
-    rgba(128, 236, 142, .60) 0%, rgba(74, 186, 116, .30) 42%, transparent 70%);
-  animation: blobGreen 16s ease-in-out infinite alternate;
+    rgba(132, 240, 146, .68) 0%, rgba(78, 192, 120, .34) 42%, transparent 70%);
+  animation: blobGreen 12s ease-in-out -6s infinite alternate;
 }
 @keyframes blobGreen {
-  from { transform: translate3d(10%, 13%, 0) scale(.92); }
-  to   { transform: translate3d(-12%, -14%, 0) scale(1.18); }
+  from { transform: translate3d(16%, 14%, 0) scale(.94); }
+  to   { transform: translate3d(-18%, -16%, 0) scale(1.24); }
 }
 
 /* a cool periwinkle low on the right, the coldest note */
@@ -2142,11 +2142,11 @@ h1, h2, h3, p { margin: 0; }
   left: 84%; top: 28%;
   background: radial-gradient(circle at 50% 50%,
     rgba(158, 172, 255, .48) 0%, rgba(104, 124, 228, .22) 44%, transparent 72%);
-  animation: blobViolet 21s ease-in-out infinite alternate;
+  animation: blobViolet 15s ease-in-out -11s infinite alternate;
 }
 @keyframes blobViolet {
-  from { transform: translate3d(-11%, 9%, 0) scale(1.1); }
-  to   { transform: translate3d(14%, -12%, 0) scale(.88); }
+  from { transform: translate3d(-36%, 28%, 0) scale(1.3); }
+  to   { transform: translate3d(42%, -34%, 0) scale(.72); }
 }
 
 /* the white core - small, bright, fastest, and the thing that makes the
@@ -2156,11 +2156,11 @@ h1, h2, h3, p { margin: 0; }
   left: 47%; top: 18%;
   background: radial-gradient(circle at 50% 50%,
     rgba(228, 252, 255, .50) 0%, rgba(168, 226, 240, .20) 36%, transparent 66%);
-  animation: blobCore 12s ease-in-out infinite alternate;
+  animation: blobCore 9s ease-in-out -3s infinite alternate;
 }
 @keyframes blobCore {
-  from { transform: translate3d(-18%, -13%, 0) scale(.84); opacity: .7; }
-  to   { transform: translate3d(19%, 15%, 0) scale(1.26); opacity: 1; }
+  from { transform: translate3d(-52%, -38%, 0) scale(.66); opacity: .55; }
+  to   { transform: translate3d(54%, 44%, 0) scale(1.5); opacity: 1; }
 }
 
 /* Keeps the copy on a dark floor while the colour stays on the right. */
