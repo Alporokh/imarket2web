@@ -649,9 +649,10 @@ h1.h2-xl { color: #fff; }
 /* ---- Work index grid ---- */
 .work-intro { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: end; }
 .work-intro .lead { color: var(--on-dark-2); }
-.work-count { display: flex; gap: 40px; }
-.work-count .d { font-size: 44px; line-height: 1; color: #fff; }
-.work-count .mono { margin-top: 8px; display: block; }
+/* The counter strip was the second column. With it gone there is one child,
+   and a two-column grid holding one child puts it in 55% of the page with
+   the rest empty - the same trap .hero had. */
+.work-intro:has(> :only-child) { display: block; }
 .project--wide { grid-column: 1 / -1; }
 .project--wide .shot { height: 380px; }
 .project-note { font-size: 15px; line-height: 1.6; color: var(--text); margin-top: 14px; padding: 0 8px; }
@@ -930,7 +931,6 @@ h1.h2-xl { color: #fff; }
 }
 @media (max-width: 640px) {
   .factbar { grid-template-columns: 1fr; gap: 18px; }
-  .work-count { gap: 28px; }
   .prose p, .prose li { font-size: 16px; }
   .pull { padding-left: 18px; }
   .project--wide .shot { height: 220px; }
