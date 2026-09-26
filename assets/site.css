@@ -276,6 +276,7 @@
      nearly every page. */
   --measure-hero: 900px;
   --measure-text: 820px;   /* body copy that is not in a column already */
+  --measure-lead: 620px;   /* the deck under a hero heading */
 }
 
 /* The two largest steps are gaps between whole ideas, and on a phone that
@@ -391,6 +392,31 @@ h1, h2, h3, p { margin: 0; }
 .h1, .h2, .h2-xl { text-wrap: balance; }
 .h1, .h2-xl { max-width: var(--measure-hero); }
 
+/* =======================================================================
+   ONE HERO
+   -----------------------------------------------------------------------
+   Every hero is a label, a heading, a deck and some buttons, in that order.
+   Seven of them used to carry their own copies of these three rules with no
+   two numbers alike, which is how the cases page ended up with a deck at
+   1240px standing next to pages at 620.
+
+   Scoped to the hero containers rather than put on .lead, because .lead is
+   also a section intro 120-odd times over and those sit in a normal column
+   where a 620px cap would be wrong.
+   ======================================================================= */
+:is(.hero, .hero--matrix, .page-hero, .svc-hero-copy, .audit-hero-copy,
+    .about-hero, .case-hero, .work-intro, .space-copy, .orbit-copy)
+  :is(h1, .h1, .h2-xl) { margin-top: var(--space-3); }
+
+:is(.hero, .hero--matrix, .page-hero, .svc-hero-copy, .audit-hero-copy,
+    .about-hero, .case-hero, .work-intro, .space-copy, .orbit-copy)
+  .lead { margin-top: var(--space-3); max-width: var(--measure-lead); }
+
+:is(.hero, .hero--matrix, .page-hero, .svc-hero-copy, .audit-hero-copy,
+    .about-hero, .case-hero, .work-intro, .space-copy, .orbit-copy)
+  .hero-ctas { margin-top: var(--space-4); }
+
+
 /* Fifty h1 elements carried style="color:#fff". Every h1 that uses the
    section-heading size is a page hero on a dark band, so the colour is a
    rule, not something each page repeats. (.h1 already sets it.) */
@@ -458,8 +484,6 @@ h1.h2-xl { color: #fff; }
    page: the layout follows what is actually in the section. A browser without
    :has keeps today's behaviour, which is the same as before this rule. */
 .hero:has(> :only-child) { display: block; }
-.hero .h1 { margin-top: 24px; }
-.hero .lead { margin-top: 26px; max-width: 560px; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .langs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; align-items: center; }
 .langs .mono { font-size: 10px; margin-right: 4px; color: var(--on-dark-4); }
@@ -643,8 +667,6 @@ h1.h2-xl { color: #fff; }
 
 /* ---- Page hero (shared by /work/ and every case study) ---- */
 .page-hero { padding-top: clamp(40px, 5vw, 76px); padding-bottom: clamp(40px, 5vw, 72px); }
-.page-hero .h2-xl { max-width: 900px; margin-top: 16px; }
-.page-hero .lead { margin-top: 22px; max-width: 620px; }
 
 /* ---- Breadcrumbs ---- */
 .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--on-dark-4); }
@@ -776,8 +798,6 @@ h1.h2-xl { color: #fff; }
 
 /* ---- Case study layout ---- */
 .case-hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: center; padding-top: clamp(32px, 4vw, 60px); padding-bottom: clamp(48px, 5vw, 80px); }
-.case-hero .h2-xl { margin-top: 18px; }
-.case-hero .lead { margin-top: 20px; }
 .case-hero .shot { height: 360px; background: var(--dark-2); border-color: var(--dark-line-2); }
 .case-hero .shot .mono { color: var(--on-dark-4); }
 
@@ -1236,10 +1256,11 @@ h1.h2-xl { color: #fff; }
   display: block;
   padding-top: clamp(64px, 9vw, 132px);
   padding-bottom: clamp(56px, 7vw, 104px);
-  max-width: 940px;
+  /* No max-width. This hero used to be a 940px column centred in the page,
+     which put its heading 250px right of the logo while every other page
+     started both at the same x. The heading takes its width from
+     --measure-hero now, like the rest of them. */
 }
-.hero--matrix .h1 { margin-top: 24px; }
-.hero--matrix .lead { margin-top: 26px; max-width: 620px; }
 
 @media (max-width: 980px) {
   .hero--matrix { padding-top: 44px; padding-bottom: 40px; }
@@ -1704,9 +1725,6 @@ h1.h2-xl { color: #fff; }
   align-items: center;
   padding-top: clamp(32px, 4vw, 60px); padding-bottom: clamp(48px, 5vw, 84px);
 }
-.about-hero .h2-xl { margin-top: 18px; }
-.about-hero .lead { margin-top: 20px; max-width: 560px; }
-.about-hero .hero-ctas { margin-top: 32px; }
 
 .about-photo { margin: 0; }
 .about-photo figcaption { margin-top: 14px; color: var(--on-dark-3); text-align: center; }
@@ -2098,9 +2116,6 @@ h1.h2-xl { color: #fff; }
 }
 
 .svc-hero-copy { position: relative; z-index: 3; }
-.svc-hero-copy .h2-xl { margin-top: 18px; }
-.svc-hero-copy .lead { margin-top: 20px; }
-.svc-hero-copy .hero-ctas { margin-top: 32px; }
 
 @media (max-width: 900px) {
   .svc-hero { min-height: clamp(460px, 66vh, 560px); }
@@ -2352,8 +2367,6 @@ h1.h2-xl { color: #fff; }
 }
 
 .audit-hero-copy { position: relative; z-index: 2; }
-.audit-hero-copy .h1 { margin-top: 24px; }
-.audit-hero-copy .lead { margin-top: 26px; max-width: 620px; }
 
 /* Phones: the displacement filter is the expensive part and the least
    visible on a small screen, so it goes. The rising blobs remain. */

@@ -16,8 +16,9 @@
 .space-earth{z-index:2;object-fit:contain;opacity:0;transform:translate3d(0,18%,0) scale(.055);transform-origin:50% 54%;will-change:transform,opacity;mix-blend-mode:screen}
 .space-vignette{z-index:3;pointer-events:none;background:radial-gradient(circle at 50% 48%,transparent 32%,rgba(0,0,0,.18) 66%,rgba(0,0,0,.72) 100%)}
 .space-copy{position:relative;z-index:4;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;pointer-events:none;will-change:transform,opacity}
-.space-copy .h1{max-width:920px;margin-top:24px}
-.space-copy .lead{max-width:610px;margin-top:26px}
+/* the heading measure and the hero rhythm live in site.css now */
+.space-copy .h1{max-width:var(--measure-hero)}
+.space-copy .lead{max-width:var(--measure-lead)}
 .space-copy .hero-ctas,.space-copy .langs{pointer-events:auto}
 .space-message{position:absolute;z-index:4;left:50%;top:50%;width:min(900px,86vw);transform:translate(-50%,-42%);text-align:center;font-size:clamp(38px,6vw,88px);line-height:.94;letter-spacing:-.05em;opacity:0;will-change:transform,opacity}
 .space-message span{color:var(--blue-light)}
