@@ -48,6 +48,7 @@ The Polish site is a full mirror, not a translation layer: every page below was 
 - [Realizacje](https://imarket2web.com/pl/realizacje/): the five case studies in Polish.
 - [Wycena](https://imarket2web.com/pl/wycena/): the cost estimator, localised.
 - [Blog](https://imarket2web.com/pl/blog/): articles in Polish.
+  - [Wizytowka Google: jak zalozyc](https://imarket2web.com/pl/blog/wizytowka-google-jak-zalozyc/): step-by-step guide to setting up, verifying and completing a Google Business Profile.
 - [Kontakt](https://imarket2web.com/pl/kontakt/) and [Brief projektowy](https://imarket2web.com/pl/brief/).
 - [O mnie](https://imarket2web.com/pl/o-mnie/) and [Prywatnosc](https://imarket2web.com/pl/prywatnosc/).
 
