@@ -40,11 +40,28 @@
       return false;
     }
 
+    /* Built by script, so it follows <html lang> like the consent banner. */
+    var MSG = {
+      en: { need: 'Your name and email are the only two I need. Everything else can be left blank.', consent: 'Please tick the consent box so I am allowed to reply.', sending: 'Sending…', sent: 'Sent. I read these myself - expect a reply, not an autoresponder.', fail: 'Could not send: ', failTail: '. Email imarket2web@gmail.com instead, or copy your answers first.', copied: 'Copied', copy: 'Copy my answers' },
+      pl: { need: 'Potrzebuję tylko imienia i e-maila. Resztę możesz zostawić pustą.', consent: 'Zaznacz zgodę, żebym mogła odpowiedzieć.', sending: 'Wysyłam…', sent: 'Wysłane. Czytam je sama - spodziewaj się odpowiedzi, nie autorespondera.', fail: 'Nie udało się wysłać: ', failTail: '. Napisz na imarket2web@gmail.com albo najpierw skopiuj odpowiedzi.', copied: 'Skopiowano', copy: 'Skopiuj moje odpowiedzi' },
+      uk: { need: 'Мені потрібні лише ім’я та пошта. Усе інше можна залишити порожнім.', consent: 'Позначте згоду, щоб я могла відповісти.', sending: 'Надсилаю…', sent: 'Надіслано. Я читаю їх сама - чекайте відповіді, а не автовідповідача.', fail: 'Не вдалося надіслати: ', failTail: '. Напишіть на imarket2web@gmail.com або спершу скопіюйте відповіді.', copied: 'Скопійовано', copy: 'Скопіювати мої відповіді' },
+      ru: { need: 'Мне нужны только имя и почта. Все остальное можно оставить пустым.', consent: 'Отметьте согласие, чтобы я могла ответить.', sending: 'Отправляю…', sent: 'Отправлено. Я читаю их сама - ждите ответа, а не автоответчика.', fail: 'Не удалось отправить: ', failTail: '. Напишите на imarket2web@gmail.com или сначала скопируйте ответы.', copied: 'Скопировано', copy: 'Скопировать мои ответы' }
+    };
+    var M = MSG[(document.documentElement.lang || 'en').slice(0, 2)] || MSG.en;
+
+    function progressText(done, total) {
+      var lang = (document.documentElement.lang || 'en').slice(0, 2);
+      if (lang === 'pl') return done + ' z ' + total + ' sekcji rozpoczętych';
+      if (lang === 'uk') return 'Розпочато розділів: ' + done + ' з ' + total;
+      if (lang === 'ru') return 'Начато разделов: ' + done + ' из ' + total;
+      return done + ' of ' + total + ' sections started';
+    }
+
     function progress() {
       var done = sections.filter(answered).length;
       var pct = sections.length ? done / sections.length : 0;
       if (bar) bar.style.transform = 'scaleX(' + pct + ')';
-      if (label) label.textContent = (document.documentElement.lang === 'pl' ? done + ' z ' + sections.length + ' sekcji rozpoczętych' : done + ' of ' + sections.length + ' sections started');
+      if (label) label.textContent = progressText(done, sections.length);
     }
 
     form.addEventListener('input', progress);
@@ -125,12 +142,12 @@
       var email = form.querySelector('[name="email"]').value.trim();
       if (!name || !email) {
         status.className = 'form-status is-err';
-        status.textContent = 'Your name and email are the only two I need. Everything else can be left blank.';
+        status.textContent = M.need;
         return;
       }
       if (!form.querySelector('[name="consent"]').checked) {
         status.className = 'form-status is-err';
-        status.textContent = 'Please tick the consent box so I am allowed to reply.';
+        status.textContent = M.consent;
         return;
       }
 
@@ -154,7 +171,7 @@
 
       btn.disabled = true;
       status.className = 'form-status';
-      status.textContent = 'Sending…';
+      status.textContent = M.sending;
 
       try {
         // Plain string body: a simple request, so no CORS preflight, which
@@ -163,14 +180,13 @@
         var out = await res.json();
         if (!out.success) throw new Error(out.message || 'Submission failed');
         status.className = 'form-status is-ok';
-        status.textContent = 'Sent. I read these myself - expect a reply, not an autoresponder.';
+        status.textContent = M.sent;
         form.reset();
         syncToggles();
         progress();
       } catch (err) {
         status.className = 'form-status is-err';
-        status.textContent = 'Could not send: ' + err.message +
-          '. Email imarket2web@gmail.com instead, or copy your answers first.';
+        status.textContent = M.fail + err.message + M.failTail;
       } finally {
         btn.disabled = false;
       }
@@ -179,11 +195,12 @@
     /* ---- Let people keep what they typed ------------------------------ */
     var copyBtn = document.getElementById('brief-copy');
     if (copyBtn) {
+      var copyLabel = copyBtn.textContent;
       copyBtn.addEventListener('click', function () {
         var text = compose();
         if (navigator.clipboard) navigator.clipboard.writeText(text);
-        copyBtn.textContent = 'Copied';
-        setTimeout(function () { copyBtn.textContent = 'Copy my answers'; }, 1600);
+        copyBtn.textContent = M.copied;
+        setTimeout(function () { copyBtn.textContent = copyLabel; }, 1600);
       });
     }
 

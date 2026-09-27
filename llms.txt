@@ -63,11 +63,23 @@ A full Ukrainian mirror, written for Ukrainian speakers running a business in Po
 - [Vartist](https://imarket2web.com/uk/vartist/): the cost estimator, localised.
 - [Blog](https://imarket2web.com/uk/blog/), [Kontakty](https://imarket2web.com/uk/kontakty/), [Bryf](https://imarket2web.com/uk/bryf/), [Pro mene](https://imarket2web.com/uk/pro-mene/), [Pryvatnist](https://imarket2web.com/uk/pryvatnist/).
 
+## Russian pages
+
+A full Russian version for Russian-speaking business owners living in Poland who want Polish customers to find them in Google and Google Maps. Prices are in złoty, net, as on the Polish site. Every page that has English, Polish and Ukrainian twins declares a four-way hreflang set; two pages exist only in Russian.
+
+- [Glavnaya](https://imarket2web.com/ru/): Russian home page.
+- [Uslugi](https://imarket2web.com/ru/uslugi/): the ten disciplines in Russian, with złoty prices.
+- [SEO-audit](https://imarket2web.com/ru/audit-seo/): the free pre-order audit.
+- [Stoimost](https://imarket2web.com/ru/stoimost/): the cost estimator, in złoty.
+- [Google Business Profile](https://imarket2web.com/ru/google-biznes-profil/): Google Business Profile setup for businesses in Poland, 600 zł. Russian only.
+- [Kontakty](https://imarket2web.com/ru/kontakty/): phone, email, WhatsApp and Telegram.
+- [Raboty](https://imarket2web.com/ru/raboty/), [Blog](https://imarket2web.com/ru/blog/), [Brif](https://imarket2web.com/ru/brif/), [Obo mne](https://imarket2web.com/ru/obo-mne/), [Konfidencialnost](https://imarket2web.com/ru/konfidencialnost/).
 ## About
 
 - [About Alena](https://imarket2web.com/about/): why one person rather than an agency. English.
 - [O mnie](https://imarket2web.com/pl/o-mnie/): the same page in Polish.
 - [Про мене](https://imarket2web.com/uk/pro-mene/): the same page in Ukrainian.
+- [Обо мне](https://imarket2web.com/ru/obo-mne/): the same page in Russian.
 
 ## Optional
 

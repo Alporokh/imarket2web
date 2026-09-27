@@ -92,6 +92,7 @@
         head: 'This site does not track you.',
         body: 'No cookies, no third-party scripts, and the fonts are served from here rather than Google - so nothing about your visit reaches anyone else. May I turn on privacy-friendly analytics to see which pages are useful? ',
         link: 'What I collect',
+        privacy: 'privacy/',
         no: 'No thanks',
         yes: 'Allow analytics'
       },
@@ -100,6 +101,7 @@
         head: 'Ta strona Cię nie śledzi.',
         body: 'Bez ciasteczek, bez skryptów firm trzecich, a fonty są serwowane stąd, nie z Google - więc nic o Twojej wizycie nie trafia do nikogo innego. Czy mogę włączyć analitykę przyjazną prywatności, żeby wiedzieć, które strony są przydatne? ',
         link: 'Co zbieram',
+        privacy: 'pl/prywatnosc/',
         no: 'Nie, dziękuję',
         yes: 'Zgoda na analitykę'
       },
@@ -108,8 +110,18 @@
         head: 'Цей сайт вас не відстежує.',
         body: 'Без файлів cookie, без сторонніх скриптів, шрифти віддаються звідси, а не з Google - тож про ваш візит ніхто більше не дізнається. Дозволите увімкнути аналітику, дружню до приватності, щоб бачити, які сторінки корисні? ',
         link: 'Що я збираю',
+        privacy: 'uk/pryvatnist/',
         no: 'Ні, дякую',
         yes: 'Дозволити аналітику'
+      },
+      ru: {
+        region: 'Настройки конфиденциальности',
+        head: 'Этот сайт вас не отслеживает.',
+        body: 'Без файлов cookie, без сторонних скриптов, шрифты загружаются отсюда, а не из Google - так что о вашем визите больше никто не узнает. Можно включить аналитику, бережную к конфиденциальности, чтобы видеть, какие страницы полезны? ',
+        link: 'Что я собираю',
+        privacy: 'ru/konfidencialnost/',
+        no: 'Нет, спасибо',
+        yes: 'Разрешить аналитику'
       }
     };
     var t = T[(document.documentElement.lang || 'en').slice(0, 2)] || T.en;
@@ -120,7 +132,7 @@
         '<div class="consent-copy">' +
           '<p class="d">' + t.head + '</p>' +
           '<p>' + t.body +
-          '<a href="' + p + 'privacy/">' + t.link + '</a>.</p>' +
+          '<a href="' + p + t.privacy + '">' + t.link + '</a>.</p>' +
         '</div>' +
         '<div class="consent-btns">' +
           '<button type="button" class="consent-btn" data-consent="denied">' + t.no + '</button>' +

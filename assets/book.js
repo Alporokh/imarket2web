@@ -75,9 +75,11 @@
     });
 
     /* ---- controls: a drag nobody can see is a drag nobody uses ---- */
-    var L = document.documentElement.lang === 'pl'
-      ? { prev: 'Poprzednia realizacja', next: 'Następna realizacja' }
-      : { prev: 'Previous project', next: 'Next project' };
+    var L = {
+      pl: { prev: 'Poprzednia realizacja', next: 'Następna realizacja' },
+      uk: { prev: 'Попередній проєкт', next: 'Наступний проєкт' },
+      ru: { prev: 'Предыдущий проект', next: 'Следующий проект' }
+    }[(document.documentElement.lang || 'en').slice(0, 2)] || { prev: 'Previous project', next: 'Next project' };
 
     var nav = document.createElement('div');
     nav.className = 'book-nav';

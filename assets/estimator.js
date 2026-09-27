@@ -176,10 +176,91 @@ const UK = {
   ' of ': ' з ',
 };
 
+const RU = {
+  // website packages
+  'Website, up to 4 pages': 'Сайт, до 4 страниц',
+  'Website, up to 10 pages': 'Сайт, до 10 страниц',
+  'Larger SEO-focused website, 10+ pages': 'Большой сайт под SEO, 10+ страниц',
+  'No new website': 'Без нового сайта',
+  // what a build includes
+  'Design system': 'Дизайн-система',
+  'Logo': 'Логотип',
+  'Form with automated orders': 'Форма с автоматической обработкой заявок',
+  'SEO-ready page structure': 'Структура страниц, готовая под SEO',
+  'Unique images, not stock': 'Собственные изображения, не стоковые',
+  'Home + service pages (up to 10)': 'Главная + страницы услуг (до 10)',
+  'Google Business Profile setup & optimisation': 'Настройка и оптимизация Гугл Бизнес Профиля',
+  'Google Business Profile set up and optimised': 'Гугл Бизнес Профиль настроен и оптимизирован',
+  '10+ pages, SEO-focused architecture': '10+ страниц, структура под SEO',
+  'SEO strategy, keywords & competitor research': 'SEO-стратегия, запросы и анализ конкурентов',
+  'Backlink strategy': 'Стратегия ссылок',
+  'Blog + 5 articles & 3-month content plan': 'Блог + 5 статей и контент-план на 3 месяца',
+  'Blog plus 5 keyword-led articles and a 3-month plan': 'Блог плюс 5 статей под запросы и план на 3 месяца',
+  '5 articles researched against real keywords': '5 статей, написанных под реальные запросы',
+  'Content plan for 3 months': 'Контент-план на 3 месяца',
+  'GA4 + Search Console': 'GA4 + Search Console',
+  'GA4, Search Console and conversion tracking': 'GA4, Search Console и отслеживание конверсий',
+  'Google Sheets integration': 'Интеграция с Google Таблицами',
+  'FAQ sections written for AI answers': 'Разделы FAQ, написанные под ответы AI',
+  'Keyword research and the page structure it implies':
+    'Исследование запросов и структура страниц, которая из него следует',
+  // add-on layers
+  'SEO strategy + keywords + GBP registration + content + 2 posts + GSC + GA4':
+    'SEO-стратегия + запросы + регистрация Гугл Бизнес Профиля + контент + 2 поста + GSC + GA4',
+  'SEO strategy & keywords': 'SEO-стратегия и запросы',
+  'Google Business Profile': 'Гугл Бизнес Профиль',
+  'Blog + 5 keyword-led articles + 3-month content plan':
+    'Блог + 5 статей под запросы + контент-план на 3 месяца',
+  'Blog + 5 articles': 'Блог + 5 статей',
+  'GA4 + Search Console + conversions setup': 'GA4 + Search Console + настройка конверсий',
+  'Analytics & conversions': 'Аналитика и конверсии',
+  'Simple n8n automation': 'Простая автоматизация в n8n',
+  'Marketing automation': 'Автоматизация маркетинга',
+  'Social: profile setup, 16-post calendar & posting automation':
+    'Соцсети: настройка профиля, календарь на 16 постов и автоматизация публикаций',
+  'Social & content calendar': 'Соцсети и контент-календарь',
+  'Social content & posting automation, per month':
+    'Контент для соцсетей и автоматизация публикаций, в месяц',
+  '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
+    '16 постов в месяц, настройка или оптимизация профиля, календарь и автоматизация публикаций - согласованные с вами заранее',
+  'Backlink strategy: link gap audit, target list, digital PR angles':
+    'Стратегия ссылок: аудит пробелов, список целей, темы для digital PR',
+  'Search package: SEO strategy, Google Business Profile, blog and analytics':
+    'Поисковый пакет: SEO-стратегия, Гугл Бизнес Профиль, блог и аналитика',
+  'All-in-one search package': 'Поисковый пакет все в одном',
+  'Monthly growth plan': 'Ежемесячный план роста',
+  'Monthly growth plan, per month': 'Ежемесячный план роста, в месяц',
+  'Content plans and their automation, Google Ads each month, blog posts, backlink registration':
+    'Контент-планы и их автоматизация, Google Ads каждый месяц, статьи в блог, регистрация ссылок',
+  'Any language you sell in. Separate keyword research and copy per language, never machine translation over the first':
+    'Любой язык, на котором вы продаете. Отдельное исследование запросов и отдельные тексты для каждого языка, никогда не машинный перевод поверх первого',
+  '1 additional language': '1 дополнительный язык',
+  '2 additional languages': '2 дополнительных языка',
+  '3 additional languages': '3 дополнительных языка',
+  '4 additional languages': '4 дополнительных языка',
+  '5 additional languages': '5 дополнительных языков',
+  'Fast-track delivery': 'Ускоренное выполнение',
+  'Compressed schedule, priority scheduling': 'Сжатый график, приоритет в очереди',
+  // rendering
+  ' weeks': ' нед.',
+  'from ': 'от ',
+  'included': 'входит в стоимость',
+  ' /mo': ' /мес.',
+  ' line items': ' позиций',
+  'The build, with the search work it already covers':
+    'Сам сайт вместе с SEO-работой, которая уже входит в его стоимость',
+  'Exactly what you selected': 'Ровно то, что вы выбрали',
+  'Every layer of the growth system': 'Все слои системы роста',
+  'Fast-track': 'Ускоренный',
+  'Standard': 'Стандартный',
+  'Step ': 'Шаг ',
+  ' of ': ' из ',
+};
+
 /* One table per language, picked from <html lang>. A string with no entry
    falls back to the English, so the calculator never breaks on a new line in
    the rate card - it just shows that one line untranslated. */
-const I18N = { pl: PL, uk: UK };
+const I18N = { pl: PL, uk: UK, ru: RU };
 const DICT = I18N[(document.documentElement.lang || 'en').slice(0, 2)] || null;
 function T(s) {
   return (DICT && Object.prototype.hasOwnProperty.call(DICT, s)) ? DICT[s] : s;
@@ -378,11 +459,15 @@ const state = {
   rush: false
 };
 
-/* The Polish pages quote in złoty. The rate card stays in one currency and
-   converts on the way out, exactly as the copy stays in English and
-   translates on the way out - so a price is still edited in one place.
+/* The Polish and Russian pages quote in złoty - both are written for people
+   living in Poland. The rate card stays in one currency and converts on the
+   way out, exactly as the copy stays in English and translates on the way
+   out - so a price is still edited in one place.
    4 zł to the euro, which is the rate these prices were set against. */
-const FX = { pl: { rate: 4, symbol: 'zł', locale: 'pl-PL' } };
+const FX = {
+  pl: { rate: 4, symbol: 'zł', locale: 'pl-PL' },
+  ru: { rate: 4, symbol: 'зл', locale: 'pl-PL' },
+};
 const MONEY = FX[(document.documentElement.lang || 'en').slice(0, 2)] || null;
 
 const fmt = n => {
