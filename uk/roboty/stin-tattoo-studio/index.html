@@ -3,6 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Consent Mode v2: nothing is stored until the visitor allows analytics in the banner -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: (function () { try { return localStorage.getItem('i2w-consent') === 'granted' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(),
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VCYMXHF58"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7VCYMXHF58');
+  </script>
   <title>Stin Tattoo Studio - тату-студія, Прага | imarket2web</title>
   <meta name="description" content="Портфоліо як сторінка продажу: роботи за стилем, щоб клієнт упізнав свою ідею ще до запису. Тату-студія в Мала Страна, Прага.">
   <link rel="canonical" href="https://imarket2web.com/uk/roboty/stin-tattoo-studio/">

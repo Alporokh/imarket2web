@@ -3,8 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Consent Mode v2: nothing is stored until the visitor allows analytics in the banner -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: (function () { try { return localStorage.getItem('i2w-consent') === 'granted' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(),
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VCYMXHF58"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7VCYMXHF58');
+  </script>
   <title>Prywatność - co się dzieje z Twoimi danymi | imarket2web</title>
-  <meta name="description" content="Bez ciasteczek i bez skryptów firm trzecich. Co zbiera kalkulator wyceny, po co, kto jeszcze to widzi i jak poprosić o usunięcie swoich danych.">
+  <meta name="description" content="Google Analytics działa w pełni tylko za Twoją zgodą. Co zbierają formularze kontaktu, briefu i wyceny, kto to jeszcze widzi i jak poprosić o usunięcie.">
   <link rel="canonical" href="https://imarket2web.com/pl/prywatnosc/">
   <link rel="alternate" hreflang="en" href="https://imarket2web.com/privacy/">
   <link rel="alternate" hreflang="pl" href="https://imarket2web.com/pl/prywatnosc/">
@@ -14,7 +37,7 @@
   <meta name="theme-color" content="#121214">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Prywatność | imarket2web">
-  <meta property="og:description" content="Bez ciasteczek i bez skryptów firm trzecich. Co zbiera kalkulator wyceny, po co, kto jeszcze to widzi i jak poprosić o usunięcie swoich danych.">
+  <meta property="og:description" content="Google Analytics działa w pełni tylko za Twoją zgodą. Co zbierają formularze kontaktu, briefu i wyceny, kto to jeszcze widzi i jak poprosić o usunięcie.">
   <meta property="og:url" content="https://imarket2web.com/pl/prywatnosc/">
   <meta property="og:image" content="https://imarket2web.com/images/og-default.jpg">
   <meta property="og:image:width" content="1200">
@@ -151,34 +174,41 @@
       <div class="prose">
         <div class="panel panel--green">
           <span class="mono">W jednym zdaniu</span>
-          <div class="d">Ta strona nie ustawia ciasteczek i nie ładuje niczego od nikogo innego.</div>
-          <p>Fonty są serwowane z tego serwera, a nie z Google, nie ma skryptów śledzących, a kalculator wyceny liczy w Twojej własnej przeglądarce. Nic o Twojej wizycie nie opuszcza Twojego urządzenia, dopóki sama nie wyślesz formularza.</p>
+          <div class="d">Analityka liczy Cię w pełni tylko wtedy, gdy się zgodzisz.</div>
+          <p>Na stronie działa Google Analytics w trybie zgody: dopóki nie zgodzisz się w banerze, nie zapisuje ciasteczek i wysyła do Google tylko anonimowe liczniki odsłon, bez ciasteczek. Nie ma reklam, fonty są serwowane z tego serwera, a kalkulator wyceny liczy wszystko w Twojej przeglądarce. To, co wpisujesz, opuszcza Twoje urządzenie dopiero wtedy, gdy wyślesz formularz.</p>
         </div>
 
         <h2 id="what" class="d">Co zbieram</h2>
-        <p>Tylko przez formularz wyceny i tylko wtedy, gdy zdecydujesz się go wysłać:</p>
+        <p>Przez formularz kontaktowy, brief projektowy i kalkulator wyceny - i tylko jeśli zdecydujesz się któryś wysłać:</p>
         <ul>
-          <li><strong>Twoje imię i adres e-mail</strong> - żebym mogła wysłać wycenę i odpowiedzieć.</li>
-          <li><strong>Twoje odpowiedzi w kalkulatorze</strong> - rodzaj projektu, liczba podstron, języki, warstwy, termin.</li>
-          <li><strong>To, co napiszesz w polu wiadomości</strong> - całkowicie opcjonalne.</li>
+          <li><strong>Imię oraz e-mail albo numer telefonu</strong> - żeby odpowiedzieć tak, jak prosisz.</li>
+          <li><strong>Twoje odpowiedzi</strong> - w kalkulatorze rodzaj projektu, liczbę podstron, języki, warstwy i termin; w briefie to, co wypełnisz.</li>
+          <li><strong>Wszystko, co napiszesz w polach wiadomości</strong> - całkowicie opcjonalnie.</li>
+          <li><strong>Stronę, z której wysłano formularz</strong> - żebym wiedziała, która strona wywołała pytanie.</li>
         </ul>
-        <p>Samo korzystanie z kalkulatora nie zbiera niczego. Pytania i wynik liczą się w Twojej przeglądarce, a nic nie opuszcza urządzenia, dopóki nie naciśniesz przycisku wysyłki.</p>
+        <p>Samo korzystanie z kalkulatora niczego nie zbiera. Pytania i wynik są liczone w Twojej przeglądarce i nic nie opuszcza urządzenia, dopóki nie naciśniesz przycisku wysyłania.</p>
+        <p>Osobno <strong>Google Analytics</strong> rejestruje wizyty: oglądane strony, skąd przyszłaś lub przyszedłeś, rodzaj urządzenia i przeglądarki oraz przybliżoną lokalizację. Za Twoją zgodą używa ciasteczek, żeby odróżnić powracającą osobę od nowej; bez zgody wysyła tylko anonimowe sygnały bez ciasteczek.</p>
 
         <h2 id="why" class="d">Po co</h2>
-        <p>Żeby wysłać Ci mailem wycenę, o którą poprosiłaś, i odpowiedzieć w sprawie projektu. To cały cel. Nie ma newslettera, sekwencji mailowej ani listy reklamowej.</p>
+        <p>Żeby wysłać Ci wycenę, o którą prosisz, i odpowiedzieć w sprawie projektu. Nie ma newslettera, sekwencji maili ani listy reklamowej. Analityka służy do tego, żeby widzieć, które strony są przydatne, a z których ludzie wychodzą - i poprawiać stronę. Nie jest używana do reklam.</p>
 
         <h2 id="who" class="d">Kto to jeszcze widzi</h2>
-        <p>Tylko jeśli wyślesz formularz. Jeśli po prostu czytasz stronę, ta lista jest pusta.</p>
+        <p>Jeśli wyślesz formularz:</p>
         <ul>
-          <li><strong>Web3Forms</strong> dostarcza zgłoszenie z formularza jako e-mail. Zobacz ich <a href="https://web3forms.com/privacy-policy" target="_blank" rel="noopener">politykę prywatności</a>.</li>
-          <li><strong>Google (Gmail)</strong> przechowuje powstałą wiadomość, bo tam czytam swoją pocztę.</li>
+          <li><strong>Cloudflare</strong> przekazuje zgłoszenie dalej (mały pośrednik zwany Workerem). Zobacz ich <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">politykę prywatności</a>.</li>
+          <li><strong>Google</strong> - skrypt Google Apps Script zapisuje je w Arkuszu Google i wysyła maila przez Gmail, bo tam przechowuję i czytam zapytania.</li>
+          <li><strong>Telegram</strong> - dostaję krótkie powiadomienie na prywatnym czacie w Telegramie, żeby szybko odpowiedzieć.</li>
+        </ul>
+        <p>W przypadku każdej wizyty:</p>
+        <ul>
+          <li><strong>Google Analytics</strong> - jak opisano wyżej, w trybie zgody. Zobacz <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politykę prywatności Google</a>.</li>
           <li><strong>GitHub Pages</strong> serwuje tę stronę i prowadzi standardowe logi serwera, jak każdy serwer WWW.</li>
         </ul>
-        <p>Nikt więcej. Twoje dane nie są sprzedawane, wynajmowane ani udostępniane do celów reklamowych, a listy mailingowej, do której można by Cię dopisać, po prostu nie ma.</p>
+        <p>Nikt więcej. Twoje dane nie są sprzedawane, wynajmowane ani udostępniane do celów reklamowych i nie ma listy mailingowej, na którą można trafić.</p>
 
         <h2 id="cookies" class="d">Ciasteczka i analityka</h2>
-        <p><strong>Ta strona nie ustawia ciasteczek.</strong> Ani do analityki, ani do reklam, ani do preferencji. Jeśli dokonasz wyboru w banerze prywatności, ten jeden wybór zapisuje się w pamięci lokalnej Twojej przeglądarki - na Twoim urządzeniu, czytelny tylko dla tej strony i nigdy nigdzie niewysyłany.</p>
-        <p>Obecnie nie działa żadna analityka. Jeśli to się zmieni, będzie to analityka przyjazna prywatności, uruchomi się tylko wtedy, gdy zgodzisz się w banerze, i w każdej chwili możesz tę zgodę wycofać przez <a href="#" data-privacy-settings>Ustawienia prywatności</a> w stopce. Odmowa nic Cię nie kosztuje - strona zachowuje się dokładnie tak samo.</p>
+        <p><strong>Ciasteczka pojawiają się tylko wtedy, gdy zgodzisz się na analitykę.</strong> Żadnych reklamowych, żadnych do zapamiętywania ustawień. Twój wybór w banerze prywatności jest zapisany w pamięci lokalnej przeglądarki - na Twoim urządzeniu, do odczytu tylko przez tę stronę.</p>
+        <p>Strona korzysta z <strong>Google Analytics 4</strong> w trybie zgody Google (Consent Mode). Dopóki nie klikniesz Zgoda na analitykę, nie zapisuje ciasteczek i wysyła do Google tylko anonimowe sygnały bez ciasteczek. Jeśli się zgodzisz, Google Analytics zapisuje własne ciasteczka (o nazwie <code>_ga</code>), ważne do dwóch lat. Zgodę możesz wycofać w każdej chwili przez <a href="#" data-privacy-settings>Ustawienia prywatności</a> w stopce. Odmowa nic Cię nie kosztuje - strona działa tak samo.</p>
 
         <h2 id="long" class="d">Jak długo to przechowuję</h2>
         <p>Zapytania przechowuję przez <strong>24 miesiące</strong> i potem usuwam, chyba że zaczniemy współpracę - wtedy obowiązują zwykłe polskie terminy przechowywania dokumentacji księgowej i firmowej.</p>

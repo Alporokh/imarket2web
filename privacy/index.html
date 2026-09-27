@@ -3,8 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Consent Mode v2: nothing is stored until the visitor allows analytics in the banner -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: (function () { try { return localStorage.getItem('i2w-consent') === 'granted' ? 'granted' : 'denied'; } catch (e) { return 'denied'; } })(),
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7VCYMXHF58"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7VCYMXHF58');
+  </script>
   <title>Privacy - what happens to your data | imarket2web</title>
-  <meta name="description" content="No cookies and no third-party scripts anywhere on this site. What the project estimator collects, why, who else sees it and how to have it deleted.">
+  <meta name="description" content="Google Analytics only runs fully if you allow it. What the contact, brief and estimator forms collect, who else sees it and how to have it deleted.">
   <link rel="canonical" href="https://imarket2web.com/privacy/">
   <link rel="alternate" hreflang="en" href="https://imarket2web.com/privacy/">
   <link rel="alternate" hreflang="pl" href="https://imarket2web.com/pl/prywatnosc/">
@@ -14,7 +37,7 @@
   <meta name="theme-color" content="#121214">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Privacy | imarket2web">
-  <meta property="og:description" content="No cookies and no third-party scripts anywhere on this site. What the project estimator collects, why, who else sees it and how to have it deleted.">
+  <meta property="og:description" content="Google Analytics only runs fully if you allow it. What the contact, brief and estimator forms collect, who else sees it and how to have it deleted.">
   <meta property="og:url" content="https://imarket2web.com/privacy/">
   <meta property="og:image" content="https://imarket2web.com/images/og-default.jpg">
   <meta property="og:image:width" content="1200">
@@ -144,34 +167,41 @@
       <div class="prose">
         <div class="panel panel--green">
           <span class="mono">In one line</span>
-          <div class="d">This site sets no cookies and loads nothing from anyone else.</div>
-          <p>The fonts are served from this server rather than from Google, there are no tracking scripts, and the cost estimator does its maths in your own browser. Nothing about your visit leaves your device unless you choose to send the form.</p>
+          <div class="d">Analytics only counts you properly if you say yes.</div>
+          <p>Google Analytics is on this site in consent mode: until you allow it in the banner, it sets no cookies and sends Google only anonymous, cookie-free page counts. There is no advertising, the fonts are served from this server, and the cost estimator does its maths in your own browser. What you type only leaves your device when you send a form.</p>
         </div>
 
         <h2 id="what" class="d">What I collect</h2>
-        <p>Only through the estimator form, and only if you choose to submit it:</p>
+        <p>Through the contact form, the project brief and the estimator - and only if you choose to send one:</p>
         <ul>
-          <li><strong>Your name and email address</strong> - so I can send the estimate and reply.</li>
-          <li><strong>Your answers in the estimator</strong> - project type, page count, languages, layers, timeline.</li>
-          <li><strong>Anything you write in the message field</strong> - entirely optional.</li>
+          <li><strong>Your name, and an email address or phone number</strong> - so I can reply the way you asked.</li>
+          <li><strong>Your answers</strong> - in the estimator, project type, page count, languages, layers and timeline; in the brief, what you fill in.</li>
+          <li><strong>Anything you write in the message fields</strong> - entirely optional.</li>
+          <li><strong>The page you sent it from</strong> - so I know which page raised the question.</li>
         </ul>
         <p>Using the calculator itself collects nothing. The questions and the result are worked out in your own browser, and nothing leaves your device until you press the send button.</p>
+        <p>Separately, <strong>Google Analytics</strong> records visits: pages viewed, how you arrived, device and browser type and approximate location. With your consent it uses cookies to tell a returning visitor from a new one; without it, it sends only anonymous, cookie-free pings.</p>
 
         <h2 id="why" class="d">Why</h2>
-        <p>To email you the estimate you asked for, and to reply about your project. That is the whole purpose. There is no newsletter, no drip sequence and no advertising list.</p>
+        <p>To send you the estimate you asked for, and to reply about your project. There is no newsletter, no drip sequence and no advertising list. Analytics is there to see which pages are useful and which ones people leave, so the site can be improved - it is not used for advertising.</p>
 
         <h2 id="who" class="d">Who else sees it</h2>
-        <p>Only if you submit the form. If you just read the site, this list is empty.</p>
+        <p>If you send a form:</p>
         <ul>
-          <li><strong>Web3Forms</strong> delivers the form submission as email. See their <a href="https://web3forms.com/privacy-policy" target="_blank" rel="noopener">privacy policy</a>.</li>
-          <li><strong>Google (Gmail)</strong> stores the resulting email, because that is where I read my mail.</li>
+          <li><strong>Cloudflare</strong> passes the submission on (a small relay called a Worker). See their <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">privacy policy</a>.</li>
+          <li><strong>Google</strong> - a Google Apps Script writes it into a Google Sheet and sends the email through Gmail, because that is where I keep and read enquiries.</li>
+          <li><strong>Telegram</strong> - I get a short notification in a private Telegram chat, so I can reply quickly.</li>
+        </ul>
+        <p>For everyone who visits:</p>
+        <ul>
+          <li><strong>Google Analytics</strong> - as described above, in consent mode. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</li>
           <li><strong>GitHub Pages</strong> serves this site and keeps standard server logs, as any web server does.</li>
         </ul>
         <p>Nobody else. Your data is not sold, rented or shared for advertising, and there is no mailing list to be added to.</p>
 
         <h2 id="cookies" class="d">Cookies and analytics</h2>
-        <p><strong>This site sets no cookies.</strong> Not for analytics, not for advertising, not for preferences. If you make a choice in the privacy banner, that single choice is stored in your browser's local storage - on your device, readable only by this site, and never sent anywhere.</p>
-        <p>There is currently no analytics running. If that changes, it will be privacy-friendly analytics, it will only run if you have said yes in the banner, and you can withdraw that at any time through <a href="#" data-privacy-settings>Privacy settings</a> in the footer. Saying no costs you nothing - the site behaves identically either way.</p>
+        <p><strong>No cookies are set unless you allow analytics.</strong> None for advertising, none for preferences. Your choice in the privacy banner is stored in your browser's local storage - on your device, readable only by this site.</p>
+        <p>This site uses <strong>Google Analytics 4</strong> with Google's Consent Mode. Until you click Allow analytics, it sets no cookies and sends Google only anonymous, cookie-free pings. If you allow it, Google Analytics sets its own cookies (named <code>_ga</code>), which last up to two years. You can withdraw at any time through <a href="#" data-privacy-settings>Privacy settings</a> in the footer. Saying no costs you nothing - the site behaves identically either way.</p>
 
         <h2 id="long" class="d">How long I keep it</h2>
         <p>Enquiries are kept for <strong>24 months</strong> and then deleted, unless we start working together - in which case normal Polish business and accounting record-keeping periods apply.</p>

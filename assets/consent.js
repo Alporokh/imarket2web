@@ -2,21 +2,15 @@
    imarket2web - consent
    =========================================================================
 
-   This site currently sets NO cookies and makes NO third-party requests.
-   Fonts are self-hosted, so nothing about a visitor reaches anyone else.
+   Google Analytics 4 (G-7VCYMXHF58) is on every page, in Consent Mode v2.
+   Each page's <head> sets every consent type to "denied" before the Google
+   tag loads - or restores "granted" if the visitor already agreed on an
+   earlier visit - and then loads the tag. While consent is denied, GA sets
+   no cookies and sends Google only cookie-free, anonymous pings.
 
-   So this banner is not a "we use cookies" notice - that would be untrue.
-   It is a consent gate for analytics, which is the only thing that would
-   ever need one, and it is wired for Google Consent Mode v2 so that the
-   moment GA4 is added it respects the visitor's choice automatically.
-
-   TO ADD GA4 LATER
-   ----------------
-   1. Paste the usual gtag snippet into each page's <head>, AFTER this file.
-      This file sets consent defaults to "denied" before gtag runs, which is
-      exactly what Consent Mode v2 requires.
-   2. Set MEASUREMENT_ID below. Nothing else changes - granting or
-      withdrawing consent updates gtag on its own.
+   This file is the other half: the banner that asks, and the switch.
+   Allowing or withdrawing updates analytics_storage through gtag, and the
+   tag adjusts on its own. Nothing here loads Google - the <head> does.
 
    The visitor's choice is stored in localStorage, not a cookie, and can be
    changed at any time via the "Privacy settings" link in the footer.
@@ -26,20 +20,10 @@
   'use strict';
 
   var KEY = 'i2w-consent';
-  var MEASUREMENT_ID = ''; // e.g. 'G-XXXXXXXXXX' - leave empty until GA4 is added
 
-  /* ---- Consent Mode v2 defaults: denied until the visitor says otherwise -- */
+  /* The consent default and the Google tag are set in each page's <head>. */
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
-  gtag('consent', 'default', {
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    analytics_storage: 'denied',
-    functionality_storage: 'granted', // strictly necessary only
-    security_storage: 'granted',
-    wait_for_update: 500
-  });
 
   /* ---- Stored choice ---------------------------------------------------- */
   function read() {
@@ -54,15 +38,6 @@
     gtag('consent', 'update', {
       analytics_storage: granted ? 'granted' : 'denied'
     });
-    if (granted && MEASUREMENT_ID && !window.__i2wGaLoaded) {
-      window.__i2wGaLoaded = true;
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
-      document.head.appendChild(s);
-      gtag('js', new Date());
-      gtag('config', MEASUREMENT_ID, { anonymize_ip: true });
-    }
     document.dispatchEvent(new CustomEvent('consent:changed', { detail: { analytics: granted } }));
   }
 
@@ -89,8 +64,8 @@
     var T = {
       en: {
         region: 'Privacy choices',
-        head: 'This site does not track you.',
-        body: 'No cookies, no third-party scripts, and the fonts are served from here rather than Google - so nothing about your visit reaches anyone else. May I turn on privacy-friendly analytics to see which pages are useful? ',
+        head: 'Analytics only if you say yes.',
+        body: 'Google Analytics is on this site, but until you allow it, it sets no cookies and sends Google only anonymous, cookie-free page counts. There is no advertising, and the fonts are served from here. May I turn analytics on, so I can see which pages are useful? ',
         link: 'What I collect',
         privacy: 'privacy/',
         no: 'No thanks',
@@ -98,8 +73,8 @@
       },
       pl: {
         region: 'Wybory dotyczące prywatności',
-        head: 'Ta strona Cię nie śledzi.',
-        body: 'Bez ciasteczek, bez skryptów firm trzecich, a fonty są serwowane stąd, nie z Google - więc nic o Twojej wizycie nie trafia do nikogo innego. Czy mogę włączyć analitykę przyjazną prywatności, żeby wiedzieć, które strony są przydatne? ',
+        head: 'Analityka tylko za Twoją zgodą.',
+        body: 'Na stronie jest Google Analytics, ale dopóki się nie zgodzisz, nie zapisuje ciasteczek i wysyła do Google tylko anonimowe liczniki odsłon, bez ciasteczek. Nie ma reklam, a fonty są serwowane stąd. Czy mogę włączyć analitykę, żeby wiedzieć, które strony są przydatne? ',
         link: 'Co zbieram',
         privacy: 'pl/prywatnosc/',
         no: 'Nie, dziękuję',
@@ -107,8 +82,8 @@
       },
       uk: {
         region: 'Налаштування приватності',
-        head: 'Цей сайт вас не відстежує.',
-        body: 'Без файлів cookie, без сторонніх скриптів, шрифти віддаються звідси, а не з Google - тож про ваш візит ніхто більше не дізнається. Дозволите увімкнути аналітику, дружню до приватності, щоб бачити, які сторінки корисні? ',
+        head: 'Аналітика - лише з вашої згоди.',
+        body: 'На сайті є Google Analytics, але доки ви не дозволите, вона не зберігає cookie і надсилає в Google лише анонімні лічильники переглядів без cookie. Реклами немає, шрифти віддаються звідси. Увімкнути аналітику, щоб я бачила, які сторінки корисні? ',
         link: 'Що я збираю',
         privacy: 'uk/pryvatnist/',
         no: 'Ні, дякую',
@@ -116,8 +91,8 @@
       },
       ru: {
         region: 'Настройки конфиденциальности',
-        head: 'Этот сайт вас не отслеживает.',
-        body: 'Без файлов cookie, без сторонних скриптов, шрифты загружаются отсюда, а не из Google - так что о вашем визите больше никто не узнает. Можно включить аналитику, бережную к конфиденциальности, чтобы видеть, какие страницы полезны? ',
+        head: 'Аналитика - только с вашего согласия.',
+        body: 'На сайте есть Google Analytics, но пока вы не разрешите, она не сохраняет cookie и отправляет в Google только анонимные счетчики просмотров без cookie. Рекламы нет, шрифты загружаются отсюда. Включить аналитику, чтобы я видела, какие страницы полезны? ',
         link: 'Что я собираю',
         privacy: 'ru/konfidencialnost/',
         no: 'Нет, спасибо',

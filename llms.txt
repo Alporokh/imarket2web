@@ -84,7 +84,7 @@ A full Russian version for Russian-speaking business owners living in Poland who
 ## Optional
 
 - [Project brief](https://imarket2web.com/brief/): an eight-section questionnaire for people who already want to work together. Only a name and an email are required.
-- [Privacy](https://imarket2web.com/privacy/): what is collected and why. The site sets no cookies and loads no third-party scripts; fonts are self-hosted.
+- [Privacy](https://imarket2web.com/privacy/): what is collected and why. Google Analytics 4 runs in Consent Mode: no cookies until the visitor allows analytics; fonts are self-hosted.
 
 ## Contact
 
