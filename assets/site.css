@@ -505,6 +505,18 @@ h1.h2-xl { color: #fff; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
 .svc { padding: var(--pad-card); display: flex; flex-direction: column; gap: 13px; min-height: 278px; }
 .svc h3 { font-size: 23px; line-height: 1.12; }
+/* Carousel clones carry the title as a <p> so each service is a heading once;
+   this undoes the card paragraph styling so the clone looks identical. */
+.svc .svc-title { font-size: 23px; line-height: 1.12; color: inherit; flex-grow: 0; }
+
+/* Home "where to start": the money pages as a short list of link tiles */
+.start-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.start-list a { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 20px 22px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; color: inherit; text-decoration: none; transition: border-color .2s ease; }
+.start-list a:hover, .start-list a:focus-visible { border-color: var(--blue); }
+.start-list .d { font-size: 19px; line-height: 1.2; }
+.start-list .d::after { content: " →"; color: var(--blue); }
+.start-list span:not(.d) { font-size: 15px; line-height: 1.55; color: var(--text); }
+@media (max-width: 760px) { .start-list { grid-template-columns: 1fr; } }
 .svc p { font-size: 15px; line-height: 1.6; color: var(--text); flex-grow: 1; }
 .svc .mono { color: var(--blue); }
 .svc--blue { background: var(--blue-tint); border-color: var(--blue-tint-line); }
