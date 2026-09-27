@@ -46,9 +46,10 @@
      root, so links are relative. Deriving the prefix from a link that is
      already correct on this page avoids guessing the depth.              */
   function prefix() {
-    var link = document.querySelector('link[href$="assets/site.css"]');
+    // *= not $=: the href carries a ?v= cache-busting version
+    var link = document.querySelector('link[rel="stylesheet"][href*="assets/site.css"]');
     if (!link) return './';
-    return link.getAttribute('href').replace(/assets\/site\.css$/, '');
+    return link.getAttribute('href').replace(/assets\/site\.css(\?.*)?$/, '');
   }
 
   /* ---- Banner ----------------------------------------------------------- */

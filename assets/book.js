@@ -254,9 +254,13 @@
       if (!imgs[i].complete) imgs[i].addEventListener('load', measure, { once: true });
     }
 
-    measure();
-    sync();
-    book.classList.add('is-ready');
+    // First measure on the next frame: measuring synchronously, right after
+    // the pages were built, forced a layout during load.
+    requestAnimationFrame(function () {
+      measure();
+      sync();
+      book.classList.add('is-ready');
+    });
   }
 
   function init() {

@@ -184,8 +184,13 @@
       }
     }
 
-    resize();
-    if (reduced) staticFrame(); else start();
+    /* First measure on the next frame, not synchronously at load: reading the
+       hero's size right after the page's styles land forced a layout. The rain
+       starts one frame later, which nobody can see. */
+    requestAnimationFrame(function () {
+      resize();
+      if (reduced) staticFrame(); else start();
+    });
   }
 
   if (document.readyState === 'loading') {

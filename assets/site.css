@@ -4,113 +4,27 @@
    cyrillic (IBM Plex Mono only - Archivo has no Cyrillic on Google Fonts,
    so Ukrainian text falls back to the system stack, as it always did).
    ============================================ */
+/* Archivo is a variable font (wght 100-900): one file per subset covers
+   every weight. It used to be declared once per weight, each pointing at
+   an identical copy, so a page could download the same file five times. */
 /* latin-ext */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-stretch: 100%;
   font-display: swap;
-  src: url(fonts/archivo-400-latin-ext.woff2) format('woff2');
+  src: url(fonts/archivo-latin-ext.woff2) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
 /* latin */
 @font-face {
   font-family: 'Archivo';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-stretch: 100%;
   font-display: swap;
-  src: url(fonts/archivo-400-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 500;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-500-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 500;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-500-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 600;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-600-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 600;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-600-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-700-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-700-latin.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 800;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-800-latin-ext.woff2) format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 800;
-  font-stretch: 100%;
-  font-display: swap;
-  src: url(fonts/archivo-800-latin.woff2) format('woff2');
+  src: url(fonts/archivo-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -180,7 +94,7 @@
   --ink-2: #33312D;
   --text: #5F5C55;
   --text-2: #4E4B45;
-  --muted: #86827A;
+  --muted: #6E6A63;   /* was #86827A: 3.4:1 on cream, below AA. Dark surfaces keep the old value, below */
   --cream: #F3F0E9;
   --white: #FFFFFF;
   --line: #E4DFD4;
@@ -366,6 +280,9 @@ h1, h2, h3, p { margin: 0; }
 .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-left: var(--pad-x); padding-right: var(--pad-x); }
 .section { padding-top: var(--section-y); padding-bottom: var(--section-y); }
 .dark { background: var(--dark); color: var(--on-dark); }
+/* --muted was darkened for AA on cream; on the dark surfaces the lighter
+   original is the one with enough contrast, so they keep it. */
+.dark, .case { --muted: #86827A; }
 
 /* ============ Type ============ */
 .d { font-weight: 800; letter-spacing: -0.035em; }
@@ -423,6 +340,11 @@ h1, h2, h3, p { margin: 0; }
 h1.h2-xl { color: #fff; }
 .eyebrow { margin-bottom: 16px; }
 .lead { font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; color: var(--on-dark-2); text-wrap: pretty; }
+/* The same class in a light section (FAQ, service pages) needs the body
+   colour - on cream the on-dark grey was 2.2:1. No section is both .wrap
+   and .dark, and a dark block nested inside a light section keeps its own. */
+section.wrap .lead { color: var(--text); }
+section.wrap .dark .lead { color: var(--on-dark-2); }
 
 /* ============ Logo - direction 02 "Split weight" ============ */
 .logo { font-weight: 800; letter-spacing: -0.05em; font-size: 22px; line-height: 1; white-space: nowrap; color: var(--ink); }
@@ -541,9 +463,9 @@ h1.h2-xl { color: #fff; }
 .layer .d { font-size: 19px; margin-bottom: 5px; }
 .layer p { font-size: 14px; color: var(--on-dark-3); }
 .layer--goal { background: var(--blue); border-color: var(--blue); }
-.layer--goal .mono { color: #BFDCFA; }
+.layer--goal .mono { color: #EAF3FE; }   /* was #BFDCFA, 3.7:1 on blue */
 .layer--goal .d { font-size: 22px; color: #fff; }
-.layer--goal p { color: #CFE3FB; }
+.layer--goal p { color: #EAF3FE; }       /* was #CFE3FB, 4.0:1 on blue */
 
 /* ============ Work ============ */
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; }
@@ -1498,7 +1420,13 @@ h1.h2-xl { color: #fff; }
 .case::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
 .case::before {
   z-index: 0;
-  background: url(../images/case-lilies.webp) right center / cover no-repeat;
+  /* Shown at up to ~1350px wide, so a 1400px file; the 2400px original only
+     for high-density screens, and an 800px one on phones. */
+  background: url(../images/case-lilies-1400.webp) right center / cover no-repeat;
+  background-image: image-set(url(../images/case-lilies-1400.webp) 1x, url(../images/case-lilies.webp) 2x);
+}
+@media (max-width: 700px) {
+  .case::before { background-image: url(../images/case-lilies-800.webp); }
 }
 .case::after {
   z-index: 1;
