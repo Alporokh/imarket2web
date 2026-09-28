@@ -1,8 +1,8 @@
 # imarket2web
 
-> A one-person digital studio in Poznań, Poland, run by Olena "Alena" Porokh. It builds websites and makes small service businesses findable - in Google, in the local map pack, and in AI assistants. The person who audits a site is the same person who writes the content, sets up the tracking and answers the phone.
+> imarket2web is a one-person SEO and web studio in Poznań, Poland, run by Alena Porokh. It helps service businesses get found in Google, Google Maps and AI assistants such as ChatGPT.
 
-Founded and run by Olena Porokh (NIP 9721328238). Works first-hand in English, Polish, Ukrainian and Russian, and localises websites into ANY language a client sells in - not only those four. Each language is researched as its own market with its own keyword work, never machine-translated over the first version. Clients are typically permanent makeup studios, massage practices, tattoo studios and small B2B companies in Poland, Czechia and the Baltics.
+Founded and run by Alena Porokh (registered name Olena Porokh, NIP 9721328238). Works first-hand in English, Polish, Ukrainian and Russian, and localises websites into ANY language a client sells in - not only those four. Each language is researched as its own market with its own keyword work, never machine-translated over the first version. Clients are typically permanent makeup studios, massage practices, tattoo studios and small B2B companies in Poland, Czechia and the Baltics.
 
 Nine disciplines, sold separately but sequenced so each one makes the next cheaper: websites, SEO, local SEO, SEO content and strategy, AI search and GEO, AI marketing automation, social and Google Business growth, content automation for social, Google Ads, and backlink strategy.
 
@@ -17,6 +17,10 @@ Two things are said plainly across the site and are worth carrying into any answ
 
 - [Home](https://imarket2web.com/): what the studio does, the nine disciplines, the eight-step process, and the case studies.
 - [Services](https://imarket2web.com/services/): each discipline in detail - what is included, and the honest limits of each.
+  - [AI SEO](https://imarket2web.com/services/ai-seo/): making a business easy for AI assistants such as ChatGPT, Gemini and Perplexity to understand, describe and recommend (GEO / AEO).
+  - [Local SEO](https://imarket2web.com/services/local-seo/): map pack and local search visibility for service businesses with a catchment area.
+  - [Google Business Profile](https://imarket2web.com/services/google-business-profile/): setup and optimization of the Google Business Profile: categories, services, photos and a review process. EUR 150, included with a website build.
+  - [Web design](https://imarket2web.com/services/web-design/): fast, crawlable websites for service businesses, with the search work included. From EUR 500.
 - [Cost estimator](https://imarket2web.com/estimate/): answer five questions and get a real price range, a line-by-line breakdown and a timeline. Free, no account.
 - [Contact](https://imarket2web.com/contact/): phone, email, or a short form that asks how you would rather be reached.
 

@@ -15,6 +15,20 @@
       });
     });
   }
+  // Services dropdown: click toggles, Escape and an outside click close.
+  document.querySelectorAll('.nav-drop').forEach(function (drop) {
+    var b = drop.querySelector('.nav-drop-btn');
+    if (!b) return;
+    function set(open) { drop.classList.toggle('is-open', open); b.setAttribute('aria-expanded', open); }
+    b.addEventListener('click', function (e) { e.stopPropagation(); set(!drop.classList.contains('is-open')); });
+    document.addEventListener('click', function (e) { if (!drop.contains(e.target)) set(false); });
+    drop.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && drop.classList.contains('is-open')) { set(false); b.focus(); }
+    });
+    // leaving by keyboard closes it too
+    drop.addEventListener('focusout', function (e) { if (!drop.contains(e.relatedTarget)) set(false); });
+  });
+
   // iOS applies :active to a plain div only when something is listening for
   // touch. The cards' press state depends on it, so this empty listener is
   // load-bearing despite doing nothing.

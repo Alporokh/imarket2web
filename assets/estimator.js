@@ -37,8 +37,8 @@ const PL = {
   'SEO-ready page structure': 'Struktura podstron gotowa pod SEO',
   'Unique images, not stock': 'Autorskie zdjęcia, nie stock',
   'Home + service pages (up to 10)': 'Strona główna + podstrony usług (do 10)',
-  'Google Business Profile setup & optimisation': 'Założenie i optymalizacja wizytówki Google',
-  'Google Business Profile set up and optimised': 'Wizytówka Google założona i zoptymalizowana',
+  'Google Business Profile setup & optimization': 'Założenie i optymalizacja wizytówki Google',
+  'Google Business Profile set up and optimized': 'Wizytówka Google założona i zoptymalizowana',
   '10+ pages, SEO-focused architecture': '10+ podstron, architektura pod SEO',
   'SEO strategy, keywords & competitor research': 'Strategia SEO, słowa kluczowe i analiza konkurencji',
   'Backlink strategy': 'Strategia linkowania',
@@ -67,7 +67,7 @@ const PL = {
   'Social & content calendar': 'Social i kalendarz treści',
   'Social content & posting automation, per month':
     'Treści social i automatyzacja publikacji, miesięcznie',
-  '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
+  '16 posts a month, profile setup or optimization, calendar and posting automation - approved by you in advance':
     '16 postów miesięcznie, założenie lub optymalizacja profilu, kalendarz i automatyzacja publikacji - zatwierdzane przez Ciebie z góry',
   'Backlink strategy: link gap audit, target list, digital PR angles':
     'Strategia linkowania: audyt luki linkowej, lista celów, tematy do digital PR',
@@ -113,8 +113,8 @@ const UK = {
   'SEO-ready page structure': 'Структура сторінок, готова під SEO',
   'Unique images, not stock': 'Авторські зображення, не стокові',
   'Home + service pages (up to 10)': 'Головна + сторінки послуг (до 10)',
-  'Google Business Profile setup & optimisation': 'Створення та оптимізація Google Бізнес-профілю',
-  'Google Business Profile set up and optimised': 'Google Бізнес-профіль створений і оптимізований',
+  'Google Business Profile setup & optimization': 'Створення та оптимізація Google Бізнес-профілю',
+  'Google Business Profile set up and optimized': 'Google Бізнес-профіль створений і оптимізований',
   '10+ pages, SEO-focused architecture': '10+ сторінок, структура під SEO',
   'SEO strategy, keywords & competitor research': 'SEO-стратегія, запити й аналіз конкурентів',
   'Backlink strategy': 'Стратегія посилань',
@@ -145,7 +145,7 @@ const UK = {
   'Social & content calendar': 'Соцмережі й контент-календар',
   'Social content & posting automation, per month':
     'Контент для соцмереж і автоматизація публікацій, за місяць',
-  '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
+  '16 posts a month, profile setup or optimization, calendar and posting automation - approved by you in advance':
     '16 постів на місяць, створення або оптимізація профілю, календар і автоматизація публікацій - погоджені вами заздалегідь',
   'Backlink strategy: link gap audit, target list, digital PR angles':
     'Стратегія посилань: аудит розриву, список цілей, теми для digital PR',
@@ -189,8 +189,8 @@ const RU = {
   'SEO-ready page structure': 'Структура страниц, готовая под SEO',
   'Unique images, not stock': 'Собственные изображения, не стоковые',
   'Home + service pages (up to 10)': 'Главная + страницы услуг (до 10)',
-  'Google Business Profile setup & optimisation': 'Настройка и оптимизация Гугл Бизнес Профиля',
-  'Google Business Profile set up and optimised': 'Гугл Бизнес Профиль настроен и оптимизирован',
+  'Google Business Profile setup & optimization': 'Настройка и оптимизация Гугл Бизнес Профиля',
+  'Google Business Profile set up and optimized': 'Гугл Бизнес Профиль настроен и оптимизирован',
   '10+ pages, SEO-focused architecture': '10+ страниц, структура под SEO',
   'SEO strategy, keywords & competitor research': 'SEO-стратегия, запросы и анализ конкурентов',
   'Backlink strategy': 'Стратегия ссылок',
@@ -221,7 +221,7 @@ const RU = {
   'Social & content calendar': 'Соцсети и контент-календарь',
   'Social content & posting automation, per month':
     'Контент для соцсетей и автоматизация публикаций, в месяц',
-  '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance':
+  '16 posts a month, profile setup or optimization, calendar and posting automation - approved by you in advance':
     '16 постов в месяц, настройка или оптимизация профиля, календарь и автоматизация публикаций - согласованные с вами заранее',
   'Backlink strategy: link gap audit, target list, digital PR angles':
     'Стратегия ссылок: аудит пробелов, список целей, темы для digital PR',
@@ -281,7 +281,7 @@ const RATES = {
       // when a client already has a website and wants marketing on its own.
       bundles: ['seoStrategy', 'analytics', 'backlinks', 'gbp', 'blog'],
       includes: [
-        'Google Business Profile setup & optimisation',
+        'Google Business Profile setup & optimization',
         'Blog + 5 articles & 3-month content plan',
         'SEO strategy, keywords & competitor research',
         'Backlink strategy',
@@ -305,7 +305,7 @@ const RATES = {
         'Backlink strategy',
         'GA4 + Search Console',
         'Home + service pages (up to 10)',
-        'Google Business Profile setup & optimisation',
+        'Google Business Profile setup & optimization',
         'Design system',
         'Logo',
         'Form with automated orders',
@@ -319,7 +319,7 @@ const RATES = {
       weeks: [5, 8],
       bundles: ['seoStrategy', 'analytics', 'backlinks', 'gbp', 'blog'],
       includes: [
-        'Google Business Profile setup & optimisation',
+        'Google Business Profile setup & optimization',
         'Blog + 5 articles & 3-month content plan',
         'SEO strategy, keywords & competitor research',
         'Backlink strategy',
@@ -342,7 +342,7 @@ const RATES = {
     },
     gbp: {
       price: 150,
-      label: 'Google Business Profile setup & optimisation',
+      label: 'Google Business Profile setup & optimization',
       short: 'Google Business Profile',
       weeks: [0, 1]
     },
@@ -378,7 +378,7 @@ const RATES = {
       weeks: [1, 2],
       monthly: 150,
       monthlyLabel: 'Social content & posting automation, per month',
-      monthlyNote: '16 posts a month, profile setup or optimisation, calendar and posting automation - approved by you in advance'
+      monthlyNote: '16 posts a month, profile setup or optimization, calendar and posting automation - approved by you in advance'
     },
     backlinks: {
       price: 0,
@@ -399,7 +399,7 @@ const RATES = {
       covers: ['seoStrategy', 'gbp', 'blog', 'analytics'],
       includes: [
         'Keyword research and the page structure it implies',
-        'Google Business Profile set up and optimised',
+        'Google Business Profile set up and optimized',
         'Blog plus 5 keyword-led articles and a 3-month plan',
         'GA4, Search Console and conversion tracking'
       ]
@@ -592,10 +592,10 @@ function renderResult() {
     ? '-'
     : (r.hasFrom ? T('from ') : '')
       + fmt(r.floor)
-      + (Math.round(r.ceiling) > Math.round(r.floor) ? ' – ' + fmt(r.ceiling) : '');
+      + (Math.round(r.ceiling) > Math.round(r.floor) ? ' - ' + fmt(r.ceiling) : '');
 
   document.getElementById('res-weeks').textContent =
-    r.weeksMin === 0 ? '-' : r.weeksMin + '–' + r.weeksMax + T(' weeks');
+    r.weeksMin === 0 ? '-' : r.weeksMin + '-' + r.weeksMax + T(' weeks');
 
   document.getElementById('res-items').textContent =
     r.lines.filter(l => !l.included).length + T(' line items');
@@ -631,7 +631,7 @@ function renderResult() {
       const right = document.createElement('span');
       right.className = 'bd-price';
       right.textContent = (l.priceMax
-        ? fmt(l.price) + ' – ' + fmt(l.priceMax)
+        ? fmt(l.price) + ' - ' + fmt(l.priceMax)
         : fmt(l.price)) + T(' /mo');
       row.append(left, right);
       mBody.append(row);
@@ -676,7 +676,7 @@ function payloadFields() {
     monthly: r && r.monthlyTotal ? Math.round(r.monthlyTotal) : '',
     // the Sheet should record the currency the visitor was actually quoted
     currency: MONEY ? 'PLN' : RATES.currency,
-    timeline: r ? r.weeksMin + '–' + r.weeksMax + T(' weeks') : '',
+    timeline: r ? r.weeksMin + '-' + r.weeksMax + T(' weeks') : '',
     goal: state.goal || '',
     website: site.label || '',
     languages: state.languages,
@@ -690,7 +690,7 @@ function setTier(id, data, note) {
   document.getElementById('tier-' + id + '-price').textContent =
     data.floor === 0 ? '-' : (data.hasFrom ? 'from ' : '') + fmt(data.floor);
   document.getElementById('tier-' + id + '-weeks').textContent =
-    data.weeksMin === 0 ? '-' : data.weeksMin + '–' + data.weeksMax + T(' weeks');
+    data.weeksMin === 0 ? '-' : data.weeksMin + '-' + data.weeksMax + T(' weeks');
   document.getElementById('tier-' + id + '-note').textContent = note;
 }
 
@@ -713,8 +713,8 @@ function plainText(r, t) {
     L.push('      ' + p);
   });
   L.push('');
-  L.push('ESTIMATE:  ' + (r.hasFrom ? T('from ') : '') + fmt(r.floor) + ' – ' + fmt(r.ceiling));
-  L.push('TIMELINE:  ' + r.weeksMin + '–' + r.weeksMax + T(' weeks'));
+  L.push('ESTIMATE:  ' + (r.hasFrom ? T('from ') : '') + fmt(r.floor) + ' - ' + fmt(r.ceiling));
+  L.push('TIMELINE:  ' + r.weeksMin + '-' + r.weeksMax + T(' weeks'));
   if (r.monthlyLines.length) {
     L.push('');
     L.push('THEN, MONTHLY');

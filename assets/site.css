@@ -265,6 +265,19 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--blue); }
+/* Links inside running text must look like links, not only on hover.
+   Buttons, chips and nav links all carry a class, so class-less anchors in
+   paragraphs, list items and table cells are the in-text ones. */
+main p a:not([class]), main li a:not([class]), main td a:not([class]) {
+  color: var(--blue); text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 2px;
+}
+main p a:not([class]):hover, main li a:not([class]):hover, main td a:not([class]):hover { color: var(--blue-hover); }
+/* 4.3:1 on the pale-blue panels is short of AA; the darker blue is 5.6:1 */
+main .panel--blue a:not([class]), main .svc--blue a:not([class]) { color: var(--blue-hover); }
+/* and on dark surfaces the light blue (7:1) */
+main .dark p a:not([class]), main .dark li a:not([class]), main .dark td a:not([class]),
+main .case p a:not([class]), main .case li a:not([class]) { color: var(--blue-light); }
 h1, h2, h3, p { margin: 0; }
 :focus-visible { outline: 2px solid var(--blue-light); outline-offset: 3px; border-radius: 6px; }
 
@@ -390,8 +403,51 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
 .mobile-menu a { display: block; padding: 14px 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--on-dark); border-bottom: 1px solid var(--dark-line); }
 .mobile-menu .lang { border: 0; padding: 18px 0 20px; }
 .mobile-menu .lang a { display: inline; border: 0; padding: 0; font-size: 13px; }
-.mobile-menu .btn { width: 100%; font-size: 16px; color: #fff; border-bottom: 0; padding: 16px; }
+.mobile-menu .btn { display: flex; justify-content: center; width: 100%; font-size: 16px; color: #fff; border-bottom: 0; padding: 16px; }
 .site-header.is-open .mobile-menu { display: block; }
+
+/* ---- Services dropdown (desktop nav) ------------------------------------
+   A disclosure, not an ARIA menu: a button that shows a list of links.
+   Opens on click (site.js keeps aria-expanded in sync), and on hover and
+   keyboard focus for pointer users. Escape and an outside click close it. */
+.nav-drop { position: relative; }
+.nav-drop-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; color: #C9C4BA;
+}
+.nav-drop-btn:hover, .nav-drop-btn[aria-expanded="true"] { color: #fff; }
+.nav-drop-btn svg { transition: transform .2s ease; }
+.nav-drop-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.nav-drop-menu {
+  position: absolute; top: calc(100% + 14px); left: -18px; z-index: 60;
+  min-width: 250px; padding: 8px;
+  background: var(--dark-2); border: 1px solid var(--dark-line-2); border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .16s ease, transform .16s ease, visibility 0s linear .16s;
+}
+/* a bridge over the gap, so moving the pointer down does not close it */
+.nav-drop-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px; }
+.nav-drop-menu a { display: block; padding: 10px 12px; border-radius: 9px; color: #C9C4BA; font-size: 15px; }
+.nav-drop-menu a:hover, .nav-drop-menu a:focus-visible { background: rgba(255,255,255,.06); color: #fff; }
+.nav-drop-menu a[aria-current="page"] { color: #fff; }
+.nav-drop-menu .nav-drop-all { margin-top: 4px; border-top: 1px solid var(--dark-line-2); border-radius: 0 0 9px 9px; }
+.nav-drop.is-open .nav-drop-menu,
+.nav-drop:focus-within .nav-drop-menu {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .16s ease, transform .16s ease, visibility 0s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-drop:hover .nav-drop-menu { opacity: 1; visibility: visible; transform: none; transition: opacity .16s ease, transform .16s ease, visibility 0s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-drop-menu, .nav-drop-btn svg { transition: none; }
+}
+/* the same links in the mobile menu, as an indented group */
+.mobile-menu .mobile-sub { padding: 2px 0 8px 16px; border-bottom: 1px solid var(--dark-line); }
+.mobile-menu .mobile-sub a { font-size: 17px; font-weight: 600; padding: 10px 0; border-bottom: 0; color: #C9C4BA; }
+.mobile-menu .mobile-group { display: block; padding: 14px 0 6px; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--on-dark); }
 
 /* ============ Hero ============ */
 .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center; padding-block: var(--section-y); }
@@ -755,6 +811,18 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
 .prose ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
 .prose li { font-size: 16px; line-height: 1.55; color: var(--text); }
 .prose strong { color: var(--ink-2); font-weight: 600; }
+/* Tables in articles and service pages: prices, comparisons, orders of work */
+.prose table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+.prose th, .prose td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.prose th { font-weight: 600; color: var(--ink-2); border-bottom-color: var(--ink-2); }
+.prose .table-wrap { overflow-x: auto; }
+/* On phones a wide table scrolls sideways instead of squeezing its columns */
+@media (max-width: 640px) { .prose table { display: block; overflow-x: auto; } }
+/* Case cards on the work hub hold a heading and one link; the link's hit area
+   stretches over the whole card so the card still clicks as a unit. */
+.project { position: relative; }
+.project .link-mono::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+@media (max-width: 640px) { .prose table { font-size: 14px; } .prose th, .prose td { padding: 8px 8px; } }
 
 /* =======================================================================
    THE PROJECT BOOK
