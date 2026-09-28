@@ -98,6 +98,14 @@ const PL = {
   'FAQ sections written for AI answers': 'Sekcje FAQ pisane pod odpowiedzi AI',
   'Step ': 'Krok ',
   ' of ': ' z ',
+  // form status and tags
+  "Email delivery is not set up yet - see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.": "Wysyłka maili nie jest jeszcze skonfigurowana. Twoja wycena jest powyżej i możesz ją wydrukować.",
+  "Please tick the consent box so I am allowed to email you.": "Zaznacz zgodę, żebym mogła wysłać Ci maila.",
+  "Sending…": "Wysyłam…",
+  "Sent. Check your inbox - the estimate is on its way.": "Wysłane. Sprawdź skrzynkę - wycena jest w drodze.",
+  "Could not send: ": "Nie udało się wysłać: ",
+  ". Email imarket2web@gmail.com instead.": ". Napisz na imarket2web@gmail.com.",
+  "Included in your website price": "W cenie Twojej strony",
 };
 
 const UK = {
@@ -174,6 +182,14 @@ const UK = {
   'Standard': 'Стандартний',
   'Step ': 'Крок ',
   ' of ': ' з ',
+  // form status and tags
+  "Email delivery is not set up yet - see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.": "Надсилання листів ще не налаштоване. Ваш розрахунок вище, його можна роздрукувати.",
+  "Please tick the consent box so I am allowed to email you.": "Позначте згоду, щоб я могла надіслати вам лист.",
+  "Sending…": "Надсилаю…",
+  "Sent. Check your inbox - the estimate is on its way.": "Надіслано. Перевірте пошту - розрахунок уже в дорозі.",
+  "Could not send: ": "Не вдалося надіслати: ",
+  ". Email imarket2web@gmail.com instead.": ". Напишіть на imarket2web@gmail.com.",
+  "Included in your website price": "Входить у вартість сайту",
 };
 
 const RU = {
@@ -255,6 +271,14 @@ const RU = {
   'Standard': 'Стандартный',
   'Step ': 'Шаг ',
   ' of ': ' из ',
+  // form status and tags
+  "Email delivery is not set up yet - see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.": "Отправка писем еще не настроена. Ваш расчет выше, его можно распечатать.",
+  "Please tick the consent box so I am allowed to email you.": "Отметьте согласие, чтобы я могла отправить вам письмо.",
+  "Sending…": "Отправляю…",
+  "Sent. Check your inbox - the estimate is on its way.": "Отправлено. Проверьте почту - расчет уже в пути.",
+  "Could not send: ": "Не удалось отправить: ",
+  ". Email imarket2web@gmail.com instead.": ". Напишите на imarket2web@gmail.com.",
+  "Included in your website price": "Входит в стоимость сайта",
 };
 
 /* One table per language, picked from <html lang>. A string with no entry
@@ -262,6 +286,33 @@ const RU = {
    the rate card - it just shows that one line untranslated. */
 const I18N = { pl: PL, uk: UK, ru: RU };
 const DICT = I18N[(document.documentElement.lang || 'en').slice(0, 2)] || null;
+const LANG = (document.documentElement.lang || 'en').slice(0, 2);
+
+/* "1 language", "3 languages" - Polish, Ukrainian and Russian have three
+   plural forms (1 / 2-4 / 5+, with 12-14 taking the last), so a lookup table
+   of fixed strings cannot cover every count. */
+const LANG_WORDS = {
+  en: ['language', 'languages', 'languages'],
+  pl: ['język', 'języki', 'języków'],
+  uk: ['мова', 'мови', 'мов'],
+  ru: ['язык', 'языка', 'языков'],
+};
+const EXTRA_WORDS = {
+  en: ['additional language', 'additional languages', 'additional languages'],
+  pl: ['dodatkowy język', 'dodatkowe języki', 'dodatkowych języków'],
+  uk: ['додаткова мова', 'додаткові мови', 'додаткових мов'],
+  ru: ['дополнительный язык', 'дополнительных языка', 'дополнительных языков'],
+};
+function plural(n, forms) {
+  if (LANG === 'en') return n === 1 ? forms[0] : forms[1];
+  const d = n % 10, dd = n % 100;
+  if (n === 1) return forms[0];
+  if (d >= 2 && d <= 4 && !(dd >= 12 && dd <= 14)) return forms[1];
+  return forms[2];
+}
+const langCount = n => n + ' ' + plural(n, LANG_WORDS[LANG] || LANG_WORDS.en);
+const extraLangCount = n => n + ' ' + plural(n, EXTRA_WORDS[LANG] || EXTRA_WORDS.en);
+
 function T(s) {
   return (DICT && Object.prototype.hasOwnProperty.call(DICT, s)) ? DICT[s] : s;
 }
@@ -297,7 +348,7 @@ const RATES = {
       price: 800,
       label: 'Website, up to 10 pages',
       weeks: [3, 5],
-      // This package already contains GBP, plus the search work every build covers.
+      // Like every package, this one already contains GBP and the search work.
       bundles: ['gbp', 'blog', 'seoStrategy', 'analytics', 'backlinks'],
       includes: [
         'Blog + 5 articles & 3-month content plan',
@@ -498,7 +549,7 @@ function price(addonKeys) {
   if (extraLangs > 0 && site.price > 0) {
     const langCost = site.price * RATES.extraLanguagePct * extraLangs;
     lines.push({
-      label: extraLangs + ' additional language' + (extraLangs > 1 ? 's' : ''),
+      label: extraLangCount(extraLangs),
       price: langCost,
       note: 'Any language you sell in. Separate keyword research and copy per language, never machine translation over the first'
     });
@@ -812,7 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (langs) langs.addEventListener('input', () => {
     state.languages = parseInt(langs.value, 10);
     document.getElementById('langs-out').textContent =
-      state.languages + (state.languages === 1 ? ' language' : ' languages');
+      langCount(state.languages);
   });
 
   const rush = document.getElementById('rush');
@@ -833,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
       b.classList.remove('is-on');
       b.setAttribute('aria-pressed', 'false');
     });
-    if (langs) { langs.value = 1; document.getElementById('langs-out').textContent = '1 language'; }
+    if (langs) { langs.value = 1; document.getElementById('langs-out').textContent = langCount(1); }
     if (rush) rush.checked = false;
     showStep(0);
   });
@@ -858,12 +909,12 @@ function wireForm() {
 
     if (!ENDPOINT || ENDPOINT.indexOf("PASTE-") === 0 || ENDPOINT.indexOf("YOUR-") === 0) {
       status.className = "form-status is-err";
-      status.textContent = "Email delivery is not set up yet - see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.";
+      status.textContent = T("Email delivery is not set up yet - see tools/apps-script/Code.gs. Your estimate is shown above and can still be printed.");
       return;
     }
     if (!form.querySelector("[name=consent]").checked) {
       status.className = "form-status is-err";
-      status.textContent = "Please tick the consent box so I am allowed to email you.";
+      status.textContent = T("Please tick the consent box so I am allowed to email you.");
       return;
     }
 
@@ -875,7 +926,7 @@ function wireForm() {
 
     btn.disabled = true;
     status.className = "form-status";
-    status.textContent = "Sending…";
+    status.textContent = T("Sending…");
 
     try {
       let ok;
@@ -897,11 +948,11 @@ function wireForm() {
         if (!ok) throw new Error(out.message || "Submission failed");
       }
       status.className = "form-status is-ok";
-      status.textContent = "Sent. Check your inbox - the estimate is on its way.";
+      status.textContent = T("Sent. Check your inbox - the estimate is on its way.");
       form.reset();
     } catch (err) {
       status.className = "form-status is-err";
-      status.textContent = "Could not send: " + err.message + ". Email imarket2web@gmail.com instead.";
+      status.textContent = T("Could not send: ") + err.message + T(". Email imarket2web@gmail.com instead.");
     } finally {
       btn.disabled = false;
     }
@@ -930,7 +981,7 @@ function syncBundledOptions() {
       if (!tag) {
         tag = document.createElement('span');
         tag.className = 'opt-inc-tag';
-        tag.textContent = 'Included in your website price';
+        tag.textContent = T('Included in your website price');
         btn.append(tag);
       }
     } else if (tag) {

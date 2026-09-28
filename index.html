@@ -59,7 +59,7 @@
 
   <link rel="preload" href="./assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="./assets/site.css?v=2026-09-28">
+  <link rel="stylesheet" href="./assets/site.css?v=2026-09-28b">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -80,17 +80,38 @@
         "priceRange": "150-800 EUR",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "ul. Jasielska 10a",
+          "postalCode": "60-476",
           "addressLocality": "Poznań",
           "addressCountry": "PL"
         },
         "areaServed": [
-          {"@type": "City", "name": "Poznań"},
-          {"@type": "Country", "name": "Poland"},
-          {"@type": "Country", "name": "Czechia"},
-          {"@type": "Country", "name": "Estonia"}
+          {
+            "@type": "City",
+            "name": "Poznań"
+          },
+          {
+            "@type": "Country",
+            "name": "Poland"
+          },
+          {
+            "@type": "Country",
+            "name": "Czechia"
+          },
+          {
+            "@type": "Country",
+            "name": "Estonia"
+          }
         ],
-        "knowsLanguage": ["en", "pl", "uk", "ru"],
-        "founder": {"@id": "https://imarket2web.com/#olena"},
+        "knowsLanguage": [
+          "en",
+          "pl",
+          "uk",
+          "ru"
+        ],
+        "founder": {
+          "@id": "https://imarket2web.com/#olena"
+        },
         "sameAs": [
           "https://www.google.com/maps?cid=15196942344139686995",
           "https://www.google.com/search?kgmid=/g/11tkb21c41",
@@ -100,11 +121,52 @@
           "@type": "OfferCatalog",
           "name": "SEO and web services",
           "itemListElement": [
-            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AI SEO", "url": "https://imarket2web.com/services/ai-seo/"}},
-            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Local SEO", "url": "https://imarket2web.com/services/local-seo/"}},
-            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Google Business Profile optimization", "url": "https://imarket2web.com/services/google-business-profile/"}, "price": "150", "priceCurrency": "EUR"},
-            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Web design", "url": "https://imarket2web.com/services/web-design/"}, "price": "500", "priceCurrency": "EUR"},
-            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Free SEO audit", "url": "https://imarket2web.com/seo-audit/"}, "price": "0", "priceCurrency": "EUR"}
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "AI SEO",
+                "url": "https://imarket2web.com/services/ai-seo/"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Local SEO",
+                "url": "https://imarket2web.com/services/local-seo/"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Google Business Profile optimization",
+                "url": "https://imarket2web.com/services/google-business-profile/"
+              },
+              "price": "150",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Web design",
+                "url": "https://imarket2web.com/services/web-design/"
+              },
+              "price": "500",
+              "priceCurrency": "EUR"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Free SEO audit",
+                "url": "https://imarket2web.com/seo-audit/"
+              },
+              "price": "0",
+              "priceCurrency": "EUR"
+            }
           ]
         }
       },
@@ -112,11 +174,25 @@
         "@type": "Person",
         "@id": "https://imarket2web.com/#olena",
         "name": "Alena Porokh",
-        "alternateName": ["Olena Porokh", "Олена Порох"],
+        "alternateName": [
+          "Olena Porokh",
+          "Олена Порох"
+        ],
         "jobTitle": "SEO specialist and founder",
-        "worksFor": {"@id": "https://imarket2web.com/#business"},
+        "worksFor": {
+          "@id": "https://imarket2web.com/#business",
+          "founder": {
+            "@id": "https://imarket2web.com/#olena"
+          },
+          "foundingDate": "2020"
+        },
         "url": "https://imarket2web.com/about/",
-        "knowsLanguage": ["en", "pl", "uk", "ru"],
+        "knowsLanguage": [
+          "en",
+          "pl",
+          "uk",
+          "ru"
+        ],
         "sameAs": [
           "https://www.linkedin.com/in/alenaporokh/",
           "https://lasoft.org/blog/author/porokh/",
@@ -128,18 +204,71 @@
         "@id": "https://imarket2web.com/#website",
         "url": "https://imarket2web.com/",
         "name": "imarket2web",
-        "publisher": {"@id": "https://imarket2web.com/#business"},
-        "inLanguage": ["en", "pl", "uk", "ru"]
+        "publisher": {
+          "@id": "https://imarket2web.com/#business",
+          "founder": {
+            "@id": "https://imarket2web.com/#olena"
+          },
+          "foundingDate": "2020"
+        },
+        "inLanguage": [
+          "en",
+          "pl",
+          "uk",
+          "ru"
+        ]
       },
       {
         "@type": "FAQPage",
         "mainEntity": [
-          {"@type": "Question", "name": "What does an SEO specialist do for a small business?", "acceptedAnswer": {"@type": "Answer", "text": "An SEO specialist finds out how your customers search, then builds or fixes the pages that answer those searches. I also set up your Google Business Profile and keep the site technically clean. Then I measure calls, forms and bookings, and improve what does not work."}},
-          {"@type": "Question", "name": "How much does SEO or a website cost?", "acceptedAnswer": {"@type": "Answer", "text": "Prices are public and in euros, net. A website of up to 4 pages is €500, and up to 10 pages is €800. Every website package includes SEO work, Google Business Profile setup and a blog. If you already have a site, an SEO strategy is €300 one-off, and ongoing monthly support is €250-300. The website cost calculator gives you a range for your project."}},
-          {"@type": "Question", "name": "What is AI SEO, and can you get my business into ChatGPT?", "acceptedAnswer": {"@type": "Answer", "text": "AI SEO, also called GEO, is the work of making your business easy for AI assistants to understand and describe. That means clear facts, structured data and pages that answer questions directly. Nobody can guarantee that ChatGPT will recommend you; this work improves the odds. More on the AI SEO service page."}},
-          {"@type": "Question", "name": "Do you only work with businesses in Poznań?", "acceptedAnswer": {"@type": "Answer", "text": "No. I am based in Poznań, and clients include studios in Prague and a freight company in Tallinn. Local SEO works the same way in any city: it starts with research into how people search there."}},
-          {"@type": "Question", "name": "Why one person and not an agency?", "acceptedAnswer": {"@type": "Answer", "text": "The person who researches your market also writes the strategy, builds the site and reads the numbers three months later. Nothing gets lost between an account manager and a junior. The limit is capacity: I take on a small number of projects at a time."}},
-          {"@type": "Question", "name": "Do I have to sign up for a monthly retainer?", "acceptedAnswer": {"@type": "Answer", "text": "No. Most projects are one-off: a website or a specific service. A monthly plan only makes sense if you want content, links and ads to keep working every month."}}
+          {
+            "@type": "Question",
+            "name": "What does an SEO specialist do for a small business?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An SEO specialist finds out how your customers search, then builds or fixes the pages that answer those searches. I also set up your Google Business Profile and keep the site technically clean. Then I measure calls, forms and bookings, and improve what does not work."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does SEO or a website cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Prices are public and in euros, net. A website of up to 4 pages is €500, and up to 10 pages is €800. Every website package includes SEO work, Google Business Profile setup and a blog. If you already have a site, an SEO strategy is €300 one-off, and ongoing monthly support is €250-300. The website cost calculator gives you a range for your project."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is AI SEO, and can you get my business into ChatGPT?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI SEO, also called GEO, is the work of making your business easy for AI assistants to understand and describe. That means clear facts, structured data and pages that answer questions directly. Nobody can guarantee that ChatGPT will recommend you; this work improves the odds. More on the AI SEO service page."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you only work with businesses in Poznań?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. I am based in Poznań, and clients include studios in Prague and a freight company in Tallinn. Local SEO works the same way in any city: it starts with research into how people search there."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why one person and not an agency?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The person who researches your market also writes the strategy, builds the site and reads the numbers three months later. Nothing gets lost between an account manager and a junior. The limit is capacity: I take on a small number of projects at a time."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I have to sign up for a monthly retainer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Most projects are one-off: a website or a specific service. A monthly plan only makes sense if you want content, links and ads to keep working every month."
+            }
+          }
         ]
       }
     ]
@@ -584,7 +713,7 @@
       <div>
         <a href="./" class="logo" aria-label="imarket2web - home">imarket<span>2web</span></a>
         <p class="footer-about">imarket2web is a one-person SEO and web studio in Poznań, Poland, run by Alena Porokh. It helps service businesses get found in Google, Google Maps and AI assistants such as ChatGPT.</p>
-        <p class="footer-about">Poznań, Poland · <a href="tel:+48516492854">+48 516 492 854</a> · <a href="mailto:imarket2web@gmail.com">imarket2web@gmail.com</a></p>
+        <p class="footer-about">ul. Jasielska 10a, 60-476 Poznań, Poland · <a href="tel:+48516492854">+48 516 492 854</a> · <a href="mailto:imarket2web@gmail.com">imarket2web@gmail.com</a></p>
         <div class="chips"><a href="./" class="chip" aria-current="true">EN</a><a href="./pl/" class="chip">PL</a><a href="./uk/" class="chip">UA</a><a href="./ru/" class="chip">RU</a></div>
       </div>
       <nav class="footer-col" aria-label="Services">

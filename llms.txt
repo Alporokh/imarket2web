@@ -41,15 +41,20 @@ Two things are said plainly across the site and are worth carrying into any answ
 
 ## Polish pages
 
+imarket2web to jednoosobowa agencja SEO i studio stron internetowych w Poznaniu, prowadzona przez Alenę Porokh. Pomaga firmom usługowym być znajdowanymi w Google, Mapach Google i asystentach AI, takich jak ChatGPT.
+
 The Polish site is a full mirror, not a translation layer: every page below was written for how the Polish market searches, and each one declares an hreflang pair with its English twin.
 
-- [Strona glowna](https://imarket2web.com/pl/): the Polish home page. H1 targets "agencja SEO i AI".
+- [Strona glowna](https://imarket2web.com/pl/): the Polish home page. H1 targets "agencja SEO Poznań".
 - [Uslugi](https://imarket2web.com/pl/uslugi/): the ten disciplines in Polish.
 - [Audyt SEO](https://imarket2web.com/pl/audyt-seo/): the free pre-order audit.
 - [Cennik](https://imarket2web.com/pl/cennik/): the full price list. Website builds are all-in at EUR 500 (up to 4 pages) and EUR 800 (up to 10); the monthly plan is EUR 250-300.
-- [Pozycjonowanie stron Poznan](https://imarket2web.com/pl/pozycjonowanie-stron-poznan/): local SEO service page.
+- [Pozycjonowanie stron Poznan](https://imarket2web.com/pl/pozycjonowanie-stron-poznan/): whole-site SEO for businesses in Poznań.
 - [Wizytowka Google](https://imarket2web.com/pl/wizytowka-google/): Google Business Profile setup and optimisation. EUR 150 on its own, included with a website build.
-- [Realizacje](https://imarket2web.com/pl/realizacje/): the five case studies in Polish.
+- [Pozycjonowanie lokalne](https://imarket2web.com/pl/pozycjonowanie-lokalne/): local SEO for Google Maps and city searches, for service businesses anywhere in Poland.
+- [SEO AI](https://imarket2web.com/pl/seo-ai/): visibility in AI assistants such as ChatGPT and Gemini (GEO).
+- [Strony WWW Poznan](https://imarket2web.com/pl/strony-internetowe-poznan/): websites for service businesses in Poznan, with SEO, Google Business Profile and a blog included. From 2000 zl net.
+- [Realizacje](https://imarket2web.com/pl/realizacje/): the six case studies in Polish.
 - [Wycena](https://imarket2web.com/pl/wycena/): the cost estimator, localised.
 - [Blog](https://imarket2web.com/pl/blog/): articles in Polish.
   - [Wizytowka Google: jak zalozyc](https://imarket2web.com/pl/blog/wizytowka-google-jak-zalozyc/): step-by-step guide to setting up, verifying and completing a Google Business Profile.
@@ -96,4 +101,5 @@ A full Russian version for Russian-speaking business owners living in Poland who
 - Phone: +48 516 492 854
 - LinkedIn: https://www.linkedin.com/company/imarket2web/
 - Google Business Profile: https://www.google.com/search?kgmid=/g/11tkb21c41
+- Address: ul. Jasielska 10a, 60-476 Poznań, Poland.
 - Based in Poznań, Poland. Remote across Poland, Czechia and the Baltics.

@@ -26,8 +26,8 @@
 
     gtag('config', 'G-7VCYMXHF58');
   </script>
-  <title>Blog o SEO i marketingu dla małych firm | imarket2web</title>
-  <meta name="description" content="Pozycjonowanie stron, wizytówka Google i treści dla małych firm: notatki z prawdziwych projektów. Co działa, co marnuje budżet i w jakiej kolejności to robić.">
+  <title>Blog SEO dla małych firm - SEO lokalne | imarket2web</title>
+  <meta name="description" content="Blog SEO dla małych firm: wizytówka Google, SEO lokalne i strony, które przynoszą telefony. Poradniki z prawdziwych projektów, bez teorii i bez lania wody.">
   <link rel="canonical" href="https://imarket2web.com/pl/blog/">
   <link rel="alternate" hreflang="en" href="https://imarket2web.com/insights/">
   <link rel="alternate" hreflang="pl" href="https://imarket2web.com/pl/blog/">
@@ -36,13 +36,13 @@
   <link rel="alternate" hreflang="x-default" href="https://imarket2web.com/insights/">
   <meta name="theme-color" content="#121214">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Blog | imarket2web">
-  <meta property="og:description" content="Pozycjonowanie stron, wizytówka Google i treści dla małych firm: notatki z prawdziwych projektów. Co działa, co marnuje budżet i w jakiej kolejności to robić.">
+  <meta property="og:title" content="Blog SEO dla małych firm - SEO lokalne">
+  <meta property="og:description" content="Blog SEO dla małych firm: wizytówka Google, SEO lokalne i strony, które przynoszą telefony. Poradniki z prawdziwych projektów, bez teorii i bez lania wody.">
   <meta property="og:url" content="https://imarket2web.com/pl/blog/">
   <meta property="og:image" content="https://imarket2web.com/images/og-default.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Europe at night seen from space, city lights picking out the cities, with the imarket2web wordmark">
+  <meta property="og:image:alt" content="Europa nocą widziana z kosmosu, światła miast i logo imarket2web">
   <meta property="og:site_name" content="imarket2web">
   <meta property="og:locale" content="pl">
   <meta name="twitter:card" content="summary_large_image">
@@ -51,29 +51,39 @@
   <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
   <link rel="manifest" href="/site.webmanifest?v=2">
-  <link rel="stylesheet" href="../../assets/site.css?v=2026-09-28">
+  <link rel="stylesheet" href="../../assets/site.css?v=2026-09-28b">
   <link rel="stylesheet" href="../../assets/space.css?v=2026-09-27">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "imarket2web Insights",
-    "url": "https://imarket2web.com/pl/blog/",
-    "description": "Notes from building search visibility for service businesses in Poland, Czechia and Estonia.",
-    "inLanguage": "en",
-    "publisher": {
-      "@type": "Organization",
-      "name": "imarket2web",
-      "url": "https://imarket2web.com/",
-      "founder": { "@type": "Person", "name": "Alena Porokh" },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Poznan",
-        "addressCountry": "PL"
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://imarket2web.com/pl/blog/#page",
+        "url": "https://imarket2web.com/pl/blog/",
+        "name": "Blog SEO dla małych firm: jak ludzie naprawdę Cię znajdują",
+        "description": "Blog SEO dla małych firm: wizytówka Google, SEO lokalne i strony, które przynoszą telefony. Poradniki z prawdziwych projektów, bez teorii i bez lania wody.",
+        "inLanguage": "pl",
+        "isPartOf": {"@id": "https://imarket2web.com/#website"},
+        "author": {"@id": "https://imarket2web.com/#olena"},
+        "publisher": {"@id": "https://imarket2web.com/#business"},
+        "dateModified": "2026-09-28",
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Wizytówka Google: jak założyć krok po kroku (2026)", "url": "https://imarket2web.com/pl/blog/wizytowka-google-jak-zalozyc/"},
+            {"@type": "ListItem", "position": 2, "name": "SEO lokalne dla jednoosobowego studia: co naprawdę działa", "url": "https://imarket2web.com/pl/blog/seo-lokalne-jednoosobowe-studio/"}
+          ]
+        }
       },
-      "email": "imarket2web@gmail.com",
-      "telephone": "+48516492854"
-    }
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://imarket2web.com/pl/"},
+          {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://imarket2web.com/pl/blog/"}
+        ]
+      }
+    ]
   }
   </script>
 </head>
@@ -85,15 +95,24 @@
     <a href="../../pl/" class="logo" aria-label="imarket2web - strona główna">imarket<span>2web</span></a>
 
     <nav class="nav-links" aria-label="Główna">
-      <a href="../audyt-seo/">Audyt SEO</a>
-      <a href="../uslugi/">Usługi</a>
-      <a href="../realizacje/">Realizacje</a>
-      <a href="../wycena/">Wycena</a>
-      <a href="../cennik/">Cennik</a>
-      <a href="../o-mnie/">O mnie</a>
-      <a href="./" aria-current="page">Blog</a>
-
-
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-expanded="false" aria-controls="nav-uslugi">Usługi
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav-drop-menu" id="nav-uslugi">
+          <a href="../../pl/pozycjonowanie-stron-poznan/">Pozycjonowanie stron Poznań</a>
+          <a href="../../pl/pozycjonowanie-lokalne/">Pozycjonowanie lokalne</a>
+          <a href="../../pl/wizytowka-google/">Wizytówka Google</a>
+          <a href="../../pl/strony-internetowe-poznan/">Strony WWW</a>
+          <a href="../../pl/seo-ai/">SEO AI</a>
+          <a href="../../pl/audyt-seo/">Darmowy audyt SEO</a>
+          <a href="../../pl/uslugi/" class="nav-drop-all">Wszystkie usługi</a>
+        </div>
+      </div>
+      <a href="../../pl/realizacje/">Realizacje</a>
+      <a href="../../pl/blog/" aria-current="page">Blog</a>
+      <a href="../../pl/cennik/">Cennik</a>
+      <a href="../../pl/o-mnie/">O mnie</a>
       <div class="lang" aria-label="Język">
         <a href="../../insights/" class="mono" hreflang="en">EN</a><span class="mono sep">·</span>
         <a href="./" class="mono" hreflang="pl" aria-current="true">PL</a><span class="mono sep">·</span>
@@ -101,7 +120,7 @@
         <a href="../../ru/blog/" class="mono" hreflang="ru">RU</a>
       </div>
       <a href="tel:+48516492854" class="nav-phone">+48 516 492 854</a>
-      <a href="../../pl/kontakt/" class="nav-cta">Porozmawiajmy o projekcie</a>
+      <a href="../../pl/kontakt/" class="nav-cta" data-contact-open>Kontakt</a>
     </nav>
 
     <div class="nav-mobile">
@@ -115,29 +134,33 @@
   </div>
 
   <nav class="mobile-menu" id="mobile-menu" aria-label="Mobilne">
-    <a href="../audyt-seo/">Audyt SEO</a>
-    <a href="../uslugi/">Usługi</a>
-    <a href="../realizacje/">Realizacje</a>
-    <a href="../wycena/">Wycena</a>
-    <a href="../cennik/">Cennik</a>
-    <a href="../o-mnie/">O mnie</a>
-    <a href="./" aria-current="page">Blog</a>
-
-
+    <a href="../../pl/uslugi/">Usługi</a>
+    <div class="mobile-sub">
+      <a href="../../pl/pozycjonowanie-stron-poznan/">Pozycjonowanie stron Poznań</a>
+      <a href="../../pl/pozycjonowanie-lokalne/">Pozycjonowanie lokalne</a>
+      <a href="../../pl/wizytowka-google/">Wizytówka Google</a>
+      <a href="../../pl/strony-internetowe-poznan/">Strony WWW</a>
+      <a href="../../pl/seo-ai/">SEO AI</a>
+      <a href="../../pl/audyt-seo/">Darmowy audyt SEO</a>
+    </div>
+    <a href="../../pl/realizacje/">Realizacje</a>
+    <a href="../../pl/blog/" aria-current="page">Blog</a>
+    <a href="../../pl/cennik/">Cennik</a>
+    <a href="../../pl/o-mnie/">O mnie</a>
     <div class="lang">
-        <a href="../../insights/" class="mono" hreflang="en">EN</a><span class="mono sep">·</span>
-        <a href="./" class="mono" hreflang="pl" aria-current="true">PL</a><span class="mono sep">·</span>
-        <a href="../../uk/blog/" class="mono" hreflang="uk">UA</a><span class="mono sep">·</span>
-        <a href="../../ru/blog/" class="mono" hreflang="ru">RU</a>
-      </div>
-    <a href="../../pl/kontakt/" class="btn">Porozmawiajmy o projekcie</a>
+      <a href="../../insights/" class="mono" hreflang="en">EN</a><span class="mono sep">·</span>
+      <a href="./" class="mono" hreflang="pl" aria-current="true">PL</a><span class="mono sep">·</span>
+      <a href="../../uk/blog/" class="mono" hreflang="uk">UA</a><span class="mono sep">·</span>
+      <a href="../../ru/blog/" class="mono" hreflang="ru">RU</a>
+    </div>
+    <a href="../../pl/kontakt/" class="btn" data-contact-open>Kontakt</a>
   </nav>
 </header>
 
 <main id="main">
 
   <!-- ================= CINEMATIC SPACE HERO ================= -->
-  <section class="space-journey space-journey--short dark" id="space-journey" aria-label="Insights introduction">
+  <section class="space-journey space-journey--short dark" id="space-journey" aria-label="Wprowadzenie do bloga">
     <div class="space-stage">
       <canvas class="space-canvas" id="space-canvas" aria-hidden="true"></canvas>
       <img class="space-earth" id="space-earth"
@@ -146,13 +169,13 @@
       <div class="space-vignette" aria-hidden="true"></div>
       <div class="space-copy wrap">
         <nav class="crumbs mb-2" aria-label="Ścieżka nawigacji">
-          <a href="../../pl/">Strona główna</a><span>/</span><span aria-current="page">Blog</span>
+          <a href="../">Strona główna</a><span>/</span><span aria-current="page">Blog</span>
         </nav>
-        <h1 class="d h1">Jak ludzie <span class="accent">naprawdę Cię znajdują</span>.</h1>
-        <p class="lead">Notatki z budowania widoczności w wyszukiwarce dla gabinetów w Poznaniu, Pradze i Tallinnie. Co zadziałało, co kosztowało i niczego nie nauczyło i dlaczego kolejność budowania znaczy więcej niż jakakolwiek pojedyncza taktyka.</p>
+        <h1 class="d h1">Blog SEO dla małych firm: <span class="accent">jak ludzie naprawdę Cię znajdują</span></h1>
+        <p class="lead">To blog o SEO lokalnym, wizytówce Google i stronach dla małych firm usługowych. Każdy wpis wychodzi z prawdziwego projektu w Poznaniu, Pradze albo Tallinnie. Piszę, co zadziałało, co kosztowało i w jakiej kolejności to robić.</p>
         <div class="hero-ctas">
-          <a href="#articles" class="btn">Czytaj notatki <span aria-hidden="true">↓</span></a>
-          <a href="../../pl/wycena/" class="btn-ghost">Weź wycenę</a>
+          <a href="#poradniki" class="btn">Czytaj poradniki <span aria-hidden="true">↓</span></a>
+          <a href="../wycena/" class="btn-ghost">Sprawdź, ile to kosztuje</a>
         </div>
       </div>
       <div class="space-message d" aria-hidden="true">Bądź znajdowana.<br><span>Zostań znaleziona.</span></div>
@@ -161,17 +184,11 @@
   </section>
 
   <!-- ================= ARTICLES ================= -->
-  <section class="wrap section" id="articles">
-    <div class="sec-head mb-5">
-      <div>
-        <div class="mono eyebrow">Blog</div>
-        <h2 class="d h2">Pisane z pracy, a nie z <span class="accent">narzędzia do słów kluczowych</span>.</h2>
-      </div>
-      <a href="../../pl/realizacje/" class="link-mono">Zobacz realizacje →</a>
-    </div>
+  <section class="wrap section" id="poradniki">
+    <h2 class="d h2 mb-5">Najnowsze poradniki</h2>
 
     <div class="grid-2">
-      <a href="./wizytowka-google-jak-zalozyc/" class="card project">
+      <article class="card project">
         <div class="shot">
           <img src="../../images/insights/wizytowka-google-cover.jpg"
                alt="Logo Google My Business i ikona Profilu Firmy w Google z podpisem Wizytówka Google"
@@ -179,14 +196,15 @@
         </div>
         <div class="project-meta">
           <div>
-            <div class="d">Wizytówka Google: jak założyć krok po kroku</div>
+            <h3 class="d">Wizytówka Google: jak założyć krok po kroku (2026)</h3>
             <div class="sub">SEO lokalne · 8 min czytania</div>
           </div>
         </div>
-        <p class="project-note">Jak założyć darmowy Profil Firmy w Google (dawniej Google Moja Firma), przejść weryfikację i uzupełnić go tak, żeby naprawdę pokazywał się w mapach. Z kategoriami, opiniami i powodami, dla których wizytówka się nie wyświetla.</p>
+        <p class="project-note">Jak założyć darmowy Profil Firmy w Google, przejść weryfikację i uzupełnić profil tak, żeby pokazywał się w mapach. Z kategoriami, opiniami i powodami, dla których wizytówka się nie wyświetla.</p>
         <div class="chips"><span class="chip">Wizytówka Google</span><span class="chip">Weryfikacja</span><span class="chip">Opinie</span></div>
-      </a>
-      <a href="./seo-lokalne-jednoosobowe-studio/" class="card project">
+        <p class="project-note"><a href="./wizytowka-google-jak-zalozyc/" class="link-mono">Poradnik: jak założyć wizytówkę Google</a></p>
+      </article>
+      <article class="card project">
         <div class="shot">
           <img src="../../images/insights/local-seo-cover.jpg"
                alt="Europa nocą widziana z kosmosu, światła miast, z podpisem SEO lokalne"
@@ -194,81 +212,85 @@
         </div>
         <div class="project-meta">
           <div>
-            <div class="d">SEO lokalne dla jednoosobowego studia</div>
+            <h3 class="d">SEO lokalne dla jednoosobowego studia: co naprawdę działa</h3>
             <div class="sub">SEO lokalne · 9 min czytania</div>
           </div>
         </div>
-        <p class="project-note">Większość porad o SEO lokalnym jest pisana dla firm z działem marketingu. To wersja dla jednoosobowego gabinetu: co rusza wyniki map, co marnuje popołudnie i w jakiej kolejności to robić, mając dwie godziny tygodniowo.</p>
+        <p class="project-note">Większość porad o SEO lokalnym jest pisana dla firm z działem marketingu. To wersja dla jednoosobowego gabinetu: co rusza wyniki map, co marnuje czas i w jakiej kolejności to robić.</p>
         <div class="chips"><span class="chip">Wizytówka Google</span><span class="chip">Opinie</span><span class="chip">Wyniki map</span></div>
-      </a>
+        <p class="project-note"><a href="./seo-lokalne-jednoosobowe-studio/" class="link-mono">SEO lokalne dla jednoosobowego studia</a></p>
+      </article>
     </div>
-
   </section>
 
-
-  <!-- ================= WHAT THESE NOTES ARE ================= -->
+  <!-- ================= BASIS + TOPICS ================= -->
   <section class="wrap section">
-    <div class="mono eyebrow">Czym są te notatki</div>
-    <h2 class="d h2 mb-4 measure">Pisane po pracy, a nie <span class="accent">zamiast niej</span>.</h2>
     <div class="grid-2" style="align-items:start;">
       <div>
-        <p>Wszystko tutaj wychodzi z prawdziwego projektu dla prawdziwej małej firmy: studia makijażu permanentnego, gabinetu masażu, studia tatuażu, firmy od grafiki do gier. Jeśli podaję liczbę, to liczba, którą widziałam, jak się zmienia. Jeśli piszę, że coś jest marnowaniem pieniędzy, to zwykle dlatego, że sama je wydałam.</p>
-        <p class="mt-2">To cała zasada wyboru tematów. Nie ma harmonogramu publikacji ani prób wyczerpania tematu, bo tekst pisany po to, żeby zapełnić kalendarz, jest wart tyle, ile kosztowało jego napisanie. Wpis powstaje, kiedy jakieś zlecenie nauczy czegoś, co przyda się innej właścicielce.</p>
+        <h2 class="d h2 mb-4">Na czym opierają się te poradniki?</h2>
+        <p>Każdy wpis wychodzi z prawdziwego projektu dla prawdziwej małej firmy. Jeśli podaję liczbę, to taką, którą widziałam w danych. Jeśli piszę, że coś marnuje pieniądze, to zwykle dlatego, że sama je na to wydałam.</p>
+        <p class="mt-2">Nie mam harmonogramu publikacji. Wpis powstaje, kiedy jakiś projekt nauczy mnie czegoś, co przyda się innej właścicielce firmy.</p>
       </div>
-      <div class="card svc-box">
-        <span class="mono">O czym tu piszę</span>
-        <ul class="svc-list">
-          <li>SEO lokalne: wyniki map, wizytówka Google, opinie</li>
-          <li>Co zbudować pierwsze, gdy budżet wystarcza na jedną rzecz</li>
-          <li>Widoczność w ChatGPT i innych asystentach, nie tylko w Google</li>
-          <li>Koszty, w konkretnych liczbach, i co za nie dostałam</li>
-          <li>Błędy, w tym moje własne</li>
-        </ul>
+      <div>
+        <h2 class="d h2 mb-4">O czym piszę na blogu?</h2>
+        <p>Piszę o tym, co realnie przynosi klientów małej firmie usługowej z Google, Map Google i asystentów AI.</p>
+        <div class="card svc-box mt-3">
+          <ul class="svc-list">
+            <li><strong>SEO lokalne:</strong> wyniki map, wizytówka Google i opinie.</li>
+            <li><strong>Pierwszy krok przy małym budżecie:</strong> co zbudować najpierw, gdy stać Cię na jedną rzecz.</li>
+            <li><strong>Widoczność w ChatGPT</strong> i innych asystentach AI, nie tylko w Google.</li>
+            <li><strong>Koszty w konkretnych liczbach</strong> i co za nie dostajesz.</li>
+            <li><strong>Błędy,</strong> także moje własne.</li>
+          </ul>
+        </div>
       </div>
     </div>
-    <h3 class="d mt-5">Dla kogo to jest</h3>
-    <p class="mt-2 measure">Dla właścicielki, która jest jednocześnie całym działem marketingu. Prawie wszystkie porady o SEO lokalnym po cichu zakładają zespół, budżet i kogoś, kto się tym zajmuje na etacie. Jeśli masz dwie godziny tygodniowo i jesteś też osobą, która wykonuje zabiegi, większość tych porad nie jest błędna, tylko niewykonalna, a kolejność, którą proponują, jest dla Ciebie zła.</p>
-    <p class="mt-2 measure">Dlatego te notatki są pisane pod dwie godziny tygodniowo. Mówią, co zrobić najpierw, co może poczekać kwartał, a co pominąć w całości. Jeśli coś tutaj by pomogło, ale wolisz tego nie robić sama, <a href="../uslugi/">strona usług</a> obejmuje ten sam zakres jako pracę, a <a href="../audyt-seo/">bezpłatny audyt</a> powie Ci, której części naprawdę potrzebujesz.</p>
   </section>
+
+  <!-- ================= WHO IT IS FOR ================= -->
+  <section class="wrap section">
+    <h2 class="d h2 mb-4 measure">Dla kogo jest ten blog?</h2>
+    <p class="measure">Dla właścicielki lub właściciela, który jest jednocześnie całym działem marketingu. Większość porad o SEO zakłada zespół i budżet. Przy dwóch godzinach tygodniowo nie są błędne, tylko niewykonalne.</p>
+    <p class="mt-2 measure">Dlatego te poradniki mówią, co zrobić najpierw, co może poczekać kwartał, a co pominąć. Jeśli wolisz tego nie robić sama, zobacz <a href="../uslugi/">usługi SEO i strony WWW</a>. <a href="../audyt-seo/">Darmowy audyt SEO</a> powie Ci, której części naprawdę potrzebujesz.</p>
+  </section>
+
   <!-- ================= CTA ================= -->
   <section class="dark">
     <div class="wrap cta">
-      <div class="mono">Zanim się odezwę</div>
-      <h2 class="d">Zobacz, ile to <span class="accent">u Ciebie kosztuje</span>.</h2>
-      <p>Pięć pytań, realny widełkowy koszt i rozpisanie pozycja po pozycji - na stronie, bez podawania maila, żeby to zobaczyć.</p>
+      <div class="mono">Wycena</div>
+      <h2 class="d">Zobacz, ile to kosztuje <span class="accent">w Twoim przypadku</span></h2>
+      <p>Pięć pytań, realne widełki i rozpisanie pozycja po pozycji. Wynik widzisz od razu na stronie, bez podawania maila.</p>
       <div class="cta-btns">
-        <a href="../../pl/wycena/" class="btn">Otwórz kalkulator
+        <a href="../wycena/" class="btn">Otwórz kalkulator wyceny
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#FFFFFF" stroke-width="1.7" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
-        <a href="../../pl/realizacje/" class="btn-ghost">Zobacz realizacje</a>
+        <a href="../realizacje/" class="btn-ghost">Zobacz realizacje SEO</a>
       </div>
     </div>
   </section>
 
 </main>
 
-<!-- ================= FOOTER ================= -->
 <footer class="dark">
   <div class="wrap footer">
     <div class="footer-grid">
       <div>
         <a href="../../pl/" class="logo" aria-label="imarket2web - strona główna">imarket<span>2web</span></a>
-        <p class="footer-about">Strony, widoczność w wyszukiwarkach i automatyzacja dla rosnących firm usługowych. Poznań · Polska · Czechy · Estonia · UE.</p>
-        <div class="chips"><a href="../../" class="chip">EN</a><a href="../../pl/" class="chip">PL</a><a href="../../uk/" class="chip">UA</a><a href="../../ru/" class="chip">RU</a></div>
+        <p class="footer-about">imarket2web to jednoosobowa agencja SEO i studio stron internetowych w Poznaniu, prowadzona przez Alenę Porokh. Pomaga firmom usługowym być znajdowanymi w Google, Mapach Google i asystentach AI, takich jak ChatGPT.</p>
+        <p class="footer-about">ul. Jasielska 10a, 60-476 Poznań · <a href="tel:+48516492854">+48 516 492 854</a> · <a href="mailto:imarket2web@gmail.com">imarket2web@gmail.com</a></p>
+        <div class="chips"><a href="../../" class="chip">EN</a><a href="../../pl/" class="chip" aria-current="true">PL</a><a href="../../uk/" class="chip">UA</a><a href="../../ru/" class="chip">RU</a></div>
       </div>
       <nav class="footer-col" aria-label="Usługi">
         <span class="mono">Usługi</span>
-        <a href="../audyt-seo/">Audyt SEO - bezpłatny</a>
-        <a href="../../pl/uslugi/#web-design">Projektowanie i budowa stron</a>
-        <a href="../../pl/uslugi/#seo">SEO</a>
-        <a href="../../pl/uslugi/#local-seo">SEO lokalne</a>
-        <a href="../../pl/uslugi/#content-strategy">Strategia treści</a>
-        <a href="../../pl/uslugi/#ai-search-geo">Widoczność w wyszukiwarkach AI</a>
-        <a href="../../pl/uslugi/#marketing-automation">Automatyzacja marketingu</a>
-        <a href="../../pl/uslugi/#social-google-business">Social i wizytówka Google</a>
-        <a href="../../pl/uslugi/#content-automation">Automatyzacja treści</a>
-        <a href="../../pl/uslugi/#google-ads">Google Ads</a>
-        <a href="../../pl/uslugi/#backlinks">Strategia linkowania</a>
+        <a href="../../pl/pozycjonowanie-stron-poznan/">Pozycjonowanie stron Poznań</a>
+        <a href="../../pl/pozycjonowanie-lokalne/">Pozycjonowanie lokalne</a>
+        <a href="../../pl/wizytowka-google/">Wizytówka Google</a>
+        <a href="../../pl/strony-internetowe-poznan/">Strony WWW Poznań</a>
+        <a href="../../pl/seo-ai/">SEO AI</a>
+        <a href="../../pl/audyt-seo/">Darmowy audyt SEO</a>
+        <a href="../../pl/uslugi/">Wszystkie usługi</a>
+        <a href="../../pl/cennik/">Cennik</a>
+        <a href="../../pl/wycena/">Kalkulator wyceny</a>
       </nav>
       <nav class="footer-col" aria-label="Realizacje">
         <span class="mono">Realizacje</span>
@@ -282,15 +304,12 @@
       </nav>
       <nav class="footer-col" aria-label="Studio">
         <span class="mono">Studio</span>
-        <a href="../../pl/wycena/">Kalkulator wyceny</a>
-        <a href="../../pl/brief/">Brief projektowy</a>
-        <a href="../../pl/prywatnosc/">Prywatność</a>
-        <a href="#" data-privacy-settings>Ustawienia prywatności</a>
         <a href="../../pl/o-mnie/">O mnie</a>
         <a href="../../pl/blog/">Blog</a>
+        <a href="../../pl/brief/">Brief projektowy</a>
         <a href="../../pl/kontakt/">Kontakt</a>
-        <a href="tel:+48516492854">+48 516 492 854</a>
-        <a href="mailto:imarket2web@gmail.com">imarket2web@gmail.com</a>
+        <a href="../../pl/prywatnosc/">Prywatność</a>
+        <a href="#" data-privacy-settings>Ustawienia prywatności</a>
         <a href="https://www.linkedin.com/company/imarket2web/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://share.google/0PfGrTg85Ts70bd71" target="_blank" rel="noopener">Profil w Google</a>
       </nav>
@@ -304,6 +323,7 @@
 
 <script src="../../assets/site.js?v=2026-09-28" defer></script>
 <script src="../../assets/consent.js?v=2026-09-27" defer></script>
+<script src="../../assets/contact.js?v=2026-09-28" defer></script>
 <script src="../../assets/space.js?v=2026-09-27" defer></script>
 </body>
 </html>
