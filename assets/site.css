@@ -1225,9 +1225,10 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
    translates by exactly one third, so the moment it snaps back the frame
    is identical and the seam is invisible.
 
-   Only the first copy is real. The other two carry aria-hidden and
-   tabindex="-1", so assistive tech and the keyboard meet each service
-   once, not three times.
+   Only the first copy is in the HTML. site.js clones the other two after
+   load, with aria-hidden and inert, so crawlers, assistive tech and the
+   keyboard all meet each service once, not three times. Until the copies
+   exist (or with no JavaScript) the row is a plain swipeable list.
 
    WCAG 2.2.2 - moving content must be pausable. It pauses on hover and on
    keyboard focus, and reduced motion stops it entirely and hands the row
@@ -1245,19 +1246,25 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
   mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
 }
 
-.gal-row { overflow: hidden; }
+/* Scrollable until site.js has built the loop, then clipped. The scrollbar
+   is hidden so the row does not change height when the loop takes over. */
+.gal-row { overflow-x: auto; scrollbar-width: none; }
+.gal-row::-webkit-scrollbar { display: none; }
+.gal-row:has(> .gal-track.is-looped) { overflow: hidden; }
 .gal-row + .gal-row { margin-top: 16px; }
 
 .gal-track {
   display: flex;
   gap: 16px;
   width: max-content;
+}
+.gal-track.is-looped {
   will-change: transform;
   animation: galScroll 64s linear infinite;
 }
-.gal-row--rev .gal-track { animation-name: galScrollRev; animation-duration: 74s; }
+.gal-row--rev .gal-track.is-looped { animation-name: galScrollRev; animation-duration: 74s; }
 
-/* One third, because the track holds exactly three copies of its cards. */
+/* One third, because site.js builds exactly three copies of the cards. */
 @keyframes galScroll    { to { transform: translate3d(-33.3333%, 0, 0); } }
 @keyframes galScrollRev { from { transform: translate3d(-33.3333%, 0, 0); } to { transform: none; } }
 
