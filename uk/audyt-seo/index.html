@@ -124,16 +124,24 @@
     <a href="../../uk/" class="logo" aria-label="imarket2web - головна">imarket<span>2web</span></a>
 
     <nav class="nav-links" aria-label="Головна">
-      <a href="./" aria-current="page">SEO аудит</a>
-      <a href="../poslugy/">Послуги</a>
-      <a href="../roboty/">Роботи</a>
-      <a href="../vartist/">Вартість</a>
-      <a href="../pro-mene/">Про мене</a>
-      <a href="../blog/">Блог</a>
-
-
-
-
+      <div class="nav-drop">
+        <button type="button" class="nav-drop-btn" aria-expanded="false" aria-controls="nav-services">Послуги
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav-drop-menu" id="nav-services">
+          <a href="../../uk/poslugy/#seo">SEO-просування</a>
+          <a href="../../uk/poslugy/#local-seo">Локальне SEO</a>
+          <a href="../../uk/poslugy/#social-google-business">Google Бізнес-профіль</a>
+          <a href="../../uk/poslugy/#web-design">Розробка сайтів</a>
+          <a href="../../uk/poslugy/#ai-search-geo">SEO для AI-пошуку</a>
+          <a href="../../uk/audyt-seo/" aria-current="page">Безкоштовний SEO-аудит</a>
+          <a href="../../uk/poslugy/" class="nav-drop-all">Усі послуги</a>
+        </div>
+      </div>
+      <a href="../../uk/roboty/">Роботи</a>
+      <a href="../../uk/vartist/">Вартість</a>
+      <a href="../../uk/blog/">Блог</a>
+      <a href="../../uk/pro-mene/">Про мене</a>
       <div class="lang" aria-label="Мова">
         <a href="../../seo-audit/" class="mono" hreflang="en">EN</a><span class="mono sep">·</span>
         <a href="../../pl/audyt-seo/" class="mono" hreflang="pl">PL</a><span class="mono sep">·</span>
@@ -141,7 +149,7 @@
         <a href="../../ru/audit-seo/" class="mono" hreflang="ru">RU</a>
       </div>
       <a href="tel:+48516492854" class="nav-phone">+48 516 492 854</a>
-      <a href="../../uk/kontakty/" class="nav-cta">Обговорімо проєкт</a>
+      <a href="../../uk/kontakty/" class="nav-cta" data-contact-open>Контакти</a>
     </nav>
 
     <div class="nav-mobile">
@@ -155,23 +163,26 @@
   </div>
 
   <nav class="mobile-menu" id="mobile-menu" aria-label="Мобільне">
-    <a href="./" aria-current="page">SEO аудит</a>
-    <a href="../poslugy/">Послуги</a>
-    <a href="../roboty/">Роботи</a>
-    <a href="../vartist/">Вартість</a>
-    <a href="../pro-mene/">Про мене</a>
-    <a href="../blog/">Блог</a>
-
-
-
-
+    <a href="../../uk/poslugy/">Послуги</a>
+    <div class="mobile-sub">
+      <a href="../../uk/poslugy/#seo">SEO-просування</a>
+      <a href="../../uk/poslugy/#local-seo">Локальне SEO</a>
+      <a href="../../uk/poslugy/#social-google-business">Google Бізнес-профіль</a>
+      <a href="../../uk/poslugy/#web-design">Розробка сайтів</a>
+      <a href="../../uk/poslugy/#ai-search-geo">SEO для AI-пошуку</a>
+      <a href="../../uk/audyt-seo/" aria-current="page">Безкоштовний SEO-аудит</a>
+    </div>
+    <a href="../../uk/roboty/">Роботи</a>
+    <a href="../../uk/vartist/">Вартість</a>
+    <a href="../../uk/blog/">Блог</a>
+    <a href="../../uk/pro-mene/">Про мене</a>
     <div class="lang">
-        <a href="../../seo-audit/" class="mono" hreflang="en">EN</a><span class="mono sep">·</span>
-        <a href="../../pl/audyt-seo/" class="mono" hreflang="pl">PL</a><span class="mono sep">·</span>
-        <a href="./" class="mono" hreflang="uk" aria-current="true">UA</a><span class="mono sep">·</span>
-        <a href="../../ru/audit-seo/" class="mono" hreflang="ru">RU</a>
-      </div>
-    <a href="../../uk/kontakty/" class="btn">Обговорімо проєкт</a>
+      <a href="../../seo-audit/" class="mono" hreflang="en">EN</a><span class="mono sep">·</span>
+      <a href="../../pl/audyt-seo/" class="mono" hreflang="pl">PL</a><span class="mono sep">·</span>
+      <a href="./" class="mono" hreflang="uk" aria-current="true">UA</a><span class="mono sep">·</span>
+      <a href="../../ru/audit-seo/" class="mono" hreflang="ru">RU</a>
+    </div>
+    <a href="../../uk/kontakty/" class="btn" data-contact-open>Контакти</a>
   </nav>
 </header>
 <main id="main">
@@ -318,6 +329,7 @@
 
 <script src="../../assets/site.js?v=2026-09-28" defer></script>
 <script src="../../assets/consent.js?v=2026-09-27" defer></script>
+<script src="../../assets/contact.js?v=2026-09-28" defer></script>
 <script src="../../assets/orbit.js?v=2026-09-27" defer></script>
 </body>
 </html>
