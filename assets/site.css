@@ -522,7 +522,26 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
 .layer--goal { background: var(--blue); border-color: var(--blue); }
 .layer--goal .mono { color: #EAF3FE; }   /* was #BFDCFA, 3.7:1 on blue */
 .layer--goal .d { font-size: 22px; color: #fff; }
-.layer--goal p { color: #EAF3FE; }       /* was #CFE3FB, 4.0:1 on blue */
+.layer--goal p { color: #EAF3FE; }
+/* Growth layers that link to a service: the whole card is the link */
+.layer:has(> .layer-link) { padding: 0; transition: border-color .2s ease, background-color .2s ease; }
+.layer-link { display: block; height: 100%; padding: var(--pad-card-sm); color: inherit; border-radius: inherit; }
+.layer:has(> .layer-link:hover), .layer:has(> .layer-link:focus-visible) { border-color: var(--blue-light); }
+.layer--goal:has(> .layer-link:hover), .layer--goal:has(> .layer-link:focus-visible) { background: var(--blue-hover); border-color: var(--blue-hover); }
+.layer-link .d::after { content: " →"; opacity: 0; transition: opacity .2s ease; }
+.layer-link:hover .d::after, .layer-link:focus-visible .d::after { opacity: 1; }
+
+/* FAQ answers folded behind "+" (details/summary: the answer stays in the HTML) */
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:first-of-type { margin-top: 18px; border-top: 1px solid var(--line); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 0; cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary h3 { margin: 0; }
+.faq-item summary::after { content: "+"; flex: none; width: 32px; height: 32px; border-radius: 999px; display: grid; place-items: center; font-size: 22px; line-height: 1; color: var(--blue); border: 1px solid var(--line); transition: transform .2s ease; }
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item summary:hover h3 { color: var(--blue); }
+.faq-item > .lead { padding-bottom: 20px; }
+@media (prefers-reduced-motion: reduce) { .faq-item summary::after { transition: none; } }       /* was #CFE3FB, 4.0:1 on blue */
 
 /* ============ Work ============ */
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 28px; }
