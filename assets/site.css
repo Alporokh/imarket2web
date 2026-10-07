@@ -2516,3 +2516,19 @@ section.wrap > p + ul, section.wrap > ul + p { margin-top: 18px; }
   .galaxy-canvas { -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 70%); mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 70%); }
 }
 @media (prefers-reduced-motion: reduce) { .galaxy-canvas { transition: none; } }
+
+/* Galaxy heroes: the canvas is a child of the hero, so a section-level
+   .hero no longer has one child and would turn into the two-column grid -
+   which squeezed the text into the left half. Keep it one column, and give
+   the copy more width than the 620px deck used beside a picture. */
+.galaxy-hero.hero { display: block; }
+.galaxy-hero :is(.lead, .lead + .lead) { max-width: 760px; }
+.galaxy-hero :is(h1, .h1, .h2-xl) { max-width: 980px; }
+
+/* Card rows that must line up: same picture shape, cropped from the top,
+   and the case-study link pinned to the bottom of each card */
+.even-cards { align-items: stretch; }
+.even-cards > .card.project { display: flex; flex-direction: column; }
+.even-cards > .card.project .shot { height: auto; aspect-ratio: 16 / 10; }
+.even-cards > .card.project .shot img { object-position: top center; }
+.even-cards > .card.project .project-note:last-child { margin-top: auto; padding-top: 14px; }
