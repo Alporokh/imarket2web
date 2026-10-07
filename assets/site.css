@@ -2492,3 +2492,22 @@ section.wrap > .h3 + p, section.wrap > .h3 + ul { margin-top: 18px; }
 
 section.wrap > p + p { margin-top: 16px; }
 section.wrap > p + ul, section.wrap > ul + p { margin-top: 18px; }
+
+/* ---- Binary Orbits: the spiral galaxy behind the service heroes ---------
+   galaxy.js draws it; the canvas sits under the hero content inside the
+   section's own stacking context, and fades out toward the text side so
+   headings keep their contrast. */
+.galaxy-hero { position: relative; overflow: hidden; isolation: isolate; }
+.galaxy-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: -1; pointer-events: none;
+  opacity: 0; transition: opacity 1.2s ease;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.35) 38%, #000 62%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.35) 38%, #000 62%);
+}
+.galaxy-canvas.is-on { opacity: 1; }
+@media (max-width: 760px) {
+  .galaxy-canvas.is-on { opacity: .55; }
+  .galaxy-canvas { -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 70%); mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 70%); }
+}
+@media (prefers-reduced-motion: reduce) { .galaxy-canvas { transition: none; } }
