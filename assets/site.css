@@ -2522,8 +2522,6 @@ section.wrap > p + ul, section.wrap > ul + p { margin-top: 18px; }
    which squeezed the text into the left half. Keep it one column, and give
    the copy more width than the 620px deck used beside a picture. */
 .galaxy-hero.hero { display: block; }
-.galaxy-hero :is(.lead, .lead + .lead) { max-width: 760px; }
-.galaxy-hero :is(h1, .h1, .h2-xl) { max-width: 980px; }
 
 /* Card rows that must line up: same picture shape, cropped from the top,
    and the case-study link pinned to the bottom of each card */
@@ -2532,3 +2530,9 @@ section.wrap > p + ul, section.wrap > ul + p { margin-top: 18px; }
 .even-cards > .card.project .shot { height: auto; aspect-ratio: 16 / 10; }
 .even-cards > .card.project .shot img { object-position: top center; }
 .even-cards > .card.project .project-note:last-child { margin-top: auto; padding-top: 14px; }
+
+/* One hero style everywhere, matching the home page: every page's H1 at the
+   marquee size, and the label above it is the same blue pill (.tag--h1). */
+main h1.h2-xl { font-size: var(--fs-hero); line-height: 1.02; }
+.tag--h1 + :is(h1, .h1, .h2-xl) { margin-top: var(--space-3); }
+.crumbs + .tag--h1 { margin-top: var(--space-5, 40px); }
