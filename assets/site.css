@@ -523,13 +523,15 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
 .layer--goal .mono { color: #EAF3FE; }   /* was #BFDCFA, 3.7:1 on blue */
 .layer--goal .d { font-size: 22px; color: #fff; }
 .layer--goal p { color: #EAF3FE; }
-/* Growth layers that link to a service: the whole card is the link */
-.layer:has(> .layer-link) { padding: 0; transition: border-color .2s ease, background-color .2s ease; }
-.layer-link { display: block; height: 100%; padding: var(--pad-card-sm); color: inherit; border-radius: inherit; }
-.layer:has(> .layer-link:hover), .layer:has(> .layer-link:focus-visible) { border-color: var(--blue-light); }
-.layer--goal:has(> .layer-link:hover), .layer--goal:has(> .layer-link:focus-visible) { background: var(--blue-hover); border-color: var(--blue-hover); }
-.layer-link .d::after { content: " →"; opacity: 0; transition: opacity .2s ease; }
-.layer-link:hover .d::after, .layer-link:focus-visible .d::after { opacity: 1; }
+/* Growth layers that link to a service: the link sits on the title (short
+   anchor text) and stretches over the whole card */
+.layer:has(.layer-link) { position: relative; transition: border-color .2s ease, background-color .2s ease; }
+.layer-link { color: inherit; }
+.layer-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.layer:has(.layer-link:hover), .layer:has(.layer-link:focus-visible) { border-color: var(--blue-light); }
+.layer--goal:has(.layer-link:hover), .layer--goal:has(.layer-link:focus-visible) { background: var(--blue-hover); border-color: var(--blue-hover); }
+.layer-link::before { content: "→ "; position: absolute; right: 18px; top: 18px; opacity: 0; transition: opacity .2s ease; }
+.layer-link:hover::before, .layer-link:focus-visible::before { opacity: 1; }
 
 /* FAQ answers folded behind "+" (details/summary: the answer stays in the HTML) */
 .faq-item { border-bottom: 1px solid var(--line); }
@@ -841,6 +843,9 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
 /* Case cards on the work hub hold a heading and one link; the link's hit area
    stretches over the whole card so the card still clicks as a unit. */
 .project { position: relative; }
+.project .card-link { color: inherit; }
+.project .card-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.project:has(.card-link:hover) { border-color: var(--blue); }
 .project .link-mono::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 @media (max-width: 640px) { .prose table { font-size: 14px; } .prose th, .prose td { padding: 8px 8px; } }
 

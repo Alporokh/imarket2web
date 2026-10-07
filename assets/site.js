@@ -1,5 +1,40 @@
 // imarket2web - shared behaviour (mobile menu + footer year)
 (function () {
+  /* The mobile menu is built from the desktop nav, so the page's HTML holds
+     each menu link once (SEO tools count repeated anchors). It only matters
+     with JavaScript anyway: the menu button that opens it is script-driven. */
+  (function buildMobileMenu() {
+    var menu = document.getElementById('mobile-menu');
+    var nav = document.querySelector('.nav-links');
+    if (!menu || !nav || menu.children.length) return;
+    var kids = nav.children;
+    for (var i = 0; i < kids.length; i++) {
+      var el = kids[i];
+      if (el.classList.contains('nav-drop')) {
+        var all = el.querySelector('.nav-drop-all');
+        var btn = el.querySelector('.nav-drop-btn');
+        var top = document.createElement('a');
+        top.href = all ? all.getAttribute('href') : '#';
+        top.textContent = btn ? btn.textContent.trim() : '';
+        if (all && all.hasAttribute('aria-current')) top.setAttribute('aria-current', 'page');
+        menu.appendChild(top);
+        var sub = document.createElement('div');
+        sub.className = 'mobile-sub';
+        var links = el.querySelectorAll('.nav-drop-menu a:not(.nav-drop-all)');
+        for (var j = 0; j < links.length; j++) sub.appendChild(links[j].cloneNode(true));
+        menu.appendChild(sub);
+      } else if (el.classList.contains('lang')) {
+        var lang = el.cloneNode(true);
+        lang.removeAttribute('aria-label');
+        menu.appendChild(lang);
+      } else if (el.tagName === 'A' && !el.classList.contains('nav-phone')) {
+        var a = el.cloneNode(true);
+        if (a.classList.contains('nav-cta')) { a.className = 'btn'; }
+        menu.appendChild(a);
+      }
+    }
+  })();
+
   var header = document.querySelector('.site-header');
   var btn = document.getElementById('menu-toggle');
   if (header && btn) {
