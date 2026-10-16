@@ -658,8 +658,9 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
   .hero-ctas { flex-direction: column; }
   .hero-ctas a { width: 100%; height: 54px; padding: 0 20px; }
   .hero-ctas .btn-ghost { background: var(--dark-2); }
-  .grid-3, .grid-2, .grid-4 { grid-template-columns: 1fr; }
+  .grid-3, .grid-2, .grid-4 { grid-template-columns: minmax(0, 1fr); }
   .grid-2 { gap: 18px; }
+  .link-mono { white-space: normal; }
   .svc { min-height: 0; }
   .project { padding: 14px 14px 20px; }
   .project .shot { height: 220px; }
@@ -2535,4 +2536,50 @@ section.wrap > p + ul, section.wrap > ul + p { margin-top: 18px; }
    marquee size, and the label above it is the same blue pill (.tag--h1). */
 main h1.h2-xl { font-size: var(--fs-hero); line-height: 1.02; }
 .tag--h1 + :is(h1, .h1, .h2-xl) { margin-top: var(--space-3); }
-.crumbs + .tag--h1 { margin-top: var(--space-5, 40px); }
+
+/* ---- One hero rhythm -----------------------------------------------------
+   Every hero sat at its own distance from the header: 24px on the plain
+   pages, 84-118px on the audit and blog scenes, 231px on the work page,
+   which centred its copy in a full screen. The bottoms ran from a clipped
+   -55px (the calculator) to a screen and a half of empty orbit on a phone.
+
+   Now there are three numbers and every hero uses them:
+     header -> breadcrumb            24px (.pt-3, or the hero's own top)
+     breadcrumb -> label             --hero-gap
+     last line -> end of the band    --hero-gap
+   Copy is top-aligned in every scene, so the label lands in the same place
+   whatever is drawn behind it. */
+:root { --hero-gap: clamp(40px, 5vw, 72px); }
+
+main .crumbs { margin-bottom: 0; }
+main .crumbs.crumbs + * { margin-top: var(--hero-gap); }
+
+/* Breadcrumb in its own .wrap.pt-3 above the hero */
+.page-hero,
+.about-hero,
+.case-hero,
+.svc-hero { padding-top: var(--hero-gap); padding-bottom: var(--hero-gap); }
+.about-hero,
+.case-hero { align-items: start; }
+.svc-hero.svc-hero { min-height: 0; }
+
+/* Breadcrumb inside the hero copy */
+.hero:has(.crumbs),
+.audit-hero { padding-top: var(--space-3); padding-bottom: var(--hero-gap); }
+
+.orbit-track .orbit-copy,
+.space-stage .space-copy { justify-content: flex-start; padding-top: var(--space-3); padding-bottom: var(--hero-gap); }
+
+/* The calculator's panel had a fixed height and cut its own text off on a
+   phone. It is as tall as what is in it now. */
+.orbit-track--panel .orbit-stage { height: auto; }
+
+/* On a phone the work-page orbit was a 240vh track whose copy sat at the
+   top of a pinned screen, so the first thing under the buttons was a screen
+   of empty space. There it is a panel like the calculator's: orbit.js sees
+   no scroll range and holds the camera on the scene. */
+@media (max-width: 900px) {
+  .orbit-track:not(.orbit-track--portrait) { height: auto; }
+  .orbit-track:not(.orbit-track--portrait) .orbit-stage { position: relative; height: auto; }
+  .orbit-hint { display: none; }
+}
