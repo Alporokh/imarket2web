@@ -467,6 +467,7 @@ section.wrap .dark .lead { color: var(--on-dark-2); }
 .langs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; align-items: center; }
 .langs .mono { font-size: 10px; margin-right: 4px; color: var(--on-dark-4); }
 .langs .chip { background: var(--dark-2); color: var(--on-dark-2); }
+.langs .chip--any { background: rgba(22,104,216,.2); color: var(--blue-light); }
 .hero-shots { display: flex; flex-direction: column; gap: 14px; }
 .hero-shots .row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
 
