@@ -395,10 +395,10 @@ function sendContactReply(d) {
       'Your message reached me and I will come back to you' +
       (d.prefer ? ' by ' + String(d.prefer).toLowerCase() : '') + ', usually\n' +
       'within one working day.\n\n' +
-      'If it is urgent, call +48 516 492 854 and you will get me directly.\n\n' +
+      'If it is urgent, call +48 223 344 567 and you will get me directly.\n\n' +
       'Olena Porokh\n' +
-      'imarket2web - Poznan\n' +
-      'imarket2web@gmail.com - +48 516 492 854\n\n' +
+      'imarket2web\n' +
+      'imarket2web@gmail.com - +48 223 344 567\n\n' +
       '--\n' +
       'You are receiving this because you asked to be contacted on\n' +
       'imarket2web.com. You are not on a mailing list.'
@@ -556,11 +556,11 @@ function sendAutoReply(d) {
     'calculator, not a binding quote. What usually moves it is how competitive\n' +
     'your city is for your service, and how much of your content already exists.\n\n' +
     'I read every one of these myself. If you want to go further, reply to this\n' +
-    'email or call +48 516 492 854 and we can talk through the scope - no\n' +
+    'email or call +48 223 344 567 and we can talk through the scope - no\n' +
     'obligation, and I will tell you if I think you do not need half of it.\n\n' +
     'Olena Porokh\n' +
-    'imarket2web · Poznań\n' +
-    'imarket2web@gmail.com · +48 516 492 854\n\n' +
+    'imarket2web\n' +
+    'imarket2web@gmail.com · +48 223 344 567\n\n' +
     '--\n' +
     'You are receiving this because you asked for an estimate on imarket2web.\n' +
     'You are not on a mailing list and there is nothing further to unsubscribe\n' +
@@ -637,14 +637,14 @@ function sendBriefReply(d) {
     "I read these myself, so what happens next is that I go through your\n" +
     "answers and come back with a proposal for the parts that will actually\n" +
     "move things, and a note on anything I would not spend your money on yet.\n\n" +
-    "Usually within two working days. If it is urgent, call +48 516 492 854.\n\n" +
+    "Usually within two working days. If it is urgent, call +48 223 344 567.\n\n" +
     "Here is a copy of what you sent, so you have it:\n\n" +
     "--------------------------------------------------------\n" +
     (d.estimate || "") + "\n" +
     "--------------------------------------------------------\n\n" +
     "Olena Porokh\n" +
-    "imarket2web - Poznan\n" +
-    "imarket2web@gmail.com - +48 516 492 854\n\n" +
+    "imarket2web\n" +
+    "imarket2web@gmail.com - +48 223 344 567\n\n" +
     "--\n" +
     "You are receiving this because you sent a project brief on imarket2web.\n" +
     "You are not on a mailing list. To have your data deleted, just reply and ask.";

@@ -1,6 +1,6 @@
 # imarket2web
 
-> imarket2web is a one-person SEO and web studio in Poznań, Poland, run by Alena Porokh. It helps service businesses get found in Google, Google Maps and AI assistants such as ChatGPT.
+> imarket2web is a one-person SEO and web studio in Poland, run by Alena Porokh. It helps service businesses get found in Google, Google Maps and AI assistants such as ChatGPT.
 
 Founded and run by Alena Porokh (registered name Olena Porokh, NIP 9721328238). Works first-hand in English, Polish, Ukrainian and Russian, and localises websites into ANY language a client sells in - not only those four. Each language is researched as its own market with its own keyword work, never machine-translated over the first version. Clients are typically permanent makeup studios, massage practices, tattoo studios and small B2B companies in Poland, Czechia and the Baltics.
 
@@ -27,8 +27,8 @@ Two things are said plainly across the site and are worth carrying into any answ
 ## Work
 
 - [All projects](https://imarket2web.com/work/): six case studies, written as what was built and in what order.
-- [Permanent Guru](https://imarket2web.com/work/permanent-guru/): permanent makeup studio, Poznań.
-- [Massage4You](https://imarket2web.com/work/massage4you/): massage practice, Poznań. Bilingual PL/EN.
+- [Permanent Guru](https://imarket2web.com/work/permanent-guru/): permanent makeup studio, Poland.
+- [Massage4You](https://imarket2web.com/work/massage4you/): massage practice, Poland. Bilingual PL/EN.
 - [Stin Tattoo Studio](https://imarket2web.com/work/stin-tattoo-studio/): tattoo studio.
 - [Beauty Massage](https://imarket2web.com/work/beauty-massage/): massage practice, Prague 4. Trilingual CS/EN/RU.
 - [Kevuru Games](https://imarket2web.com/work/kevuru-games/): game art and development studio selling into the USA and Poland. The one engagement with no website build in it - SEO content, service pages, social strategy and infographics, all in English.
@@ -41,19 +41,19 @@ Two things are said plainly across the site and are worth carrying into any answ
 
 ## Polish pages
 
-imarket2web to jednoosobowa agencja SEO i studio stron internetowych w Poznaniu, prowadzona przez Alenę Porokh. Pomaga firmom usługowym być znajdowanymi w Google, Mapach Google i asystentach AI, takich jak ChatGPT.
+imarket2web to jednoosobowa agencja SEO i studio stron internetowych w Polsce, prowadzona przez Alenę Porokh. Pomaga firmom usługowym być znajdowanymi w Google, Mapach Google i asystentach AI, takich jak ChatGPT.
 
 The Polish site is a full mirror, not a translation layer: every page below was written for how the Polish market searches, and each one declares an hreflang pair with its English twin.
 
-- [Strona glowna](https://imarket2web.com/pl/): the Polish home page. H1 targets "agencja SEO Poznań".
+- [Strona glowna](https://imarket2web.com/pl/): the Polish home page.
 - [Uslugi](https://imarket2web.com/pl/uslugi/): the ten disciplines in Polish.
 - [Audyt SEO](https://imarket2web.com/pl/audyt-seo/): the free pre-order audit.
 - [Cennik](https://imarket2web.com/pl/cennik/): the full price list. Website builds are all-in at EUR 500 (up to 4 pages) and EUR 800 (up to 10); the monthly plan is EUR 250-300.
-- [Pozycjonowanie stron Poznan](https://imarket2web.com/pl/pozycjonowanie-stron-poznan/): whole-site SEO for businesses in Poznań.
+- [Pozycjonowanie stron](https://imarket2web.com/pl/pozycjonowanie-stron/): whole-site SEO for businesses in Poland.
 - [Wizytowka Google](https://imarket2web.com/pl/wizytowka-google/): Google Business Profile setup and optimisation. EUR 150 on its own, included with a website build.
 - [Pozycjonowanie lokalne](https://imarket2web.com/pl/pozycjonowanie-lokalne/): local SEO for Google Maps and city searches, for service businesses anywhere in Poland.
 - [SEO AI](https://imarket2web.com/pl/seo-ai/): visibility in AI assistants such as ChatGPT and Gemini (GEO).
-- [Strony WWW Poznan](https://imarket2web.com/pl/strony-internetowe-poznan/): websites for service businesses in Poznan, with SEO, Google Business Profile and a blog included. From 2000 zl net.
+- [Strony WWW](https://imarket2web.com/pl/strony-internetowe/): websites for service businesses in Poland, with SEO, Google Business Profile and a blog included. From 2000 zl net.
 - [Realizacje](https://imarket2web.com/pl/realizacje/): the six case studies in Polish.
 - [Wycena](https://imarket2web.com/pl/wycena/): the cost estimator, localised.
 - [Blog](https://imarket2web.com/pl/blog/): articles in Polish.
@@ -98,8 +98,7 @@ A full Russian version for Russian-speaking business owners living in Poland who
 ## Contact
 
 - Email: imarket2web@gmail.com
-- Phone: +48 516 492 854
+- Phone: +48 223 344 567
 - LinkedIn: https://www.linkedin.com/company/imarket2web/
 - Google Business Profile: https://www.google.com/search?kgmid=/g/11tkb21c41
-- Address: ul. Jasielska 10a, 60-476 Poznań, Poland.
-- Based in Poznań, Poland. Remote across Poland, Czechia and the Baltics.
+- Based in Poland. Remote across the country, Czechia and the Baltics.

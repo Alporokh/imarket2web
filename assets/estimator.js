@@ -784,7 +784,7 @@ function plainText(r, t) {
   L.push('This is a ballpark estimate, not a binding quote. The final figure');
   L.push('is confirmed after a short call about scope.');
   L.push('');
-  L.push('imarket2web · Poznan · +48 516 492 854');
+  L.push('imarket2web · +48 223 344 567');
   return L.join('\n');
 }
 

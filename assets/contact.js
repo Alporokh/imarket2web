@@ -125,7 +125,7 @@
     }
   };
   var W = TEXT[(document.documentElement.lang || 'en').slice(0, 2)] || TEXT.en;
-  var PHONE_LINK = '<a href="tel:+48516492854">+48 516 492 854</a>';
+  var PHONE_LINK = '<a href="tel:+48223344567">+48 223 344 567</a>';
 
   /* ---- The form, as markup, so the dialog can build its own copy -------- */
   function fields() {

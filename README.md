@@ -7,8 +7,8 @@ Static HTML. No build step. Deploy the folder as-is to any static host (Netlify,
 ```
 index.html                        Homepage
 work/index.html                   Portfolio index - all 5 projects
-work/permanent-guru/index.html    Case study - permanent makeup, Poznań PL
-work/massage4you/index.html       Case study - massage & wellness, Poznań PL
+work/permanent-guru/index.html    Case study - permanent makeup, PL
+work/massage4you/index.html       Case study - massage & wellness, PL
 work/stin-tattoo-studio/index.html Case study - tattoo studio, Prague CZ
 work/beauty-massage/index.html    Case study - massage studio, Prague 4 CZ
 work/migrona/index.html           Case study - freight forwarding, Tallinn EE
