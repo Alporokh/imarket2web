@@ -4,6 +4,57 @@
    cyrillic (IBM Plex Mono only - Archivo has no Cyrillic on Google Fonts,
    so Ukrainian text falls back to the system stack, as it always did).
    ============================================ */
+/* Exo 2 + Jura - the type pair since 2026-10-24.
+   Exo 2 is cut down to the ten digits (unicode-range U+30-39), so it only
+   ever draws numbers; Jura draws every letter, Latin, Polish and Cyrillic.
+   Both are variable fonts: one file per subset covers every weight. Jura
+   stops at 700, so the 800 headings render at Jura's boldest. */
+@font-face {
+  font-family: 'Exo 2';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(fonts/exo2-digits.woff2) format('woff2');
+  unicode-range: U+30-39;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Jura';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(fonts/jura-cyrillic-ext.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Jura';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(fonts/jura-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Jura';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(fonts/jura-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Jura';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(fonts/jura-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Archivo stays for the logo only: the wordmark is the brand, not body
+   text, so it does not follow the type change. */
 /* Archivo is a variable font (wght 100-900): one file per subset covers
    every weight. It used to be declared once per weight, each pointing at
    an identical copy, so a page could download the same file five times. */
@@ -123,8 +174,10 @@
   --green-line: #BFD9C4;
   --green-ink: #3D6B48;
 
-  --font: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  /* Exo 2 carries only the digits (see its @font-face), so it goes first
+     and every letter falls through to the next family. */
+  --font: 'Exo 2', 'Jura', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Exo 2', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --pad-x: clamp(18px, 6.9vw, 100px);
   --section-y: clamp(56px, 6.4vw, 92px);
   --max: 1440px;
@@ -260,6 +313,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0; background: var(--cream); color: var(--ink);
   font-family: var(--font); font-size: 16px; line-height: 1.5;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; display: block; }
@@ -361,7 +415,7 @@ section.wrap .lead { color: var(--text); }
 section.wrap .dark .lead { color: var(--on-dark-2); }
 
 /* ============ Logo - direction 02 "Split weight" ============ */
-.logo { font-weight: 800; letter-spacing: -0.05em; font-size: 22px; line-height: 1; white-space: nowrap; color: var(--ink); }
+.logo { font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif; font-variant-numeric: normal; font-weight: 800; letter-spacing: -0.05em; font-size: 22px; line-height: 1; white-space: nowrap; color: var(--ink); }
 .logo span { color: var(--blue); }
 .dark .logo, .logo--on-dark { color: #fff; }
 .dark .logo span, .logo--on-dark span { color: var(--blue-light); }
